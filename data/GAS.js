@@ -1,4 +1,4 @@
-var gas = "https://script.google.com/macros/s/AKfycbyW5Se0hIHNM4fGLvvfwLWbYd8kn-irHlduxpi1l3cj3LzwhcPXBZsJCgc-uMmD6T7FBA/exec";
+var gas = "https://script.google.com/macros/s/AKfycbxkS21rC1mPLbmSUr8DCSYz0-lyX_kvJcIM-9PH-noaENZXg89faKjzmc4qIZtiHLbVwA/exec";
 // 20250121 Maria 用於取得ㄓ用於取得 試算表的資料
 function GetBirthDay (){
     var data ;
