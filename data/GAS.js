@@ -3,6 +3,7 @@ var gas = "https://script.google.com/macros/s/AKfycbxkS21rC1mPLbmSUr8DCSYz0-lyX_
 function GetBirthDay (){
     var data ;
     $.ajax({
+        "headers": {authorization: "Bearer AKfycbwMdriL5N0SjN7cECcyXJn9yvRe5MKA3kyYxZOaOw-U"},
         async: false,
         type: "post",
         data: {
