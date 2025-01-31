@@ -5,7 +5,7 @@ function GetGasData (sheetName,para = {}){
     var data ;
     $.ajax({
         // 因為我用git 去通過驗證，所以必須給 token 讓他通過
-        headers: {authorization: token},
+        headers: {authorization: GAS_token},
         async: false,
         type: "post",
         data: {
@@ -26,7 +26,7 @@ function InsertGasData (sheetName,para = {}){
     var data ;
     $.ajax({
         // 因為我用git 去通過驗證，所以必須給 token 讓他通過
-        headers: {authorization: token},
+        headers: {authorization: GAS_token},
         async: false,
         type: "post",
         data: {
