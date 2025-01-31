@@ -6,8 +6,8 @@ function GetGasData (sheetName,para = {}){
     $.ajax({
         // 因為我用git 去通過驗證，所以必須給 token 讓他通過
         headers: {
-            authorization: GAS_token,
-            Content-Type: 'applicaion/json',
+            "authorization": GAS_token,
+            "Content-Type": 'applicaion/json',
         },
         async: false,
         type: "post",
