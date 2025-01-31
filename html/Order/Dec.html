@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十二月福康訂餐-八米澤鐵板燒</title>
+</head>
+<style>
+    .required{
+        color: red;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <form id="dec_order" method="post">
+        <div class="input-group mb-3">
+            <label for="floor" class="required">所屬樓層:</label>
+            <select id="select_floor" class="easyui-combobox" name="floor" style="width:200px;" data-options="required:true">
+                <option value="manager">我是張總</option>
+                <option value="first_fllor">我是一樓</option>
+                <option value="second_floor">我是二樓</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label for="name">訂餐大名:</label>
+            <select class="easyui-combobox" name="name" style="width:200px;">
+            </select>
+        </div>
+
+    </form>
+</body>
+<script type="text/javascript" src= "../../public/main/main.js" ></script>
+<script type="text/javascript">
+    // 先跑完加載，再跑自己的fn
+    loadResourcesAndRun().then(
+        (reslove)=>{
+            $("#select_floor").combobox({
+                onChange:function(newValue,oldValue){
+                    if (newValue !== oldValue){
+                        var list = GetGasData("成員");
+                        
+
+
+                    }
+
+                }
+            })
+        }
+    )
+</script>
+</html>

@@ -956,12 +956,6 @@ $.extend($.fn.validatebox.defaults.rules, {
 		}, 
 		message: 'Field do not match.',
 	},
-	vaildBetween:{
-		validator: function(value,param){ 
-			
-		}, 
-		message: 'Field do not match.',
-	}
 });
 /*
 	20231212 Maria 
