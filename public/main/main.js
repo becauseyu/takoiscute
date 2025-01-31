@@ -18,10 +18,10 @@ const src_creat = [
 if ( location.href.includes("github")){
     url = '/takoiscute/';
 }else{
-    url = "";
+    url = "../../";
 }
 // 定義前綴詞
-prefer = typeof(prefer) === "undefined"?"../../":prefer;
+// prefer = typeof(prefer) === "undefined"?"../../":prefer;
 // 加載 CSS
 function loadCSS(href) {
     return new Promise((resolve, reject) => {
