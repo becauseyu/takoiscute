@@ -28,7 +28,7 @@ function loadCSS(href) {
         let link = document.createElement("link");
         link.rel = "stylesheet";
         link.type = "text/css";
-        link.href = url + prefer+href;
+        link.href = url +href;
         link.onload = () => resolve(href);
         link.onerror = () => reject(new Error(`CSS 加載失敗: ${href}`));
         document.head.appendChild(link);
@@ -40,7 +40,7 @@ function loadJS(src) {
     return new Promise((resolve, reject) => {
         let script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = url + prefer+src;
+        script.src = url + src;
         script.onload = () => resolve(src);
         script.onerror = () => reject(new Error(`JS 加載失敗: ${src}`));
         document.head.appendChild(script);
