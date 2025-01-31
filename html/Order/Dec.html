@@ -10,36 +10,81 @@
         color: red;
         font-weight: bold;
     }
+
 </style>
 <body>
-    <form id="dec_order" method="post">
-        <div class="input-group mb-3">
-            <label for="floor" class="required">所屬樓層:</label>
-            <select id="select_floor" class="easyui-combobox" name="floor" style="width:200px;" data-options="required:true">
-                <option value="manager">我是張總</option>
-                <option value="first_fllor">我是一樓</option>
-                <option value="second_floor">我是二樓</option>
-            </select>
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">訂餐大名:</label>
-            <select class="easyui-combobox" name="name" style="width:200px;">
-            </select>
-        </div>
-
-    </form>
+    <div class="container" style="width: 50%;">
+        <form id="dec_order" method="post" novalidate >
+            <div class="modal-content" style="background-color:#f2f3f4">
+                <div class="modal-header">
+                    <h5 class="modal-title" >八米澤鐵板燒</h5>
+                    <div class="disable_msg d-none" style="position: absolute;right: 50px;top: 20px">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size: 13px;color: red;"></i>
+                        <span id="browse_disable_msg" style="color: red;" data-userediting = false  ></span>
+                    </div>
+                </div> <!-- end of <div class='modal-header'>-->
+                <!--放菜單的位置 -->
+                <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
+                <div class="pa-gallery-player-widget" style="width:100%; height:480px; display:none;">
+                <object data="https://lh3.googleusercontent.com/pw/AP1GczM2vCLrIxTadGTY8hNfZwNr6yQpdJcn_yAz5nwD3KeRrNaBEE4tCWW2cETiDvXI4V_wwfnnOzmWbu47GeodvChA_feFksfkhkAHXRu9aN6h58_zcJn_=w1920-h1080"></object>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="select_floor" class="required" >所屬樓層:</label>
+                        <input id="select_floor" class="easyui-combobox" name="floor"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="select_name">訂餐大名:</label>
+                        <input id="select_name" class="easyui-combobox" name="name" />
+                        </input>
+                    </div>
+                </div> <!-- end of <div class='modal-body'>-->
+                <!--20221111 modal-footer 是共用，不跑迴圈-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" >確認</button>
+                    <button type="button" class="btn btn-primary" >重製</button>
+                </div> <!-- end of <div class='modal-footer'>-->
+            </div>  <!-- end of <div class='modal-content'>-->
+        </form>
+    </div>
 </body>
 <script type="text/javascript" src= "../../public/main/main.js" ></script>
 <script type="text/javascript">
     // 先跑完加載，再跑自己的fn
     loadResourcesAndRun().then(
         (reslove)=>{
+            
+            // 先把需要的資料讀近來，避免跑AJAX太慢
+            // var list = GetGasData("成員");
+            var data = [];
             $("#select_floor").combobox({
+                required:true,
+                editable: false,
+                panelHeight:'auto',
+                panelMaxHeight:'335',
+                valueField:'id',
+                textField:'text',
+                data:[
+                    {id:"0",text:"我是張總"},
+                    {id:"1",text:"一樓"},
+                    {id:"2",text:"二樓"},
+                ],
                 onChange:function(newValue,oldValue){
                     if (newValue !== oldValue){
-                        var list = GetGasData("生日");
+                        data = list[newValue0].map((x) => { return{id:x,text:x} });
                     }
-
+                    $("#select_name").combobox({
+                        required:true,
+                        editable: false,
+                        panelHeight:'auto',
+                        panelMaxHeight:'335',
+                        panelWidth:'auto',
+                        valueField:'id',
+                        textField:'text',
+                        data:data,
+                        idField:"id",
+                        textField:"text",
+                    })
                 }
             })
         }
