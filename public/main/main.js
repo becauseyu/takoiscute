@@ -14,6 +14,7 @@ const src_creat = [
     "public/bootstrap/bootstrap.min.js", // bootstrap js
     "public/sweetalert/sweetalert2.min.js", // swal js
     "public/gas/gas.js", // gas js
+    "public/animation/anime.min.js", // gas js
 ];
 if ( location.href.includes("github")){
     url = '/takoiscute/';
