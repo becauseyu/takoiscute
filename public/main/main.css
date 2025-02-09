@@ -1,0 +1,15 @@
+/* 特殊字體引用*/
+@font-face {
+    font-family:'JasonHandwriting2';
+    font-style: cursive;
+    font-weight: 400;
+    font-display: swap;
+    src: url(public/font/JasonHandwriting2.ttf) format('woff2');
+}
+@font-face {
+    font-family: 'ChenYuluoyan-Thin';
+    font-style: cursive;
+    font-weight: 400;
+    font-display: swap;
+    src: url(public/font/ChenYuluoyan-Thin.ttf) format('woff2');
+}

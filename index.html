@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 聯盈貿易資訊部 福康會</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @font-face {
+            font-family:'JasonHandwriting2';
+            font-style: cursive;
+            font-weight: 400;
+            font-display: swap;
+            src: url(public/font/JasonHandwriting2.ttf) format('woff2');
+        }
+        @font-face {
+            font-family: 'ChenYuluoyan-Thin';
+            font-style: cursive;
+            font-weight: 400;
+            font-display: swap;
+            src: url(public/font/ChenYuluoyan-Thin.ttf) format('woff2');
+        }
+        body {
+            margin: 0;
+            overflow: hidden; /* 防止滾動條 */
+            background-color: #f0f0f0; /* 背景顏色 */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .word {
+            position: relative;
+            font-size: 4em;
+            font-weight: bold;
+            font-family: 'ChenYuluoyan-Thin';
+        }
+
+        .word.active {
+            opacity: 1; /* 顯示文字 */
+            transform: translateY(0); /* 恢復位置 */
+        }
+
+        /* 預設位置，讓文字從下方進入 */
+        .word:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .word:nth-child(2) {
+            animation-delay: 1.5s;
+        }
+
+        .word:nth-child(3) {
+            animation-delay: 2.5s;
+        }
+        .title_div.animate__animated.animate__fadeOut{
+            animation-delay: 3.5s;
+        }
+        .title_div.animate__animated.animate__zoomIn{
+            animation-delay: 5s;
+            animation-duration: 2s;
+        }
+        .title_div{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title_div animate__animated animate__fadeOut">
+            <span class="animate__animated animate__fadeInUp word" style="color: #90c24f;">健康</span>
+            <span class="animate__animated animate__fadeInUp word" style="color: #f99e29;">感恩</span>
+            <span class="animate__animated animate__fadeInUp word" style="color: #5fabe5;">包容</span>
+        </div>
+        <div id="myTitle" class="title_div animate__animated animate__zoomIn" >
+            <div  style='font-family:"JasonHandwriting2";font-size: 100px;'>2025 聯盈貿易資訊部 福康會</div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script>
+        // 當動畫結束，跳轉到真正的主頁
+        const element = document.getElementById('myTitle');
+        element.addEventListener('animationend', () => {
+            let url = "/html/Common/real_index.html";
+            if ( location.href.includes("github")){
+                url = '/takoiscute/' + url;
+            }
+            location.href= url;
+        });
+      
+    </script>
+</body>
+</html>
