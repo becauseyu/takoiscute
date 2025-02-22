@@ -3,7 +3,7 @@ const href_create = [
     // "public/easyui/themes/icon.min.css", // easyui css
     "public/easyui/metro-orange/easyui.css",
     "public/bootstrap/bootstrap.min.css", // bootstrap css
-    // "public/bootstrap/bootstrap-icons.min.css",
+    "public/bootstrap/bootstrap-icons.min.css",
     "public/sweetalert/sweetalert2.min.css", // swal css
     "public/main/main.css", // 主 css
 ];
