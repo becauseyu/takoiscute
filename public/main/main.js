@@ -5,6 +5,7 @@ const href_create = [
     "public/bootstrap/bootstrap.min.css", // bootstrap css
     "public/bootstrap/bootstrap-icons.min.css",
     "public/sweetalert/sweetalert2.min.css", // swal css
+    "public/daterangepicker/daterangepicker.css", // datetimerange
     "public/main/main.css", // 主 css
 ];
 const src_creat = [
@@ -13,6 +14,8 @@ const src_creat = [
     "public/easyui/locale/easyui-lang-zh_TW.js", // easyui js
     "public/bootstrap/bootstrap.min.js", // bootstrap js
     "public/sweetalert/sweetalert2.min.js", // swal js
+    "public/daterangepicker/moment.min.js", // moment
+    "public/daterangepicker/daterangepicker.js", // datetimerange
     "public/gas/gas.js", // gas js
     "public/animation/anime.min.js", // gas js
 ];
@@ -21,8 +24,6 @@ if ( location.href.includes("github")){
 }else{
     url = "../../";
 }
-// 定義前綴詞
-// prefer = typeof(prefer) === "undefined"?"../../":prefer;
 // 加載 CSS
 function loadCSS(href) {
     return new Promise((resolve, reject) => {
@@ -59,3 +60,27 @@ async function loadResourcesAndRun() {
         console.error(error);
     }
 }
+// bootstrap form 驗證
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  // 把樓上樓下的名單設置為常數
+  const member_list = {
+    manager:["張總","劉總","祐寧"],
+    first_floor:["竹君","美淑","麗華","易儒","惠貞","Jany","Mia","May","Bernice","Debby","Amy","Sandy","小Hank","Bella","Sophi","Melanie","Ariel"],
+    second_floor:["藝芬","文琪","曜","怡廷","莠惠","享","明倫","宜芬","坤琳","展豪","聖安","商榮"],
+  };

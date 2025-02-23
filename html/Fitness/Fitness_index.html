@@ -13,46 +13,93 @@
             border-radius: 10px;
             margin-left: 5px;
         }
+        /* 預設情況下，顯示電腦版搜尋框，隱藏手機版搜尋框 */
+        #search_input_mobile {
+            display: none;
+        }
+
+        #search_input_net {
+            display: flex;
+        }
+        #accordionExample .modal-footer {
+            justify-content: flex-end; /* 置中對齊 */
+        }
+
+        /* 當螢幕寬度小於等於 768px 時，顯示手機版搜尋框，隱藏電腦版搜尋框 */
+        @media (max-width: 768px) {
+            #search_input_mobile {
+                display: block !important;
+            }
+
+            #search_input_net {
+                display: none !important;
+            }
+            #accordionExample .modal-footer {
+                justify-content: center !important; /* 置中對齊 */
+            }
+        }
+        @font-face {
+            font-family:'JasonHandwriting2';
+            font-style: cursive;
+            font-weight: 400;
+            font-display: swap;
+            src: url(public/font/JasonHandwriting2.ttf) format('woff2');
+        }
+        @font-face {
+            font-family: 'ChenYuluoyan-Thin';
+            font-style: cursive;
+            font-weight: 400;
+            font-display: swap;
+            src: url(public/font/ChenYuluoyan-Thin.ttf) format('woff2');
+        }
     </style>
 </head>
 <body>
+    <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand tohome" href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16" style="color: gray;">
-                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
-                <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
-            </svg>
-        </a>
-        <div class="ml-auto">  <input type="button"class="btn btn-outline-info" value="我要開團" />
-        </div>
+        <a class="navbar-brand tohome" href="#"><i style="font-size: 25px;color: #6c757d;" class="bi bi-house-door-fill"></i></a>
+        <div class="ml-auto"><input id="append_data" type="button"class="btn btn-outline-secondary" value="我要開團" /></div>
     </nav>
     <div class="container p-5">
+        <!-- 搜尋框 -->
         <div class=" mb-3">
-            <div style="display: flex;">
-                <div class="input-group"  style="flex: 25%;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"  id="basic-addon1"><i class="bi bi-person"></i></span>
+            <!-- 手機版本 過濾器 -->
+            <div id="search_input_mobile">
+                <div class="input-group">
+                    <input class="form-control "style="width: 65%;"/>
+                    <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary  " style="flex: 10%;">
+                        <i class="bi bi-search"></i>
                     </div>
-                    <select class="custom-select "style="width: 75%;">
-                        <option value="" selected> </option>
-                        <option value="">TAKO</option>
+                </div>
+            </div>
+            <!-- 電腦版本 過濾器 -->
+            <div id="search_input_net" style="display: flex;">
+                <div class="input-group"  style="flex: 25%;">
+                    <!-- 發起人 -->
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" ><i class="bi bi-person"></i></span>
+                    </div>
+                    <select class="custom-select "style="width: 75%;" id="search_user">
+                        <option value="" selected>全部</option>
                     </select>
                 </div>
                 <div class="input-group"  style="flex: 30%;">
+                    <!-- 活動日期 -->
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar-event"></i></span>
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                     </div>
-                    <input type="text" class="form-control" value="111" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control daterange" id="search_date">
                 </div>
                 <div class="input-group"  style="flex: 25%;">
+                    <!-- 開團狀態 -->
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-cast"></i></span>
+                        <span class="input-group-text"><i class="bi bi-cast"></i></span>
                     </div>
-                    <select class="custom-select " name="" id="" style="width: 75%;">
-                        <option value="" selected> </option>
-                        <option value="">已成團</option>
-                        <option value="">報名中</option>
-                        <option value="">已流團</option>
+                    <select class="custom-select "style="width: 75%;" id="search_status">
+                        <option value="" selected>全部狀態</option>
+                        <option value="success" class="bg-success" style="color: white;">已成團</option>
+                        <option value="durning" class="bg-warning">報名中</option>
+                        <option value="fault" class="bg-secondary" style="color: white;">已流團</option>
                     </select>
                 </div>
                 <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary ml-1 " style="flex: 10%;">
@@ -63,7 +110,8 @@
                 </div>
             </div>
         </div>
-        <div class="accordion" id="accordionExample">
+        <!-- 摺疊內容 -->
+        <div class="accordion" id="accordionExample" style="border-color: #d8d8d8;">
             <div class="card">
                 <div class="card-header">
                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
@@ -79,28 +127,33 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動時間</span>
+                                <span class="input-group-text">活動時間</span>
                             </div>
                             <input type="text" class="form-control" value="2025-03-02" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動地點</span>
+                                <span class="input-group-text">活動地點</span>
                             </div>
                             <input type="text" class="form-control" value="大都會羽球 (福華館)" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">報名人員</span>
+                                <span class="input-group-text">報名人員</span>
                             </div>
                             <input type="text" class="form-control" value="111、222、333" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">活動詳情</span>
+                            </div>
+                            <textarea class="form-control" disabled="disabled"></textarea>
+                        </div>
                         <div class="modal-footer">
-                            <i class="bi bi-pencil"></i>
-                            <i class="bi bi-trash"></i>
+                  
                             <input type="button" class="btn btn-primary" value="我要報名" />
                         </div>
                         <footer class="blockquote-footer text-center">發起人: <cite title="Source Title">Tako</cite>
@@ -122,21 +175,21 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動時間</span>
+                                <span class="input-group-text">活動時間</span>
                             </div>
                             <input type="text" class="form-control" value="2025-03-13" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動地點</span>
+                                <span class="input-group-text">活動地點</span>
                             </div>
                             <input type="text" class="form-control" value="朝馬運動中心" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">報名人員</span>
+                                <span class="input-group-text">報名人員</span>
                             </div>
                             <input type="text" class="form-control" value="444、555、666" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
@@ -163,21 +216,21 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動時間</span>
+                                <span class="input-group-text">活動時間</span>
                             </div>
                             <input type="text" class="form-control" value="2025-02-28" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">活動地點</span>
+                                <span class="input-group-text">活動地點</span>
                             </div>
                             <input type="text" class="form-control" value="英雄室內排球館" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">報名人員</span>
+                                <span class="input-group-text">報名人員</span>
                             </div>
                             <input type="text" class="form-control" value="444、555、666" aria-label="Username"
                                 aria-describedby="basic-addon1" disabled="disabled">
@@ -194,10 +247,12 @@
     </div>
 </body>
 <script type="text/javascript" src="../../public/main/main.js"></script>
+<script type="text/javascript" src="Fitness.js"></script>
 <script>
     // 先跑完加載，再跑自己的fn
     loadResourcesAndRun().then(
         (reslove) => {
+            // menu跳轉
             $(".tohome").on("click", function () {
                 // 圖片網址處理
                 if (location.href.includes("github")) {
@@ -206,28 +261,57 @@
                     location.href = "Fitness_index.html";
                 }
             })
-            $(".tohome").on("click", function () {
-                // 圖片網址處理
-                if (location.href.includes("github")) {
-                    location.href = '/takoiscute/html/Fitness/Fitness_index.html';
-                } else {
-                    location.href = "Fitness_index.html";
-                }
+            // 開團者
+            //  讀取二樓人員的名單
+            var list = event_member;
+            var ops = "";
+            $(list).each(function(idx,val){
+                ops += '<option value="'+val+'" >'+val+'</option>';
             })
-            $(".tohome").on("click", function () {
-                // 圖片網址處理
+            $("#search_user").append(ops);
+            $("#search_user").val("");
+            // 日期區間元件
+            $('.daterange').daterangepicker( {
+                applyClass: 'btn-sm btn-success',
+                cancelClass: 'btn-sm btn-default',
+                autoUpdateInput: false,
+                locale: {
+                    applyLabel: '確認',
+                    cancelLabel: '清除',
+                    fromLabel: '開始時間',
+                    toLabel: '結束時間',
+                    customRangeLabel: '自定義',
+                    firstDay: 1,
+                    daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+                        '七月', '八月', '九月', '十月', '十一月', '十二月'], 
+                    format: 'YYYY-MM-DD', // 初始上面顯示的格式
+                    separator: '~',
+                },
+                ranges: {
+                    '今日': [moment().startOf('day').format('YYYY-MM-DD'), moment().startOf('day').format('YYYY-MM-DD')],
+                    '昨日': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
+                    '最近7日': [moment().subtract(6,'days'), moment()],
+                    '最近30日': [moment().subtract(29, 'days'), moment()],
+                    '本月': [moment().startOf("month"), moment().endOf("month")],
+                    '上个月': [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+                },
+                opens: 'right',    
+                showWeekNumbers: false,     
+            });
+            $('.daterange').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+            $('.daterange').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') +'~'+ picker.endDate.format('YYYY-MM-DD'));
+            });
+            // 新刪修
+            // 導到新增頁
+            $("#append_data").on("click",function(e){
                 if (location.href.includes("github")) {
-                    location.href = '/takoiscute/html/Fitness/Fitness_index.html';
+                    location.href = '/takoiscute/html/Fitness/Fiteness_append.html';
                 } else {
-                    location.href = "Fitness_index.html";
-                }
-            })
-            $(".tohome").on("click", function () {
-                // 圖片網址處理
-                if (location.href.includes("github")) {
-                    location.href = '/takoiscute/html/Fitness/Fitness_index.html';
-                } else {
-                    location.href = "Fitness_index.html";
+                    location.href = "Fiteness_append.html";
                 }
             })
 

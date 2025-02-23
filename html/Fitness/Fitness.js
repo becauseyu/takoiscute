@@ -1,0 +1,1 @@
+const event_member =["洗衣粉","Jill","Yao","Luna","黑柴薩克","享","明倫","Maria","坤哥","Debby","Hao","香蕉","Jason"];
