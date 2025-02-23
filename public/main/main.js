@@ -19,6 +19,16 @@ const src_creat = [
     "public/gas/gas.js", // gas js
     "public/animation/anime.min.js", // gas js
 ];
+
+const font_creat = [
+    ["JasonHandwriting2","public/font/JasonHandwriting2.ttf"], // 
+    ["ChenYuluoyan-Thin'","public/font/ChenYuluoyan-Thin.ttf"], // 沉魚落雁體
+    ["cute_home","public/font/宅在家粉條甜.ttf"], // 宅在家粉條甜
+    ["MaokenAssortedSans","public/font/MaokenAssortedSans-TC.TTF"], // 貓啃什錦黑
+    ["ChiayiCity","ppublic/font/ChiayiCity.ttf"], // 嘉市體
+    ["Kinkakuji","public/font/Kinkakuji-Normal.ttf"], // 金畫體
+    ["cjkFonts_allseto","public/font/cjkFonts_allseto_v1.11.tt"], // 圓體
+];
 if ( location.href.includes("github")){
     url = '/takoiscute/';
 }else{
@@ -48,6 +58,25 @@ function loadJS(src) {
         document.head.appendChild(script);
     });
 }
+
+// 加載 字體
+function loadFont(font) {
+    return new Promise((resolve, reject) => {
+        let fontFamily = font[0];
+        let fontUrl = font[1];
+        const styleSheet = document.styleSheets[0]; // 假設樣式表在第一個位置
+        const fontFaceRule = `
+          @font-face {
+            font-family: '${fontFamily}';
+            src: url('${fontUrl}') format('woff2'); /* 或其他字體格式 */
+            font-weight: normal; /* 可選 */
+            font-style: normal; /* 可選 */
+            font-display: swap; /* 可選，優化字體載入體驗 */
+          }
+        `;
+        styleSheet.insertRule(fontFaceRule, styleSheet.cssRules.length);
+    });
+}
 async function loadResourcesAndRun() {
     try {
         // 先載入 CSS
@@ -56,6 +85,9 @@ async function loadResourcesAndRun() {
         // 再載入 JS
         await Promise.all(src_creat.map(loadJS));
         console.log("所有 JS 加載完成");
+        // 再載入 font
+        await Promise.all(font_creat.map(loadFont));
+        console.log("所有 FONT 加載完成");
     } catch (error) {
         console.error(error);
     }
