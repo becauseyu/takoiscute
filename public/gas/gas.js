@@ -1,5 +1,5 @@
 // 20250121 Maria 用於取得用於取得 試算表的資料
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwmqnoFT-DrDCuuLNMMU-iBnw0ila0HowpaPdy46AHeq1nBfybXoGC12aTJAiVZoaLgAA/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzFSe7HRfjTl8y8PjoGKoEk7rV8cxBreGCnucoLy78jss5NrO_IKEQs7DGU4tYiN41pqQ/exec";
 function GetGasData (sheetName,para = {}){
     var data ;
     $.ajax({
@@ -21,13 +21,12 @@ function GetGasData (sheetName,para = {}){
 }
 
 function InsertGasData (sheetName,para = {}){
-    var data ;
     $.ajax({
         type: "post",
-        data: {
+        data:  data = {
             "method": "write",
             "sheetName": sheetName,
-            'other_para':para,
+            'other_para':JSON.stringify(para) ,
         },
         // 填入網路應用程式網址
         url: GAS_URL,
@@ -36,5 +35,4 @@ function InsertGasData (sheetName,para = {}){
                 data =  result;    
             }
     });
-    return data;
 }

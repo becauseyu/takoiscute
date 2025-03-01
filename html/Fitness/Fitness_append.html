@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社團活動-新增</title>
+    <style>
+        .label_show{
+            float: right;
+            text-align: center;
+            width: 80px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+        /* 預設情況下，顯示電腦版搜尋框，隱藏手機版搜尋框 */
+        .modal-footer {
+            justify-content: flex-end; /* 置中對齊 */
+        }
+        .card_input_group {
+            display: flex; /* 預設情況下使用 Flexbox 布局，左右排列 */
+        }
+
+        /* 手機版本的顯示 */
+        @media (max-width: 768px) {
+            .modal-footer {
+                justify-content: center !important; /* 置中對齊 */
+            }
+            .card_input_group {
+                flex-direction: column; /* 改為垂直排列 */
+            }
+
+            .card_input_span {
+                width: 100% !important; /* span 寬度變為 100% */
+                text-align: left; /* 文字靠左對齊 */
+            }
+            .card_input_comp {
+                width: 100% !important; /* select 寬度變為 100% */
+            }
+            .progress-steps {
+                display: block !important;
+                justify-content: space-between; /* 水平分散對齊 */
+            }
+            .progress-step:not(.active){
+                display: none;
+            }
+        }
+        
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between; /* 水平分散對齊 */
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            align-items: center; /* 圓圈置中 */
+        }
+
+        .progress-step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc; /* 預設灰色 */
+            border: 2px solid #fff; /* 白色邊框 */
+            margin-bottom: 5px; /* 與文字間隔 */
+        }
+        /* 啟用狀態 */
+        .progress-step.active .progress-step-circle {
+            background-color: #007bff; /* 啟用時藍色 */
+        }
+
+        /* 完成狀態 */
+        .progress-step.completed .progress-step-circle {
+            background-color: #28a745; /* 完成時綠色 */
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand tohome" href="#" onclick="GoBackIdx('index')"><i style="font-size: 25px;color: #6c757d;" class="bi bi-house-door-fill"></i></a>
+    </nav>
+    <div class="container p-5">
+        <!-- 進度 circle -->
+        <div class="progress-steps">
+            <div class="progress-step active" id="progress_1">
+                <div class="progress-step-circle"></div>
+                <span style='font-family:"cjkFonts_allseto";font-size: 20px;'>開團須知</span>
+            </div>
+            <div class="progress-step ">
+                <div class="progress-step-circle" id="progress_2"></div>
+                <span  style='font-family:"cjkFonts_allseto";font-size: 20px;'>開團申請</span>
+            </div>
+            <div class="progress-step">
+                <div class="progress-step-circle" id="progress_3"></div>
+                <span  style='font-family:"cjkFonts_allseto";font-size: 20px;'>文件確認</span>
+            </div>
+            <div class="progress-step">
+                <div class="progress-step-circle" id="progress_4"></div>
+                <span  style='font-family:"cjkFonts_allseto";font-size: 20px;'>送件完成</span>
+            </div>
+        </div>
+        <!-- 進度 bar -->
+        <div class="progress mb-5">
+            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <!-- 開團須知 -->
+        <div class="card" id="open_1">
+            <div class="card-header">
+                <span style="font-size: 18px;">開團須知</span>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>1.活動至少須提前<span class="span_important">三天</span>申請</li>
+                    <li>2.開團者，須清楚註明:活動地點、活動費用</li>
+                    <li>3.部門每個月會有<span style="font-weight: bold;text-decoration: underline;">$1000元</span>的運動津貼，用完後剩餘為自費，運動津貼的使用由福委保有最終釋出權</li>
+                </ul>
+                <div class="form-check">
+                    <input type="checkbox" class="input" id="defaultCheck1" onclick="javascript:$(this).parent().next().find('input:button').attr('disabled',!this.checked)">
+                    <label class="form-check-label" for="defaultCheck1">
+                      我已閱讀並同意開團規則
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-info" onclick="NextStep(2,1)" disabled="disabled" value="下一步" />
+                </div>
+            </div>
+        </div>
+        <!-- 填寫位置 -->
+        <div class="card d-none" id="open_2" >
+            <form class="needs-validation" action="javascript:void(0)" id="event_submit" novalidate>
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <span style="font-size: 18px;">開團申請</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">發起人名</span>
+                        <select  id="event_user" class="custom-select card_input_comp" required  style="width:80%;" id="search_status" name="event_leader">
+                        </select>
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">活動名稱</span>
+                        <input type="text"  class="form-control card_input_comp" required style="width:80%;" name="event_name"/>
+                            
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">活動日期</span>
+                        <input type="datetime-local" id="event_date" class="form-control card_input_comp overdate" required style="width:80%;" name="event_time"/>
+                        <div class="invalid-tooltip"> 請輸入正確的日期(距離今天不可小於三日)</div>
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">活動地點</span>
+                        <input type="text" class="form-control card_input_comp" required style="width:80%;" name="event_local"/>
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">每人自費</span>
+                        <input type="number" min="0" step="0" class="form-control card_input_comp" required style="width:80%;" placeholder="預計每人所需的費用" name="pre_cost" />
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">預估成團</span>
+                        <input type="number" min="0" step="0" class="form-control card_input_comp" required style="width:60%;" placeholder="成團的最低人數" name="group_atleast" />
+                        <span class="input-group-text card_input_span" style="width:20%;">人</span>
+                    </div>
+                    <div class="input-group mb-3 card_input_group">
+                        <span class="input-group-text card_input_span" style="width:20%;">活動詳情</span>
+                        <textarea class="form-control card_input_comp" style="width:80%;height: 100px;"  placeholder="詳細的費用計算可以記錄於此" name="event_detail"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-secondary"  onclick="LastStep(1,2)" value="上一步" />
+                        <input type="submit" class="btn btn-info"  onclick="NextStep(3,2)" value="下一步" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- 文件確認 -->
+        <div class="card d-none" id="open_3">
+            <div class="card-header">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span style="font-size: 18px;">文件確認</span>
+                </button>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+        <!-- 送件完成 -->
+        <div class="card d-none" id="open_4">
+            <div class="card-header">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span style="font-size: 18px;">送件完成</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <img id="end_pic" src="" alt="" class="rounded mx-auto d-block" style="margin: 10px;">
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" onclick="GoBackIdx('index')"  value="回首頁" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../public/main/main.js"></script>
+<script type="text/javascript" src="Fitness.js"></script>
+<script>
+    // 轉成全域變數給文件使用
+    var form_data = {};
+    // 先跑完加載，再跑自己的fn
+    loadResourcesAndRun().then(
+        (reslove) => {
+            /*---------------------------------------------*/
+            // 設定日期與時間元件，只能從七天後開始輸入
+            /*---------------------------------------------*/
+            var overtime = document.getElementsByClassName('overdate');
+            for (var i = 0; i < overtime.length; i++) {
+                var last = new Date();
+                last.setDate(last.getDate() + 3); // 將日期設定為明天
+                last = last.toISOString().slice(0, 16);
+                overtime[i].min = last;
+            }
+            /*---------------------------------------------*/
+            // 日期與時間，只能從三天後開始輸入
+            /*---------------------------------------------*/
+            // 活動日期預設為三天後
+            $("#event_date").val(moment().add(3, 'days').format('YYYY-MM-DDTHH:mm'));   
+            /*---------------------------------------------*/
+            //  讀取二樓人員的名單
+            /*---------------------------------------------*/
+            var list = event_member;
+            var ops = "";
+            $(list).each(function(idx,val){
+                ops += '<option value="'+val+'" >'+val+'</option>';
+            })
+            $("#event_user").append(ops);
+            $("#event_user").val("");
+            /*---------------------------------------------*/
+            // 開團表單送單成功後，記錄下來
+            /*---------------------------------------------*/
+            $("#event_submit").on("submit",function(){
+                $("#open_2").find('input,textarea,select').each(function(idx,val){
+                    var field = val.name;
+                    //除了有name者，才需推入陣列
+                    if (field !== ''){
+                        //20230310 Maria boolean的radio要另外取值
+                        if (val.type !=='radio'){
+                            var tmpMap = new Map(); 
+                            tmpMap.set( field,val.value);
+                            for ( let[key,value] of tmpMap){
+                                form_data[key] = value;
+                            }
+                        }
+                    }else{
+                        if (val.checked == true){  
+                            var tmpMap = new Map(); 
+                            tmpMap.set( field,val.value);
+                            for ( let[key,value] of tmpMap){
+                                form_data[key] = value;
+                            }
+                        }
+                    }
+                })
+                // 給一些預設值
+                // 報名人，至少包含自己
+                form_data.sign_on = form_data.event_local;
+                // 報名狀態
+                form_data.status_group = "報名中";
+                // id，給假的
+                form_data.id = "9999";
+                // 透過資料，取得html
+                var event_html = GetEventHtml([form_data]);
+                // 清空內容
+                $("#open_3").find(".card-body").html("");
+                event_html += `                
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-secondary"  onclick="LastStep(2,3)" value="上一步" />
+                    <input  type="submit" class="btn btn-info"  onclick="SaveForm()" value="確認送件" />
+                </div>`;
+                $("#open_3").find(".card-body").html(event_html);
+            })
+            /*---------------------------------------------*/
+            //插入梗圖
+            /*---------------------------------------------*/
+            if ( location.href.includes("github")){
+                url = '/takoiscute/';
+            }else{
+                url = "../../";
+            }
+            $("#end_pic").attr('src',url+"/public/img/1740837295533.gif")
+        }
+    )
+    /*---------------------------------------------*/
+    // 進度條
+    /*---------------------------------------------*/
+    const step_prograss = ["0%","33%","66%","100%"];
+    /*---------------------------------------------*/
+    // 下一步時的顯示
+    /*---------------------------------------------*/
+    function NextStep(next,now){
+        // 有表單的話要檢查
+        var form_check = true;
+        var form = $("#open_"+now).find("form").length >0?true:false;
+        if ( form ){
+            var isValid = $("#open_"+now).find("form")[0].checkValidity();
+            if (! isValid) {
+                return false;
+            }
+        }
+        // 
+        // 隱藏當前的 div
+        $("#open_"+now).addClass("d-none");
+        // 開啟下一個的 div
+        $("#open_"+next).removeClass("d-none");
+        // 改變進度條
+        $(".progress-bar").css("width",step_prograss[next-1]);
+        // 改變進度條文字狀態
+        $(".progress-step").eq(now-1).removeClass("active");
+        $(".progress-step").eq(now-1).addClass("completed");
+        $(".progress-step").eq(next-1).addClass("active");
+    }
+    /*---------------------------------------------*/
+    // 上一步時的顯示
+    /*---------------------------------------------*/
+    function LastStep(last,now){
+        // 隱藏當前的 div
+        $("#open_"+now).addClass("d-none");
+        // 開啟下一個的 div
+        $("#open_"+last).removeClass("d-none");
+        // 改變進度條
+        $(".progress-bar").css("width",step_prograss[last-1]);
+        // 改變進度條文字狀態
+        $(".progress-step").eq(now-1).removeClass("active");
+        $(".progress-step").eq(last-1).removeClass("completed");
+        $(".progress-step").eq(last-1).addClass("active"); 
+    }
+    /*---------------------------------------------*/
+    // 存檔，將資料送到 GAS紀錄
+    /*---------------------------------------------*/
+    function SaveForm(){
+        InsertGasData("社團活動",form_data);
+        NextStep(4,3);
+    }
+ 
+</script>
+
+</html>

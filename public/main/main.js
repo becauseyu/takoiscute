@@ -1,4 +1,6 @@
+/*---------------------------------------------*/
 /*動態設定路由*/
+/*---------------------------------------------*/
 const href_create = [
     // "public/easyui/themes/icon.min.css", // easyui css
     "public/easyui/metro-orange/easyui.css",
@@ -20,15 +22,6 @@ const src_creat = [
     "public/animation/anime.min.js", // gas js
 ];
 
-const font_creat = [
-    ["JasonHandwriting2","public/font/JasonHandwriting2.ttf"], // 
-    ["ChenYuluoyan-Thin'","public/font/ChenYuluoyan-Thin.ttf"], // 沉魚落雁體
-    ["cute_home","public/font/宅在家粉條甜.ttf"], // 宅在家粉條甜
-    ["MaokenAssortedSans","public/font/MaokenAssortedSans-TC.TTF"], // 貓啃什錦黑
-    ["ChiayiCity","ppublic/font/ChiayiCity.ttf"], // 嘉市體
-    ["Kinkakuji","public/font/Kinkakuji-Normal.ttf"], // 金畫體
-    ["cjkFonts_allseto","public/font/cjkFonts_allseto_v1.11.tt"], // 圓體
-];
 if ( location.href.includes("github")){
     url = '/takoiscute/';
 }else{
@@ -59,24 +52,6 @@ function loadJS(src) {
     });
 }
 
-// 加載 字體
-function loadFont(font) {
-    return new Promise((resolve, reject) => {
-        let fontFamily = font[0];
-        let fontUrl = font[1];
-        const styleSheet = document.styleSheets[0]; // 假設樣式表在第一個位置
-        const fontFaceRule = `
-          @font-face {
-            font-family: '${fontFamily}';
-            src: url('${fontUrl}') format('woff2'); /* 或其他字體格式 */
-            font-weight: normal; /* 可選 */
-            font-style: normal; /* 可選 */
-            font-display: swap; /* 可選，優化字體載入體驗 */
-          }
-        `;
-        styleSheet.insertRule(fontFaceRule, styleSheet.cssRules.length);
-    });
-}
 async function loadResourcesAndRun() {
     try {
         // 先載入 CSS
@@ -85,14 +60,13 @@ async function loadResourcesAndRun() {
         // 再載入 JS
         await Promise.all(src_creat.map(loadJS));
         console.log("所有 JS 加載完成");
-        // 再載入 font
-        await Promise.all(font_creat.map(loadFont));
-        console.log("所有 FONT 加載完成");
     } catch (error) {
         console.error(error);
     }
 }
+/*---------------------------------------------*/
 // bootstrap form 驗證
+/*---------------------------------------------*/
 (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -110,9 +84,42 @@ async function loadResourcesAndRun() {
       });
     }, false);
   })();
-  // 把樓上樓下的名單設置為常數
+/*---------------------------------------------*/
+// 把樓上樓下的名單設置為常數
+/*---------------------------------------------*/
   const member_list = {
     manager:["張總","劉總","祐寧"],
     first_floor:["竹君","美淑","麗華","易儒","惠貞","Jany","Mia","May","Bernice","Debby","Amy","Sandy","小Hank","Bella","Sophi","Melanie","Ariel"],
     second_floor:["藝芬","文琪","曜","怡廷","莠惠","享","明倫","宜芬","坤琳","展豪","聖安","商榮"],
   };
+/*---------------------------------------------*/
+// 日期顯示格式化
+/*---------------------------------------------*/
+function showDate(value){
+    var dateValue = new Date(value);;
+    var val_Y = dateValue.getFullYear();
+    // 如果有人輸入的年大於4位數，就自動只取前四碼
+    val_Y = val_Y+="";
+    val_Y = val_Y.length > 4?val_Y.substring(0,4):val_Y;
+    var val_M = (dateValue.getMonth() + 1 < 10 ? '0' + (dateValue.getMonth() + 1) : dateValue.getMonth() + 1);
+    var val_D = (dateValue.getDate() < 10 ? '0' + dateValue.getDate() : dateValue.getDate());
+    // yyyy-mm-dd
+    var val_date = val_Y + '-' + val_M + '-' + val_D
+    return val_date;
+}
+/*---------------------------------------------*/
+// 日期時間顯示格式化
+/*---------------------------------------------*/
+function showDateTime(value){
+    var timeValue = new Date(value);
+    var val_Y = timeValue.getFullYear();
+    // 如果有人輸入的年大於4位數，就自動只取前四碼
+    val_Y = val_Y+="";
+    val_Y = val_Y.length > 4?val_Y.substring(0,4):val_Y;
+    var val_M = (timeValue.getMonth() + 1 < 10 ? '0' + (timeValue.getMonth() + 1) : timeValue.getMonth() + 1);
+    var val_D = (timeValue.getDate() < 10 ? '0' + timeValue.getDate() : timeValue.getDate());
+    var val_Time = timeValue.toTimeString().substr(0, 8);
+    // yyyy-mm-dd hh:mm:ss
+    var val_time = val_Y + '-' + val_M + '-' + val_D + ' ' + val_Time
+    return val_time;
+}

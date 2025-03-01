@@ -1,27 +1,28 @@
 /* 特殊字體引用 需要式 OpenType的 TTF檔案才可以用*/
-/* 沉魚落雁體 */
-@font-face {
-    font-family:'JasonHandwriting2'; /*這裡可以自己命名字體*/
-    font-style: cursive; /*手寫體*/
-    font-weight: 400;
-    font-display: swap; /*優先載入*/
-    src: url(/public/font/JasonHandwriting2.ttf) format('woff2'); /*字體的絕對路徑*/
-}
 
+
+.span_important{
+    color: red;
+    font-weight: bold;
+    text-decoration:underline;
+}
+/* 清松手寫體2 */
+@font-face {
+    font-family:'JasonHandwriting2';
+    font-style: cursive;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/public/font/JasonHandwriting2.ttf) format('opentype'),
+    url(/takoiscute/public/font/JasonHandwriting2.ttf) format("opentype");
+}
+/* 沉魚落雁體 */
 @font-face {
     font-family: 'ChenYuluoyan-Thin';
     font-style: cursive;
     font-weight: 400;
     font-display: swap;
-    src: url(/public/font/ChenYuluoyan-Thin.ttf) format('woff2');
-}
-/* 宅在家粉條甜 */
-@font-face {
-    font-family: 'cute_home';
-    font-style: cursive;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/public/font/宅在家粉條甜.ttf) format('woff2');
+    src: url(/public/font/ChenYuluoyan-Thin.ttf) format('opentype'),
+    url(/takoiscute/public/font/ChenYuluoyan-Thin.ttf) format("opentype");
 }
 /* 貓啃什錦黑 */
 @font-face {
@@ -29,23 +30,8 @@
     font-style: cursive;
     font-weight: 400;
     font-display: swap;
-    src: url(/public/font/MaokenAssortedSans-TC.TTF) format('woff2');
-}
-/* 嘉市體 */
-@font-face {
-    font-family: 'ChiayiCity';
-    font-style: cursive;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/public/font/ChiayiCity.ttf) format('woff2');
-}
-/* 金畫體 */
-@font-face {
-    font-family: 'Kinkakuji';
-    font-style: cursive;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/public/font/Kinkakuji-Normal.ttf) format('woff2');
+    src: url(/public/font/MaokenAssortedSans-TC.TTF) format('opentype'),
+    url(/takoiscute/public/font/MaokenAssortedSans-TC.TTF) format("opentype");
 }
 /* 圓體 */
 @font-face {
@@ -53,11 +39,6 @@
     font-style: cursive;
     font-weight: 400;
     font-display: swap;
-    src: url(/public/font/cjkFonts_allseto_v1.11.ttf) format('woff2');
-}
-
-.span_important{
-    color: red;
-    font-weight: bold;
-    text-decoration:underline;
+    src: url(/public/font/cjkFonts_allseto_v1.11.ttf) format('opentype'),
+    url(/takoiscute/public/font/cjkFonts_allseto_v1.11.ttf) format("opentype");
 }
