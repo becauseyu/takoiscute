@@ -7,7 +7,7 @@ const event_member =["洗衣粉","Jill","Yao","Luna","黑柴薩克","享","明�
 /*---------------------------------------------*/
 function GoBackIdx(type){
     if (location.href.includes("github")) {
-        location.href = '/takoiscute/html/Fitness_'+type+'.html';
+        location.href = '/takoiscute/html/Fitness/Fitness_'+type+'.html';
     } else {
         location.href = "Fitness_"+type+".html";
     }
