@@ -117,6 +117,7 @@
                     <li>1.活動至少須提前<span class="span_important">三天</span>申請</li>
                     <li>2.開團者，須清楚註明:活動地點、活動費用</li>
                     <li>3.部門每個月會有<span style="font-weight: bold;text-decoration: underline;">$1000元</span>的運動津貼，用完後剩餘為自費，運動津貼的使用由福委保有最終釋出權</li>
+                    <li>4.活動的最低成行人數為<span class="span_important">2</span>(包含自己)</li>
                 </ul>
                 <div class="form-check">
                     <input type="checkbox" class="input" id="defaultCheck1" onclick="javascript:$(this).parent().next().find('input:button').attr('disabled',!this.checked)">
@@ -151,7 +152,7 @@
                     </div>
                     <div class="input-group mb-3 card_input_group">
                         <span class="input-group-text card_input_span" style="width:20%;">活動日期</span>
-                        <input type="datetime-local" id="event_date" class="form-control card_input_comp overdate" required style="width:80%;" name="event_time"/>
+                        <input type="datetime-local" id="event_time" class="form-control card_input_comp overdate" required style="width:80%;" name="event_time"/>
                         <div class="invalid-tooltip"> 請輸入正確的日期(距離今天不可小於三日)</div>
                     </div>
                     <div class="input-group mb-3 card_input_group">
@@ -164,8 +165,9 @@
                     </div>
                     <div class="input-group mb-3 card_input_group">
                         <span class="input-group-text card_input_span" style="width:20%;">預估成團</span>
-                        <input type="number" min="0" step="0" class="form-control card_input_comp" required style="width:60%;" placeholder="成團的最低人數" name="group_atleast" />
+                        <input  id="group_atleast" type="number" min="2" step="0" class="form-control card_input_comp" required style="width:60%;" placeholder="成團的最低人數" name="group_atleast" />
                         <span class="input-group-text card_input_span" style="width:20%;">人</span>
+                        <div class="invalid-tooltip"> 人數不得低於2人</div>
                     </div>
                     <div class="input-group mb-3 card_input_group">
                         <span class="input-group-text card_input_span" style="width:20%;">活動詳情</span>
@@ -228,7 +230,11 @@
             // 日期與時間，只能從三天後開始輸入
             /*---------------------------------------------*/
             // 活動日期預設為三天後
-            $("#event_date").val(moment().add(3, 'days').format('YYYY-MM-DDTHH:mm'));   
+            $("#event_time").val(moment().add(3, 'days').format('YYYY-MM-DDTHH:mm'));   
+            /*---------------------------------------------*/
+            // 最低成團人數為2
+            /*---------------------------------------------*/
+            $("#group_atleast").val(2);   
             /*---------------------------------------------*/
             //  讀取二樓人員的名單
             /*---------------------------------------------*/
@@ -267,7 +273,7 @@
                 })
                 // 給一些預設值
                 // 報名人，至少包含自己
-                form_data.sign_on = form_data.event_local;
+                form_data.sign_on = form_data.event_leader;
                 // 報名狀態
                 form_data.status_group = "報名中";
                 // id，給假的

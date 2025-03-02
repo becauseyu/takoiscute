@@ -24,6 +24,17 @@
         #event_list .modal-footer {
             justify-content: flex-end; /* 置中對齊 */
         }
+        #filterOptions {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1000;
+            display: none;
+        }
 
         /* 當螢幕寬度小於等於 768px 時，顯示手機版搜尋框，隱藏電腦版搜尋框 */
         @media (max-width: 768px) {
@@ -53,9 +64,43 @@
             <!-- 手機版本 過濾器 -->
             <div id="search_input_mobile">
                 <div class="input-group">
-                    <input class="form-control "style="width: 65%;"/>
-                    <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary  " style="flex: 10%;">
+                    <input class="form-control search_comp "style="width: 65%;" onfocus="showFilter()" />
+                    <div id="filterOptions" style="display: none;">
+                        <label class="form-label">篩選條件：</label>
+                        <div class="input-group"  style="flex: 25%;">
+                            <!-- 發起人 -->
+                            <div class="input-group-prepend" title="活動發起人">
+                                <span class="input-group-text" ><i class="bi bi-person"></i></span>
+                            </div>
+                            <select class="custom-select search_comp search_user"style="width: 75%;" data-field="search_user">
+                                <option value="" selected>全部</option>
+                            </select>
+                        </div>
+                        <div class="input-group"  style="flex: 30%;">
+                            <!-- 活動日期 -->
+                            <div class="input-group-prepend" title="活動日期">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                            <input type="text" class="form-control daterange search_comp" onblur="value = dateRangeParse(this.value)" data-field="search_date">
+                        </div>
+                        <div class="input-group"  style="flex: 25%;">
+                            <!-- 開團狀態 -->
+                            <div class="input-group-prepend" title="開團狀態">
+                                <span class="input-group-text"><i class="bi bi-cast"></i></span>
+                            </div>
+                            <select class="custom-select search_comp"style="width: 75%;" data-field="search_status">
+                                <option value="" selected>全部狀態</option>
+                                <option value="已成團" class="bg-success" style="color: white;">已成團</option>
+                                <option value="報名中" class="bg-warning">報名中</option>
+                                <option value="已流團" class="bg-secondary" style="color: white;">已流團</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary ml-1 " style="flex: 10%;" onclick="Search($('#search_input_mobile'))">
                         <i class="bi bi-search"></i>
+                    </div>
+                    <div class="col-1 d-flex justify-content-center align-items-center btn btn-secondary ml-1 " style="flex: 10%;" onclick="ClearSearch($('#search_input_mobile'))">
+                        <i class="bi bi-stars"></i>
                     </div>
                 </div>
             </div>
@@ -66,7 +111,7 @@
                     <div class="input-group-prepend" title="活動發起人">
                         <span class="input-group-text" ><i class="bi bi-person"></i></span>
                     </div>
-                    <select class="custom-select "style="width: 75%;" id="search_user">
+                    <select class="custom-select search_comp search_user"style="width: 75%;" data-field="search_user">
                         <option value="" selected>全部</option>
                     </select>
                 </div>
@@ -75,24 +120,24 @@
                     <div class="input-group-prepend" title="活動日期">
                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                     </div>
-                    <input type="text" class="form-control daterange" id="search_date">
+                    <input type="text" class="form-control daterange search_comp" onblur="value = dateRangeParse(this.value)" data-field="search_date">
                 </div>
                 <div class="input-group"  style="flex: 25%;">
                     <!-- 開團狀態 -->
                     <div class="input-group-prepend" title="開團狀態">
                         <span class="input-group-text"><i class="bi bi-cast"></i></span>
                     </div>
-                    <select class="custom-select "style="width: 75%;" id="search_status">
+                    <select class="custom-select search_comp"style="width: 75%;" data-field="search_status">
                         <option value="" selected>全部狀態</option>
-                        <option value="success" class="bg-success" style="color: white;">已成團</option>
-                        <option value="durning" class="bg-warning">報名中</option>
-                        <option value="fault" class="bg-secondary" style="color: white;">已流團</option>
+                        <option value="已成團" class="bg-success" style="color: white;">已成團</option>
+                        <option value="報名中" class="bg-warning">報名中</option>
+                        <option value="已流團" class="bg-secondary" style="color: white;">已流團</option>
                     </select>
                 </div>
-                <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary ml-1 " style="flex: 10%;">
+                <div class="col-1 d-flex justify-content-center align-items-center  btn btn-secondary ml-1 " style="flex: 10%;" onclick="Search($('#search_input_net'))">
                     <i class="bi bi-search"></i>
                 </div>
-                <div class="col-1 d-flex justify-content-center align-items-center btn btn-secondary ml-1 " style="flex: 10%;">
+                <div class="col-1 d-flex justify-content-center align-items-center btn btn-secondary ml-1 " style="flex: 10%;" onclick="ClearSearch($('#search_input_net'))">
                     <i class="bi bi-stars"></i>
                 </div>
             </div>
@@ -101,6 +146,67 @@
         <div class="accordion" id="event_list" style="border-color: #d8d8d8;">
           
         </div>
+    </div>
+    <div class="modal fade" id="sign_in_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+        <form class="needs-validation" action="javascript:void(0)" id="sign_in_form" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title event_name"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                            <!-- id -->
+                            <div class="input-group mb-3 d-none">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control id " value="" disabled="disabled" />
+                            </div>
+                            <!-- 活動日期 -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">活動時間</span>
+                                </div>
+                                <input type="text" class="form-control event_time" value="" disabled="disabled" />
+                            </div>
+                            <!-- 活動地點 -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">活動地點</span>
+                                </div>
+                                <input type="text" class="form-control event_local" value="" disabled="disabled" />
+                            </div>
+                            <!-- 每人自費 -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">每人自費</span>
+                                </div>
+                                <input type="text" class="form-control pre_cost" value="" disabled="disabled" />
+                            </div>
+                            <!-- 已報名人員 -->
+                            <div class="input-group mb-3 d-none">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control  sign_on" value="" disabled="disabled" />
+                            </div>
+                            <!-- 報名人員 -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">報名人員</span>
+                                </div>
+                                <select type="text" class="custom-select search_user" required >
+                                </select>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-success">確認報名</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 <script type="text/javascript" src="../../public/main/main.js"></script>
@@ -111,8 +217,9 @@
     // 先跑完加載，再跑自己的fn
     loadResourcesAndRun().then(
         (reslove) => {
-            /* 讀取社團活動列表*/
-            // 先把需要的資料讀近來，避免跑AJAX太慢
+            /*---------------------------------------------*/
+            // 讀取社團活動列表，並依照活動日期先排序
+            /*---------------------------------------------*/
             event_list = GetGasData("社團活動");
             var [header, ...data] = event_list;
             event_list = data
@@ -124,18 +231,24 @@
             event_list.sort(function (a, b) {
                 return Date.parse(b.event_time) - Date.parse(a.event_time); // 時間較晚的排在前面
             });
+            /*---------------------------------------------*/
             //取得 html
+            /*---------------------------------------------*/
             event_html = GetEventHtml(event_list);
-            $("#event_list").append(event_html);
-            //  讀取二樓人員的名單
+            $("#event_list").html(event_html);
+            /*---------------------------------------------*/
+            //  搜尋 - 發起人 下拉元件
+            /*---------------------------------------------*/
             var member_list = event_member;
             var ops = "";
             $(member_list).each(function(idx,val){
                 ops += '<option value="'+val+'" >'+val+'</option>';
             })
-            $("#search_user").append(ops);
-            $("#search_user").val("");
-            // 日期區間元件
+            $(".search_user").append(ops);
+            $(".search_user").val("");
+            /*---------------------------------------------*/
+            //  搜尋 - 活動日期 日期時間區間元件
+            /*---------------------------------------------*/
             $('.daterange').daterangepicker( {
                 applyClass: 'btn-sm btn-success',
                 cancelClass: 'btn-sm btn-default',
@@ -170,11 +283,111 @@
             $('.daterange').on('apply.daterangepicker', function (ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD') +'~'+ picker.endDate.format('YYYY-MM-DD'));
             });
-
-
+            /*---------------------------------------------*/
+            // 我要報名(modal)
+            /*---------------------------------------------*/
+            $(".sign_in").on("click",function(){
+                var card = $(this).parents(".card");
+                var event_name =  $(card).find(".event_name").text();
+                $("#sign_in_modal").find(".event_name").text("報名申請-"+event_name);
+                // 把資訊依序填入
+                var fillin = ["id","event_time","event_local","pre_cost","sign_on"];
+                $(fillin).each(function(idx,field){
+                    $("#sign_in_modal").find("."+field).val( $(card).find("."+field).val());
+                })
+                // 填入報名者，過濾掉 已報名者
+                var member_list = event_member;
+                var ops = "";
+                // 取得報名者名單
+                var sign_on = $(card).find(".sign_on").val().split("、");
+                $(member_list).each(function(idx,val){
+                    // 不存在的才新增
+                    if ( $.inArray(val,sign_on)  == -1){
+                        ops += '<option value="'+val+'" >'+val+'</option>';
+                    }
+                })
+                $(".search_user").html(ops);
+                $(".search_user").val("");
+                $("#sign_in_modal").modal("toggle");
+            })
+            // 按下確認報名
+            $("#sign_in_form").on("submit",function(){
+                var id = $("#sign_in_modal").find(".id").val();
+                var member_list = $("#sign_in_modal").find(".sign_on").val();
+                var sign_on = $("#sign_in_modal").find(".search_user").val();
+                // 更新到 git
+                UpdateGasData("社團活動",{id:id,sign_on:member_list+"、"+sign_on});
+                showMsg("報名成功","3秒後自動重整","success")
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            })
         }
     )
+    /*---------------------------------------------*/
+    // 電腦版查詢
+    /*---------------------------------------------*/    
+    function Search(div){
+        let search_where = {};
+        // 取得查詢狀態
+        $(div).find(".search_comp").each(function(idx,comp){
+            let prop = $(comp).data('field');
+            search_where[prop] = $(comp).val();
+        })
+        // 拿出目前的資料，依照條件過濾出區間
+        var new_member_list = [];
+        $(event_list).each(function(id,val){
+            let can_show = true;
+            // 發起人
+            if ( search_where.search_user !=='' && val.event_leader !== search_where.search_user && can_show ){
+                can_show =false;
+            }
+            // 活動區間
+            // 先切割出頭跟尾
+            if (search_where.search_date !=='' && can_show ){
+                let start = search_where.search_date.split("~")[0];
+                let end = search_where.search_date.split("~")[1];
+                if (new Date(val.event_time) <= new Date(start)|| new Date(val.event_time) > new Date(end) ){
+                    can_show =false;
+                }
+            }
 
+            // 活動狀態
+            if ( search_where.search_status !=='' && val.status_group !== search_where.search_status && can_show){
+                can_show =false;
+            }
+            if (can_show) new_member_list.push(val)
+        })
+        // 依照名單，重新生成
+        event_html = GetEventHtml(new_member_list);
+        $("#event_list").html(event_html);
+        // 把手機版本的清單隱藏
+        $('#filterOptions').css("display","none");
+    }
+    function ClearSearch(div){
+        $(div).find(".search_comp").each(function(idx,comp){
+            $(comp).val('');
+        })
+        // 依照名單，重新生成
+        event_html = GetEventHtml(event_list);
+        $("#event_list").html(event_html);
+        // 把手機版本的清單隱藏
+        $('#filterOptions').css("display","none");
+    }
+    /*---------------------------------------------*/
+    // 手機版查詢
+    /*---------------------------------------------*/    
+    function showFilter(){
+        // 取得 input 的位置
+        let input = $("#search_input_mobile").find(".search_comp");
+        $('#filterOptions').css("display","block");
+        // 設定篩選框的位置（讓它浮在 input 上方）
+        $('#filterOptions').css({
+            top: input.actual( 'outerHeight', { includeMargin : true }), // 浮在 input 下方
+            left: 0,
+            width: $('#mainInput').outerWidth() + 'px'
+        }).fadeIn(200);
+    }
 </script>
 
 </html>

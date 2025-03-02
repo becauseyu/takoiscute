@@ -66,7 +66,7 @@ function GetEventHtml(event_list){
                     <div class="card-header">
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                             data-target="#collapse_`+i+`" aria-expanded="true" aria-controls="collapse_`+i+`">
-                            <span style="font-size: 18px;font-family:'cjkFonts_allseto';">`+event_list[i].event_name+`</span>
+                            <span style="font-size: 18px;font-family:'cjkFonts_allseto';" class="event_name" >`+event_list[i].event_name+`</span>
                             <span style="font-size: 14px;color: red;">-倒數`+daysDiff+`天</span>
                             <input type="button" class="label_show `+status_group_class+`" value="`+event_list[i].status_group+`" />
                         </button>
@@ -76,27 +76,32 @@ function GetEventHtml(event_list){
                         <div class="card-body">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control id d-none" value="`+event_list[i].id+`" disabled="disabled" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
                                     <span class="input-group-text">活動時間</span>
                                 </div>
-                                <input type="text" class="form-control" value="`+showDateTime(event_list[i].event_time)+`" disabled="disabled">
+                                <input type="text" class="form-control event_time" value="`+showDateTime(event_list[i].event_time)+`" disabled="disabled" />
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">活動地點</span>
                                 </div>
-                                <input type="text" class="form-control" value="`+event_list[i].event_local+`" disabled="disabled">
+                                <input type="text" class="form-control event_local" value="`+event_list[i].event_local+`" disabled="disabled" />
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">每人自費</span>
                                 </div>
-                                <input type="text" class="form-control" value="`+event_list[i].pre_cost+`" disabled="disabled">
+                                <input type="text" class="form-control pre_cost" value="`+event_list[i].pre_cost+`" disabled="disabled" />
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">報名人員</span>
                                 </div>
-                                <input type="text" class="form-control" value="`+event_list[i].sign_on+`" disabled="disabled">
+                                <input type="text" class="form-control sign_on" value="`+event_list[i].sign_on+`" disabled="disabled" />
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -105,7 +110,7 @@ function GetEventHtml(event_list){
                                 <textarea class="form-control" disabled="disabled" >`+event_list[i].event_detail+`</textarea>
                             </div>
                             <div class="modal-footer `+sign_in_status+`">
-                                <input type="button" class="btn btn-primary" value="我要報名" />
+                                <input type="button" class="btn btn-primary sign_in" value="我要報名" />
                             </div>
                             <footer class="blockquote-footer text-center">發起人: <cite title="Source Title">`+event_list[i].event_leader+`</cite>
                             </footer>
