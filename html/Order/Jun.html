@@ -70,6 +70,30 @@
             font-family: 'Playfair Display', serif; /* Or any elegant font for "Sprig & Sky" */
             margin-top: 1rem;
         }
+        .media_sm{
+            display: none;
+        }
+        /* 當螢幕寬度小於等於 768px 時，顯示手機版搜尋框，隱藏電腦版搜尋框 */
+        @media (max-width: 768px) {
+           .hero-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-top: 0rem;
+                margin-bottom: 0rem;
+            }
+            .sprig-sky-text {
+                font-size: 1rem;
+                margin-top: 0rem;
+            }
+            .media_bg{
+                display: none;
+            }
+            .media_sm{
+                display: block !important;
+            }
+        }
         .info-box {
             background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
             padding: 1.5rem;
@@ -212,31 +236,43 @@
                     <div class="info-box">
                         <div class="container text-start py-4"> 
                             <div class="row "> 
-                                <div class="col-3 mb-3"> 
+                                <div class="col-3 mb-3 media_bg"> 
                                     活動日期：
                                 </div>
-                                <div class="col-9 mb-3"> 
+                                <div class="col-9 mb-3 media_bg"> 
                                     2025年6月16日(一)
                                 </div>
+                                <div class="col mb-3 media_sm"> 
+                                    活動日期：2025年6月16日(一)
+                                </div>
                             </div>
                             <div class="row "> 
-                                <div class="col-3 mb-3"> 
+                                <div class="col-3 mb-3 media_bg"> 
                                     活動時間：
                                 </div>
-                                <div class="col-9 mb-3"> 
+                                <div class="col-9 mb-3 media_bg"> 
                                     下午 15:00
+                                </div>
+                                <div class="col mb-3 media_sm"> 
+                                    活動時間：下午 15:00
                                 </div>
                             </div>
                             <div class="row "> 
-                                <div class="col-3 mb-3"> 
+                                <div class="col-3 mb-3 media_bg"> 
                                     活動地點：
                                 </div>
-                                <div class="col-9 mb-3"> 
+                                <div class="col-9 mb-3 media_bg"> 
                                     與你的夥伴共同奮鬥、舉杯、一起作戰的辦公室
+                                </div>
+                                <div class="col mb-3 media_sm"> 
+                                    活動地點：與你的夥伴共同奮鬥、舉杯、一起作戰的辦公室
                                 </div>
                             </div>
                             <div class="row justify-content-center"> 
-                                <div class="col-3 mb-3"> 
+                                <div class="col-3 mb-3 media_bg"> 
+                                    餐食提供：
+                                </div>
+                                <div class="col-12 mb-3 media_sm"> 
                                     餐食提供：
                                 </div>
                                 <div class="col-9 mb-3"> 
@@ -376,14 +412,7 @@
                     </div>
                     <div class="card-body" >
                         <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                <td class="w-50">閣樓上的鹹派</td>
-                                <td class="w-50">日出茶太</td>
-                                </tr>
-                                <tr id="order_list_ul">
-                                
-                                </tr>
+                            <tbody id="order_list_ul">
                             </tbody>
                         </table>
                         
@@ -420,6 +449,23 @@
 <script type="text/javascript">
     // 閣樓上的鹹派，批次寫入
     const food_data = ["檸檬塔","蘋果肉桂派","坦都裡烤雞鹹派","明太子鮪魚鹹派","剝皮辣椒豚鹹派","野菇培根鹹派","菇菇蔬菜鹹派"];
+    // var drink_data;
+    // if ( location.href.includes("github")){
+    //     url = '/takoiscute/';
+    // }else{
+    //     url = "../../";
+    // }
+    // jsonFilePath = url + "public/json/日出茶太.json";
+    // fetch(jsonFilePath)
+    // .then(response => {
+    //     // 將響應解析為 JSON 格式
+    //     return response.json();
+    // })
+    // .then(data => {
+    //     // 成功讀取並解析 JSON 後，將其賦值給變數
+    //     drink_data = data;
+    // })
+
     const drink_data ={
         "獨．太極": {
             "太極111": { "price": 85, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
@@ -486,9 +532,9 @@
     // 先跑完加載，再跑自己的fn
     // loadResourcesAndRun().then(
     //     (reslove)=>{
-            // //-----------------------------------------------------------------------------------------
-            // // 進入作業的圖片等讀取
-            // //-----------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------
+            // 進入作業的圖片等讀取
+            //-----------------------------------------------------------------------------------------
             // try {
             //     const iconPath = url + "public/TAKO.ico";
             //     let link = document.createElement("link");
@@ -703,6 +749,7 @@
             // 購物車的開啟
             //-----------------------------------------------------------------------------------------
             $('#cart_form').on('show.bs.modal', function (event) {
+                var total = 0;
                 /*---------------------------------------------*/
                 // 讀取列表，並依照建立時間先排序
                 /*---------------------------------------------*/
@@ -764,6 +811,13 @@
                             data = remainingMembers[newValue].map((x) => { return{id:x,text:x} });
                         }
                         $("#select_name").combobox("loadData",data);
+                        if (newValue =="二樓"){
+                            $("#order_list_ul").append(`<tr><td colspan=2 id="budget">個人預算剩餘：${250-total}</td></tr>`);
+                        }else{
+                            if ($("#budget").length >0){
+                                $("#budget").remove();
+                            }
+                        }
                     }
                 })
                 $("#select_name").combobox({
@@ -779,7 +833,13 @@
                 /*---------------------------------------------*/
                 // 點餐清單
                 /*---------------------------------------------*/
-                var html_order = "";
+                var html_order = `
+                <tr>
+                    <td class="w-50">閣樓上的鹹派</td>
+                    <td class="w-50">日出茶太</td>
+                </tr>
+                <tr>
+                `;
                 html_order += `<td class="w-50"> `;
                 if ( localStorage.getItem("food")){
                     var food_list = JSON.parse(localStorage.getItem("food"));
@@ -790,6 +850,7 @@
                             </li>
                         `;
                     });
+                    total+=150;
                 }
                 html_order += `</td> `;
                 html_order += `<td class="w-50"> `;
@@ -803,9 +864,12 @@
                                 數量: ${drink.qty}
                             </li>
                         `;
+                        total+=drink.price;
                     });
                 }
-                html_order += `</td> `;
+                html_order += `</td><tr> `;
+                // 總和金額
+                html_order += `<tr><td colspan="2">總金額：${total}</td></tr>`;
                 $("#order_list_ul").html(html_order);
             })
     //     }
