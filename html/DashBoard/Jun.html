@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025/06 福康活動-不碌Monday- 表單回應</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-orange/easyui.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
+</head>
+</head>
+<body>
+    <div class="container p-5">
+        <!-- 摺疊內容 -->
+        <div class="accordion" id="accordion_1" style="border-color: #d8d8d8;">
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_0" aria-expanded="true" aria-controls="collapse_0">
+                    總經理室
+                    </button>
+                </div>
+                <div id="collapse_0" class="collapse show order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+                    一樓
+                    </button>
+                </div>
+                <div id="collapse_1" class="collapse show order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" aria-controls="collapse_2">
+                    二樓
+                    </button>
+                </div>
+                <div id="collapse_2" class="collapse show order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" aria-controls="collapse_3">
+                    尚未點餐
+                    </button>
+                </div>
+                <div id="collapse_3" class="collapse show order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_7" aria-expanded="true" aria-controls="collapse_7">
+                    餐食總數量(全部)
+                    </button>
+                </div>
+                <div id="collapse_7" class="collapse  order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" aria-controls="collapse_3">
+                    餐食總數量(總經理室)
+                    </button>
+                </div>
+                <div id="collapse_4" class="collapse  order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" aria-controls="collapse_3">
+                    餐食總數量(一樓)
+                    </button>
+                </div>
+                <div id="collapse_5" class="collapse  order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+            <div class="card" >
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" aria-controls="collapse_3">
+                    餐食總數量(二樓)
+                    </button>
+                </div>
+                <div id="collapse_6" class="collapse  order_table" aria-labelledby="headingOne" data-parent="#accordion_1">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src= "../../public/main/main.js" ></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
+<script type="text/javascript">
+    // // 先跑完加載，再跑自己的fn
+    // loadResourcesAndRun().then(
+    //     (reslove)=>{
+            //-----------------------------------------------------------------------------------------
+            // 進入作業的圖片等讀取
+            //-----------------------------------------------------------------------------------------
+            // try {
+            //     const iconPath = url + "public/TAKO.ico";
+            //     let link = document.createElement("link");
+            //     link.rel = "shortcut icon";
+            //     link.type = "image/x-icon";
+            //     link.href = iconPath;
+            //     document.head.appendChild(link);
+            // } catch (iconError) {
+            // }
+            // 讀取圖片
+            if ( location.href.includes("github")){
+                url = '/takoiscute/';
+            }else{
+                url = "../../";
+            }
+            /*---------------------------------------------*/
+            // 讀取列表，並依照建立時間先排序
+            /*---------------------------------------------*/
+            var form_data = GetGasData("6月表單回應");
+            // 將資料轉化為可讀取的資料
+            var [header, ...data] = form_data;
+            form_data = data
+            .map((row) =>
+                header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+            );
+            const remainingMembers = {};
+            const reportedMembersByFloor = {};
+            // 1. 建立已報到人員的快速查找結構
+            // 遍歷 form_data，將已報到的人員按樓層歸類
+            form_data.forEach(person => {
+                let floorKey = person.order_floor ;
+                if (!reportedMembersByFloor[floorKey]) {
+                    reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+                }
+                reportedMembersByFloor[floorKey].add(person.order_name);
+            });
+
+            // 2. 遍歷 member_list，找出每個樓層剩餘的人
+            for (const floorKey in member_list) {
+                if (member_list.hasOwnProperty(floorKey)) {
+                    const floorMembers = member_list[floorKey];
+                    const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+                    const remainingInThisFloor = [];
+                    floorMembers.forEach(member => {
+                        if (!currentReportedMembers.has(member)) {
+                            remainingInThisFloor.push(member);
+                        }
+                    });
+                    remainingMembers[floorKey] = remainingInThisFloor;
+                }
+            } 
+            /*---------------------------------------------*/
+            // 各樓層餐點清單
+            /*---------------------------------------------*/
+            var table_id_order = {
+                "我是張總" : "collapse_0",
+                "一樓" : "collapse_1",
+                "二樓" : "collapse_2",
+            };
+
+            for ( let key in table_id_order ){
+                let member_list = form_data.filter( x => x.order_floor == key);
+                // 開始組裝資訊
+                let html = "";
+                html += `<table class='table table-bordered'>
+                            <tr>
+                                <td>訂購人姓名</td>
+                                <td>訂單總金額</td>
+                                <td>餐食內容</td>
+                                <td>飲料內容</td>
+                            </tr>`;
+                for ( let i = 0 ; i < member_list.length ; i++ ){
+                    var food = member_list[i]["order_food"];
+                    var str_food = "";
+                    if(food){
+                        food = JSON.parse(food);
+                        str_food = food.map((x) => {
+                            return `${x.goods}＊${x.qty}`;
+
+                        }).join("<br/>")
+                    }
+                    var drink = member_list[i]["order_drink"];
+                    var str_drink= "";
+                    if(drink){
+                        drink = JSON.parse(drink);
+
+                        str_drink = drink.map((x) => {
+                            return `${x.goods}，${x.sugar}${x.iced}，${x.qty}杯`;
+                        }).join("<br/>")
+                    }
+                    html += ` 
+                        <tr>
+                            <td>${member_list[i]["order_name"]}</td>
+                            <td>${member_list[i]["total"]}</td>
+                            <td>${str_food}</td>
+                            <td>${str_drink}</td>
+                        </tr>
+                    `;
+                }
+                html += "</table>";
+                $("#"+table_id_order[key]).html(html);
+            }
+            /*---------------------------------------------*/
+            // 各樓層未點餐者
+            /*---------------------------------------------*/
+            let html = `<table class='table table-bordered'>`;
+            for (let key in remainingMembers ){
+                var member = remainingMembers[key];
+                html += `
+                        <tr>
+                            <td>${key}</td>
+                            <td>${member.join(",")}</td>
+                        </tr>`;
+            }
+            html += `</table>`;
+            $("#collapse_3").html(html);
+            /*---------------------------------------------*/
+            // 餐點的總數量表
+            /*---------------------------------------------*/
+            const food_data = ["檸檬塔","蘋果肉桂派","坦都裡烤雞鹹派","明太子鮪魚鹹派","剝皮辣椒豚鹹派","野菇培根鹹派","菇菇蔬菜鹹派"];
+            // Helper function to standardize food combinations
+            // 確保相同組合 (例如 A+B 和 B+A) 被視為同一個
+            function standardizeCombination(foods) {
+                // 如果是單一餐點且數量為2，則表示為 "餐點*2"
+                if (foods.length === 1 && foods[0].qty === 2) {
+                    return `${foods[0].goods}*2`;
+                }
+
+                // 將餐點名稱排序後再組合，確保順序一致
+                const foodNames = [];
+                foods.forEach(item => {
+                    for (let i = 0; i < item.qty; i++) {
+                        foodNames.push(item.goods);
+                    }
+                });
+                return foodNames.sort().join(' + ');
+            }
+            var table_id_food = {
+                "我是張總" : "collapse_4",
+                "一樓" : "collapse_5",
+                "二樓" : "collapse_6",
+                "全部" : "collapse_7",
+            };
+            for ( let key in table_id_food ){
+                // 儲存組合統計的物件
+                // 鍵(key) 是標準化後的餐點組合字串，值(value) 是一個包含數量和點餐人員的物件
+                var combination_stats = {};
+                if ( key =="全部"){
+                    var order_list = form_data;
+                }else{
+                    var order_list = form_data.filter( x => x.order_floor == key);
+                }
+                // 遍歷訂單列表，統計組合
+                order_list.forEach(order => {
+                    // 將訂單中的食物組合標準化
+                    var standardized_combo = standardizeCombination( JSON.parse(order.order_food));
+                    if (!combination_stats[standardized_combo]) {
+                        // 如果這個組合還沒被記錄，則初始化
+                        combination_stats[standardized_combo] = {
+                            count: 0,
+                            order_names: new Set() // 使用 Set 確保人員不重複
+                        };
+                    }
+                    // 增加數量
+                    combination_stats[standardized_combo].count++;
+                    // 添加點餐人員
+                    combination_stats[standardized_combo].order_names.add(order.order_name);
+                });
+                // 動態生成表格 HTML
+                let tableHtml = `
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-4">餐點內容</th>
+                                <th class="col-2">數量</th>
+                                <th class="col-6">點餐人員</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                // 遍歷統計結果，生成表格行
+                for (const combo_str in combination_stats) {
+                    if (Object.hasOwnProperty.call(combination_stats, combo_str)) {
+                        const stats = combination_stats[combo_str];
+                        const orderPeople = Array.from(stats.order_names).join('、'); // 將 Set 轉換為陣列並用 '、' 連接
+                        tableHtml += `
+                            <tr>
+                                <td class="col-4">${combo_str}</td>
+                                <td class="col-2">${stats.count}</td>
+                                <td class="col-6">${orderPeople}</td>
+                            </tr>
+                        `;
+                    }
+                }
+                // 總金額
+                tableHtml+= ` 
+                    <tr>
+                        <td colspan=2>總金額</td>
+                        <td>${order_list.length*150}</td>
+                    </tr>
+                `;
+                tableHtml += `
+                        </tbody>
+                    </table>
+                `;
+
+                // 將生成的 HTML 添加到 #order_total 元素中
+                $("#"+table_id_food[key]).html(tableHtml);
+            }
+    //     }
+    // )
+</script>
+</html>

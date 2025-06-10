@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025/06 福康活動-不碌Monday</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-orange/easyui.css">
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css"> -->
 </head>
     <style>
         body {
@@ -968,6 +968,7 @@
             Sum(type);
         }
         $("#"+type+"_form").modal("toggle");
+        $("#cart_total_qty").val(0); //購物車清0
     }
     function fillinDrinkList(){
         var listItem = "";
@@ -1035,12 +1036,10 @@
                 order_food:order_food,
                 order_drink:order_drink,
                 total:total,
-                over_bugget:230-total,
             };
             InsertGasData("6月表單回應",form_data);
             Swal.fire("送出成功", "", "success");
             localStorage.clear(); // 送出後清空紀錄
-            $("#cart_total_qty").val(0); //購物車清0
             // 關閉modal
             $("#cart_form").modal("toggle");
         } 
