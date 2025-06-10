@@ -245,12 +245,12 @@
                             <div class="row justify-content-center"> 
                                 <div class="col-6 col-md-4 mb-3"> 
                                     <a href="#" id="link_food"> 
-                                        <img id="logo_food" src="path/to/rara_image.png" alt="閣樓上的鹹派 Logo" class="img-fluid rounded" onclick="OpenModal('food')" >
+                                        <img id="logo_food" alt="閣樓上的鹹派 Logo" class="img-fluid rounded" onclick="OpenModal('food')" >
                                     </a>
                                 </div>
                                 <div class="col-6 col-md-4 mb-3"> 
                                     <a href="#" id="link_drink">
-                                    <img id="logo_drink" src="path/to/chatime_image.png" alt="Chatime Logo" class="img-fluid rounded" onclick="OpenModal('drink')" >
+                                    <img id="logo_drink" alt="Chatime Logo" class="img-fluid rounded" onclick="OpenModal('drink')" >
                                     </a>
                                 </div>
                             </div>
@@ -527,7 +527,7 @@
                                     <h5 class="card-title text-center">` + food_data[current_index] + `</h5>
                                     <div class="input-group justify-content-center mt-2 count_qty">
                                         <button class="btn btn-outline-secondary" type="button" onClick="Minus_qty(this,'food')" > - </button>
-                                        <input type="text" class="form-control text-center quantity-input" placeholder="" aria-label="數量"  value=0 style="max-width: 60px;" >
+                                        <input type="text" class="form-control text-center quantity-input" disabled placeholder="" aria-label="數量"  value=0 style="max-width: 60px;" >
                                         <button class="btn btn-outline-secondary plus" type="button" onClick="Plus_qty(this,'food')"> + </button>
                                     </div>
                                 </div>
@@ -845,12 +845,12 @@
         if (totalQuantity >= max_count[type]) {
             // 如果總和達到或超過上限，鎖定所有相關控件
             $('.count_qty .plus').prop('disabled', true); // 鎖定所有 count_qty 內部的 button
-            $('.count_qty input[type="text"]').prop('disabled', true); // 鎖定所有 count_qty 內部的 input
+            //$('.count_qty input[type="text"]').prop('disabled', true); // 鎖定所有 count_qty 內部的 input
 
         } else {
             // 如果總和未達到上限，則解鎖所有控件
             $('.count_qty .plus').prop('disabled', false); // 解鎖所有 count_qty 內部的 button
-            $('.count_qty input[type="text"]').prop('disabled', false); // 解鎖所有 count_qty 內部的 input
+            //$('.count_qty input[type="text"]').prop('disabled', false); // 解鎖所有 count_qty 內部的 input
         }
     }
     // 確認菜單存入localStorage
