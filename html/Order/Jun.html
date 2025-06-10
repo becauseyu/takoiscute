@@ -347,48 +347,41 @@
             </div>
             <div class="modal-body">
                 <div class="card" >
-                    <div class="accordion" id="accordion_cart">    
-                        <div class="card-header">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_cart_1" aria-expanded="true" aria-controls="collapseOne">
-                            〉訂餐人資訊
-                            </button>
-                        </div>
-                        <div id="collapse_cart_1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_cart">
-                            <div class="card-body" id ="food_cards">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" >所屬樓層</span>
-                                    </div>
-                                    <input id ="select_floor" type="text" class="form-control easyui-combobox" aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
-                                </div> 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">訂購大名</span>
-                                    </div>
-                                    <input id ="select_name" type="text" class="form-control easyui-combobox"  aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="card-header">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_cart_2" aria-expanded="true" aria-controls="collapseOne">
-                            〉訂單資訊
-                            </button>
-                        </div>
-                        <div id="collapse_cart_2" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_cart">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                    <td class="w-50">閣樓上的鹹派</td>
-                                    <td class="w-50">日出茶太</td>
-                                    </tr>
-                                    <tr id="order_list_ul">
-                                    
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="card-header">
+                        〉訂餐人資訊
                     </div>
-                </div>
+                    <div class="card-body" >
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1" >所屬樓層</span>
+                            </div>
+                            <input id ="select_floor" type="text" class="form-control easyui-combobox" aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                        </div> 
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">訂購大名</span>
+                            </div>
+                            <input id ="select_name" type="text" class="form-control easyui-combobox"  aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                        </div> 
+                    </div>
+                    <div class="card-header">
+                        〉訂單資訊
+                    </div>
+                    <div class="card-body" >
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                <td class="w-50">閣樓上的鹹派</td>
+                                <td class="w-50">日出茶太</td>
+                                </tr>
+                                <tr id="order_list_ul">
+                                
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="Confirm(this)">確定送出</button>
