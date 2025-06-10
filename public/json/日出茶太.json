@@ -1,0 +1,60 @@
+{
+    "獨．太極": {
+        "太極111": { "price": 85, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "太極1號": { "price": 75, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "太極2號": { "price": 75, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "太極3號": { "price": 70, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "太極4號": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 }
+    },
+    "茶．清香": {
+        "日曜紅茶": { "price": 40, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "春摘翡翠": { "price": 40, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "東方美人": { "price": 55, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "極上烤茶": { "price": 45, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "烏龍茶王": { "price": 45, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "玉露春芽": { "price": 45, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "金萱茶后": { "price": 55, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 }
+    },
+    "奶．醇厚": {
+        "手工仙草凍鮮奶": { "price": 70, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "日曜珍珠拿鐵": { "price": 70, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "日曜紅茶拿鐵": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "熟成紅茶拿鐵": { "price": 75, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "芋泥珍珠拿鐵": { "price": 90, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "莊園可可拿鐵": { "price": 75, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "靜岡抹茶拿鐵": { "price": 75, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "黑糖珍珠鮮奶": { "price": 85, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 }
+    },
+    "果．鮮爽": {
+        "棒打鮮橙": { "price": 55, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "棒打鮮檸": { "price": 45, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "檸檬翡翠綠": { "price": 60, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "檸檬翡翠青": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "水果派對": { "price": 75, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "百香撞QQ": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "百香翡翠綠": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "百香翡翠青": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "紫玫瑰荔枝凍飲": { "price": 70, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "芒果撞QQ": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "芒果爆檸茶": { "price": 70, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "芒果翡翠綠": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "芒果翡翠青": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "蜜桃春芽": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "蜜桃莓莓": { "price": 65, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "鮮柚翡翠綠": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "鮮柚翡翠青": { "price": 60, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "鮮橙莓莓啵啵": { "price": 65, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 }
+    },
+    "奶．特調": {
+        "手作芋泥奶茶": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "日不落珍珠奶茶": { "price": 60, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "日不落經典奶茶": { "price": 55, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "極上特濃烤奶": { "price": 60, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "泰式奶茶": { "price": 70, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "烏龍奶三寶": { "price": 70, "onIy_iced": 1, "onIy_hot": 0, "normal_only": 0 },
+        "烏龍王奶茶": { "price": 60, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "烏龍王奶蓋": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "玉露春芽奶蓋": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 },
+        "莊園可可奶茶": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 }
+    }
+}

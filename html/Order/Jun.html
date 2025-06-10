@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025/06 福康活動-不碌Monday</title>
+</head>
+    <style>
+        body {
+            font-family: 'Noto Sans CJK TC', sans-serif; /* You might need to import a suitable Chinese font */
+        }
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* For better text readability */
+            overflow: hidden; /* 確保偽元素不會超出容器 */
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.walkerland.com.tw/images/upload/poi/p38106/m28123/a394fd1d199fe818390ed632555e00320227edd1.jpg'); /* 您的圖片 URL */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4; /* 設置透明度為 60% */
+            z-index: -1; /* 將偽元素置於內容下方 */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Adjust for desired darkness */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        .sprig-sky-text {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif; /* Or any elegant font for "Sprig & Sky" */
+            margin-top: 1rem;
+        }
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(5px); /* Optional: adds a blur effect to the background */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+        .btn-custom {
+            background-color: #e0b0ff; /* A light purple color similar to the image */
+            border-color: #e0b0ff;
+            color: #333; /* Darker text for contrast */
+            padding: 0.75rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 2rem; /* Rounded corners */
+        }
+        .btn-custom:hover {
+            background-color: #cc99ff;
+            border-color: #cc99ff;
+            color: #333;
+        }
+        /* 確保圖片有固定高度且不變形 */
+        .food-card-img {
+            height: 180px; /* 設置您希望的圖片高度，例如 180px */
+            object-fit: cover; /* 圖片會被裁切以填滿指定的高度和寬度 */
+            width: 100%; /* 確保圖片寬度佔滿卡片 */
+        }
+        .floating-cart {
+            position: fixed;   /* 讓它相對於視口懸浮固定 */
+            bottom: 20px;      /* 調整距離底部的高度 */
+            right: 20px;       /* 調整距離右側的距離 */
+            z-index: 1000;     /* 確保它在其他內容之上 */
+            width: 60px;       /* 設定圓形容器的寬度 */
+            height: 60px;      /* 設定圓形容器的高度 */
+            border-radius: 50%; /* 使其變成圓形 */
+            background-color: white; /* **新增：白色背景** */
+            display: flex;     /* 使用 Flexbox 讓圖示在圓形中居中 */
+            justify-content: center; /* 水平居中 */
+            align-items: center;   /* 垂直居中 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 選填：添加一個微妙的陰影 */
+        }
+
+        .floating-cart a {
+            position: relative; /* **關鍵**：使其成為徽章定位的參考點 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .floating-cart i {
+            font-size: 30px;
+            color: #333;
+        }
+        /* **新加的購物車徽章樣式** */
+        .cart-badge {
+            position: absolute; /* 相對於 .floating-cart a 定位 */
+            top: 0px; /* 調整位置，使其顯示在右上角 */
+            right: 0px;
+            background-color: red; /* 紅色背景 */
+            color: white; /* 白色文字 */
+            border-radius: 50%; /* 圓形 */
+            padding: 2px 6px; /* 調整內邊距，讓數字有足夠空間 */
+            font-size: 0.75em; /* 文字大小，相對父元素字體大小 */
+            min-width: 20px; /* 最小寬度，確保單個數字也是圓的 */
+            text-align: center; /* 文字居中 */
+            line-height: 1; /* 行高為1，垂直居中文字 */
+            font-weight: bold; /* 字體加粗 */
+        }
+
+        /* 選填：添加懸停效果 */
+        .floating-cart:hover {
+            opacity: 0.9; /* 懸停時略微變透明 */
+            cursor: pointer; /* 懸停時鼠標變為手型 */
+           
+        }
+
+        /* 隱藏原生 radio 按鈕 */
+        .hidden-radio {
+            display: none;
+        }
+
+        /* 容器樣式 */
+        .option-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* 選項之間的間距 */
+            margin-bottom: 10px; /* 每組選項（甜度/冰度）之間的間距 */
+        }
+
+        /* 可點擊的 Label 樣式 (模擬按鈕) */
+        .option-label-radio {
+            background-color: #f0f0f0; /* 預設淺灰色背景 */
+            color: #333; /* 預設文字顏色 */
+            padding: 5px 5px;
+            border-radius: 15px; /* 圓角 */
+            cursor: pointer; /* 鼠標變成手型 */
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* 過渡效果 */
+            border: 1px solid #ddd; /* 預設邊框 */
+            white-space: nowrap; /* 防止文字換行 */
+            font-size: 1rem;
+            /* 確保 label 內容不會被選中 */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* 標準語法 */
+        }
+
+        .option-label-radio:hover {
+            background-color: #e0e0e0; /* 鼠標懸停時顏色變深 */
+        }
+
+        /* 當相關聯的 hidden-radio 被選中時，應用到 label 的樣式 */
+        /* 使用 CSS 鄰近選擇器 (~) 來選中 input 後面的 label */
+        .hidden-radio:checked + .option-label-radio {
+            background-color: #6A0DAD; /* 選中時的深紫色背景 */
+            color: white; /* 選中時的白色文字 */
+            border-color: #6A0DAD; /* 選中時的邊框顏色與背景一致 */
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="overlay"></div>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <h1 class="hero-title">
+                        <span style="font-weight: bold;color:rgb(94, 218, 255);">不碌</span><span style="font-family: Playfair Display;">Monday</span><br/>
+                    </h1>
+                    <hr class="w-100 border-light border-3 my-3">
+                    <p class="sprig-sky-text" style="font-family:'JasonHandwriting2'">
+                        庸庸碌碌的生活間隙<br>
+                        用下午茶驅散MONDAY BLUES
+                    </p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-end text-end">
+                    <div class="info-box">
+                        <div class="container text-start py-4"> 
+                            <div class="row "> 
+                                <div class="col-3 mb-3"> 
+                                    活動日期：
+                                </div>
+                                <div class="col-9 mb-3"> 
+                                    2025年6月16日(一)
+                                </div>
+                            </div>
+                            <div class="row "> 
+                                <div class="col-3 mb-3"> 
+                                    活動時間：
+                                </div>
+                                <div class="col-9 mb-3"> 
+                                    下午 15:00
+                                </div>
+                            </div>
+                            <div class="row "> 
+                                <div class="col-3 mb-3"> 
+                                    活動地點：
+                                </div>
+                                <div class="col-9 mb-3"> 
+                                    與你的夥伴共同奮鬥、舉杯、一起作戰的辦公室
+                                </div>
+                            </div>
+                            <div class="row justify-content-center"> 
+                                <div class="col-3 mb-3"> 
+                                    餐食提供：
+                                </div>
+                                <div class="col-9 mb-3"> 
+                                    
+                                </div>
+                            </div>
+                            <div class="row justify-content-center"> 
+                                <div class="col-6 col-md-4 mb-3"> 
+                                    <a href="#" id="link_food"> 
+                                        <img id="logo_food" src="path/to/rara_image.png" alt="閣樓上的鹹派 Logo" class="img-fluid rounded" onclick="OpenModal('food')" >
+                                    </a>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3"> 
+                                    <a href="#" id="link_drink">
+                                    <img id="logo_drink" src="path/to/chatime_image.png" alt="Chatime Logo" class="img-fluid rounded" onclick="OpenModal('drink')" >
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row"> 
+                                <div class="col-12 text-center"> 
+                                    點擊圖片點餐
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 閣樓上的鹹派 -->
+    <div class="modal fade" id="food_form" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">閣樓上的鹹派</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body " >
+                <div class="accordion" id="accordion_food">
+                    <div class="card" >
+                        <div class="card-header">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            〉二入小塔餐盒以下口味能選擇：
+                            </button>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_food">
+                            <div class="card-body">
+                                <ul>
+                                    <li>一鹹/一甜</li>
+                                    <li>二鹹</li>
+                                    <li>二甜</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" >
+                        <div class="card-header">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                            〉口味選擇
+                            </button>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_food">
+                            <div class="card-body" id ="food_cards">
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-info" onClick="confirm('food')">加入訂單</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 日出茶太 -->
+    <div class="modal fade" id="drink_form" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">日出茶太</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card" id="drink_name">
+                    目前已選取：
+                </div>
+                <div class="accordion" id="accordion_drink">
+                    <div class="card" id ="drink_cards">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" onClick="confirm('drink')">加入訂單</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 購物車 -->
+    <div class="modal fade" id="cart_form" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">我的訂單內容</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card" >
+                    <div class="accordion" id="accordion_cart">    
+                        <div class="card-header">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_cart_1" aria-expanded="true" aria-controls="collapseOne">
+                            〉訂餐人資訊
+                            </button>
+                        </div>
+                        <div id="collapse_cart_1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_cart">
+                            <div class="card-body" id ="food_cards">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" >所屬樓層</span>
+                                    </div>
+                                    <input id ="select_floor" type="text" class="form-control easyui-combobox" aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                                </div> 
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">訂購大名</span>
+                                    </div>
+                                    <input id ="select_name" type="text" class="form-control easyui-combobox"  aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_cart_2" aria-expanded="true" aria-controls="collapseOne">
+                            〉訂單資訊
+                            </button>
+                        </div>
+                        <div id="collapse_cart_2" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_cart">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                    <td class="w-50">閣樓上的鹹派</td>
+                                    <td class="w-50">日出茶太</td>
+                                    </tr>
+                                    <tr id="order_list_ul">
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Confirm(this)">確定送出</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 購物車圖示 -->
+    <div class="floating-cart">
+        <a href="#" onclick="$('#cart_form').modal('toggle')">
+            <i class="bi bi-cart4"></i>
+            <span class="cart-badge" id="cart_total_qty">0</span>
+        </a>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src= "../../public/main/main.js" ></script>
+<script type="text/javascript">
+    // 閣樓上的鹹派，批次寫入
+    const food_data = ["檸檬塔","蘋果肉桂派","坦都裡烤雞鹹派","明太子鮪魚鹹派","剝皮辣椒豚鹹派","野菇培根鹹派","菇菇蔬菜鹹派"];
+    var drink_data;
+    if ( location.href.includes("github")){
+        url = '/takoiscute/';
+    }else{
+        url = "../../";
+    }
+    jsonFilePath = url + "public/json/日出茶太.json";
+    fetch(jsonFilePath)
+    .then(response => {
+        // 將響應解析為 JSON 格式
+        return response.json();
+    })
+    .then(data => {
+        // 成功讀取並解析 JSON 後，將其賦值給變數
+        drink_data = data;
+    })
+    // 只要重整就是要重新填單
+    localStorage.clear();
+    // 先跑完加載，再跑自己的fn
+    loadResourcesAndRun().then(
+        (reslove)=>{
+            //-----------------------------------------------------------------------------------------
+            // 進入作業的圖片等讀取
+            //-----------------------------------------------------------------------------------------
+            try {
+                const iconPath = url + "public/TAKO.ico";
+                let link = document.createElement("link");
+                link.rel = "shortcut icon";
+                link.type = "image/x-icon";
+                link.href = iconPath;
+                document.head.appendChild(link);
+            } catch (iconError) {
+            }
+            // 讀取圖片
+            if ( location.href.includes("github")){
+                url = '/takoiscute/';
+            }else{
+                url = "../../";
+            }
+            $("#logo_food").attr('src',url+"public/img/20250618/logo_food.jpg")
+            $("#logo_drink").attr('src',url+"public/img/20250618/logo_drink.png")
+               
+            //-----------------------------------------------------------------------------------------
+            // 每行（每個 card-group）顯示的卡片數量
+            let group_size = 4; 
+            //-----------------------------------------------------------------------------------------
+            // 食物的讀取
+            //-----------------------------------------------------------------------------------------
+            let food_html = ""; // 用於累積所有 card-group 的 HTML
+            // 外層迴圈：根據每組的數量來迭代，生成多個 card-group
+            for (let i = 0; i < food_data.length; i += group_size) {
+                let current_card_group_html = `<div class="card-group mb-3">`; // 為每個 card-group 增加底部邊距，使其與下一組有間隔
+                // 內層迴圈：處理每個 card-group 中的卡片
+                for (let j = 0; j < group_size; j++) {
+                    let current_index = i + j; // 計算當前卡片的索引
+                    // 檢查是否還有數據，避免超出 food_data 陣列的範圍
+                    if (current_index < food_data.length) {
+                        current_card_group_html += `
+                            <div class="card h-100"> <img src="` + url + "public/img/20250618/" + food_data[current_index] + `.png" class="card-img-top food-card-img" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">` + food_data[current_index] + `</h5>
+                                    <div class="input-group justify-content-center mt-2 count_qty">
+                                        <button class="btn btn-outline-secondary" type="button" onClick="Minus_qty(this,'food')" > - </button>
+                                        <input type="text" class="form-control text-center quantity-input" placeholder="" aria-label="數量"  value=0 style="max-width: 60px;" >
+                                        <button class="btn btn-outline-secondary plus" type="button" onClick="Plus_qty(this,'food')"> + </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // 如果這行不足 group_size 個卡片，可以用空的卡片補齊，
+                        // 這樣可以讓 card-group 保持每列的寬度一致。
+                        // 這對於 card-group 很重要，因為它會自動調整內部卡片的寬度。
+                        current_card_group_html += `<div class="card card-placeholder invisible"></div>`; // 使用 invisible 讓其不顯示但佔據空間
+                    }
+                }
+                current_card_group_html += `</div>`; // 結束當前 card-group 的 div
+                food_html += current_card_group_html; // 將完成的 card-group 加入總 HTML 字符串
+            }
+
+            $("#food_cards").append(food_html);
+            //-----------------------------------------------------------------------------------------
+            // 飲料的讀取
+            //-----------------------------------------------------------------------------------------
+            // 第一層迴圈：遍歷每個飲料類別
+            var drinkCategories = Object.keys(drink_data);
+            var drink_html = "";
+            var key = 1;
+            for (let i = 0; i < drinkCategories.length; i++) {
+                const categoryName = drinkCategories[i];
+                const drinksInThisCategory = drink_data[categoryName];
+
+                drink_html += `                  
+                                <div class="card drink-category" >
+                                    <div class="card-header">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_${i}" aria-expanded="true" aria-controls="collapseOne">
+                                        〉${categoryName}
+                                        </button>
+                                    </div>
+                                    <div id="collapse_${i}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_drink">
+                                    `;
+                // 將該類別下的所有飲品名稱轉換成陣列，方便使用索引進行分組
+                const drinkNamesArray = Object.keys(drinksInThisCategory);
+                const cardsPerRow = 4; // 每組顯示的卡片數量
+
+                for (let j = 0; j < drinkNamesArray.length; j++) {
+                    // 每當 j 是 cardsPerRow 的倍數時（包括 j=0），就開始一個新的 card-group
+                    if (j % cardsPerRow === 0) {
+                        // 如果不是第一個 card-group，先結束前一個
+                        if (j !== 0) {
+                            // **補齊剩餘的佔位卡片**
+                            drink_html += `</div>`; // 結束上一個 card-group
+                        }
+                        // 開始新的 card-group，並增加底部邊距
+                        drink_html += `<div class="card-group mb-3">`;
+                    }
+
+                    const drinkName = drinkNamesArray[j];
+                    const drinkDetails = drinksInThisCategory[drinkName];
+
+                    drink_html += `
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">${drinkName}</h5>
+                                <p class="card-price text-center">價格: NT$${drinkDetails.price}</p>`;
+                    // 檢查是否甜度冰塊正常
+                    var ice = ['正常冰','少冰','去冰','溫'];
+                    var sugar = ['正常糖','半糖','微糖','無糖'];
+
+                    if (drinkDetails.normal_only === 1) {
+                        drink_html += `<div class="option-group" data-option-type="sugar">
+                                            <input type="radio" id="sugar-normal-${key}" name="sugar-option-${key}" value="甜度固定" class="hidden-radio">
+                                            <label for="sugar-normal-${key}" class="option-label-radio">甜度固定</label>
+                                        </div>
+                                        <div class="option-group" data-option-type="ice">
+                                            <input type="radio" id="ice-normal-${key}" name="ice-option-${key}" value="冰塊固定" class="hidden-radio">
+                                            <label for="ice-normal-${key}" class="option-label-radio">冰塊固定</label>
+                                        </div>`;
+                    }else{
+                        drink_html += `
+                                        <div class="option-group" data-option-type="sugar">
+                                            <input type="radio" id="sugar-normal-${key}" name="sugar-option-${key}" value="正常糖" class="hidden-radio">
+                                            <label for="sugar-normal-${key}" class="option-label-radio">正常糖</label>
+    
+                                            <input type="radio" id="sugar-half-${key}" name="sugar-option-${key}" value="半糖" class="hidden-radio">
+                                            <label for="sugar-half-${key}" class="option-label-radio">半糖</label>
+    
+                                            <input type="radio" id="sugar-slight-${key}" name="sugar-option-${key}" value="微糖" class="hidden-radio">
+                                            <label for="sugar-slight-${key}" class="option-label-radio">微糖</label>
+                                            <input type="radio" id="sugar-none-${key}" name="sugar-option-${key}" value="無糖" class="hidden-radio">
+                                            <label for="sugar-none-${key}" class="option-label-radio">無糖</label>
+                                        </div>
+                                        <div class="option-group" data-option-type="ice">`;
+                                        if (drinkDetails.onIy_iced === 1 || drinkDetails.onIy_hot === 0 ) {
+                                        drink_html += `    <input type="radio" id="ice-normal-${key}" name="ice-option-${key}" value="正常冰" class="hidden-radio">
+                                            <label for="ice-normal-${key}" class="option-label-radio">正常冰</label>
+
+                                            <input type="radio" id="ice-less-${key}" name="ice-option-${key}" value="少冰" class="hidden-radio">
+                                            <label for="ice-less-${key}" class="option-label-radio">少冰</label>
+
+                                            <input type="radio" id="ice-no-${key}" name="ice-option-${key}" value="去冰" class="hidden-radio">
+                                            <label for="ice-no-${key}" class="option-label-radio">去冰</label>`;
+                                        }else if (drinkDetails.onIy_hot === 1 || drinkDetails.onIy_iced === 0) {
+                                            drink_html += `
+                                            <input type="radio" id="sugar-none-${key}" name="sugar-option-${key}" value="溫" class="hidden-radio">
+                                            <label for="sugar-none-${key}" class="option-label-radio">溫</label>`;
+                                        }
+                        drink_html += ` 
+                        </div>
+                                    <div class="count_qty"> <div class="input-group justify-content-center mt-2">
+                                            <button class="btn btn-outline-secondary add_text" type="button" onClick="Minus_qty(this,'drink')" > - </button>
+                                            <input type="text" class="form-control text-center quantity-input" placeholder="" aria-label="數量" value="0" style="max-width: 60px;" id="quantity-input-drink-${key}">
+                                            <button class="btn btn-outline-secondary add_text" type="button" onClick="Plus_qty(this,'drink')" > + </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    key++;
+
+                }
+
+                // **迴圈結束後，處理最後一個 card-group 的補齊問題**
+                // 計算最後一個 card-group 還差多少個卡片
+                const remaining_cards = drinkNamesArray.length % cardsPerRow;
+                if (remaining_cards !== 0) { // 如果最後一行不是滿的
+                    const placeholders_to_add = cardsPerRow - remaining_cards;
+                    for (let k = 0; k < placeholders_to_add; k++) {
+                        drink_html += `<div class="card card-placeholder"></div>`;
+                    }
+                }
+
+                // 確保每個類別的最後一個 card-group 被正確關閉
+                if (drinkNamesArray.length > 0) { // 只有當這個類別有飲品時才需要關閉 card-group
+                    drink_html += `</div>`; // 結束最後一個 card-group
+                }
+
+                drink_html += `</div></div>`; // 結束 drink-category
+            }
+            $("#drink_cards").append(drink_html);
+            // 如果有加減項目，就把選過的品項寫上去
+            $(".add_text").on("click",function(){
+                // 先檢查是否有選甜度冰塊
+                var sugar_ck_comp = $(this).closest('.card').find('input[name^="sugar-option-"]:checked').val();
+                var ice_ck_comp = $(this).closest('.card').find('input[name^="ice-option-"]:checked').val();
+                if ( !sugar_ck_comp || !ice_ck_comp){
+                    Swal.fire({
+                    title: "請先選擇甜度冰塊",
+                    icon: "warning"
+                    });
+                    // 把值歸零
+                    $(this).siblings("input").val(0);
+                    return ;
+                }
+                fillinDrinkList();
+            })
+            //-----------------------------------------------------------------------------------------
+            // 重製表單狀態
+            //-----------------------------------------------------------------------------------------
+            // 監聽所有具有 'modal' 類別的元素，當它們觸發 'hidden.bs.modal' 事件時
+            $('.modal').on('hidden.bs.modal', function () {
+                $('.count_qty input[type="text"]').prop('disabled', false); // 鎖定所有 count_qty 內部的 input
+                $('.count_qty input[type="text"]').val(0); // 鎖定所有 count_qty 內部的 input
+                // 2. 展開 Modal 內部所有的 Accordion 項目
+                // 找到 Modal 內部所有具有 'accordion-collapse' 類別的摺疊內容區塊
+                $(this).find('.collapse').each(function() {
+                    $(this).removeClass("show");
+                });
+                // 清空選取的 radio
+                $('.hidden-radio:checked').each(function(idx,val){
+                    $(val).prop("checked",false);
+                })
+            });
+            //-----------------------------------------------------------------------------------------
+            // 購物車的開啟
+            //-----------------------------------------------------------------------------------------
+            $('#cart_form').on('show.bs.modal', function (event) {
+                /*---------------------------------------------*/
+                // 讀取列表，並依照建立時間先排序
+                /*---------------------------------------------*/
+                var form_data = GetGasData("6月表單回應");
+                // 將資料轉化為可讀取的資料
+                var [header, ...data] = form_data;
+                form_data = data
+                .map((row) =>
+                    header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+                );
+                const remainingMembers = {};
+                const reportedMembersByFloor = {};
+                // 1. 建立已報到人員的快速查找結構
+                // 遍歷 form_data，將已報到的人員按樓層歸類
+                form_data.forEach(person => {
+                    let floorKey = person.order_floor ;
+                    if (!reportedMembersByFloor[floorKey]) {
+                        reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+                    }
+                    reportedMembersByFloor[floorKey].add(person.order_name);
+                });
+
+                // 2. 遍歷 member_list，找出每個樓層剩餘的人
+                for (const floorKey in member_list) {
+                    if (member_list.hasOwnProperty(floorKey)) {
+                        const floorMembers = member_list[floorKey];
+                        const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+                        const remainingInThisFloor = [];
+                        floorMembers.forEach(member => {
+                            if (!currentReportedMembers.has(member)) {
+                                remainingInThisFloor.push(member);
+                            }
+                        });
+                        remainingMembers[floorKey] = remainingInThisFloor;
+                    }
+                }
+
+                // 比對一下每個樓層剩餘的人數
+                // 依照剩餘人數準備 data
+                let loadData_floor = [];
+                for( let floor in remainingMembers){
+                    let data = {};
+                    data.id = floor;
+                    data.text = floor;
+                    loadData_floor.push(data);
+                }
+                $("#select_floor").combobox({
+                    required:true,
+                    editable: false,
+                    panelHeight:'auto',
+                    panelMaxHeight:'335',
+                    valueField:'id',
+                    textField:'text',
+                    data:loadData_floor,
+                    onChange:function(newValue,oldValue){
+                        if (newValue !== oldValue){
+                            $("#select_name").combobox("setValue","");
+                            data = remainingMembers[newValue].map((x) => { return{id:x,text:x} });
+                        }
+                        $("#select_name").combobox("loadData",data);
+                    }
+                })
+                $("#select_name").combobox({
+                    required:true,
+                    editable: false,
+                    panelHeight:'auto',
+                    panelMaxHeight:'250',
+                    valueField:'id',
+                    textField:'text',
+                    idField:"id",
+                    textField:"text",
+                })
+                /*---------------------------------------------*/
+                // 點餐清單
+                /*---------------------------------------------*/
+                var html_order = "";
+                html_order += `<td class="w-50"> `;
+                if ( localStorage.getItem("food")){
+                    var food_list = JSON.parse(localStorage.getItem("food"));
+                    food_list.forEach(food => {
+                        html_order += `
+                            <li>
+                                <strong>${food.goods}</strong> *${food.qty}
+                            </li>
+                        `;
+                    });
+                }
+                html_order += `</td> `;
+                html_order += `<td class="w-50"> `;
+                if ( localStorage.getItem("drink")){
+                    var drink = JSON.parse(localStorage.getItem("drink"));
+                    drink.forEach(drink => {
+                        html_order += `
+                            <li>
+                                <strong>${drink.goods}</strong> - 價格: NT$${drink.price}
+                                (甜度: ${drink.sugar}, 冰塊: ${drink.iced})
+                                數量: ${drink.qty}
+                            </li>
+                        `;
+                    });
+                }
+                html_order += `</td> `;
+                $("#order_list_ul").html(html_order);
+            })
+        }
+    )
+    //-----------------------------------------------------------------------------------------
+    // 一些好用的 function
+    //-----------------------------------------------------------------------------------------
+    // 增加數量    
+    function Minus_qty(btn,type){
+        var input = $(btn).next('.quantity-input');
+        var value = parseInt($(input).val()); 
+        $(input).val( value - 1 <0?0:value- 1);
+        Sum(type);
+    }
+    // 減少數量
+    function Plus_qty(btn,type){
+        var input = $(btn).prev('.quantity-input');
+        var value = parseInt($(input).val()); 
+        $(input).val( value+1);
+        Sum(type);
+    }
+    // 減少數量
+    function Sum(type){
+        // 取得所有的數字
+        let totalQuantity = 0;
+        $('.quantity-input').each(function() {
+            // 取得每個 input 的值
+            let quantity = parseInt($(this).val()); // 使用 parseInt 將值轉換為整數
+            // 檢查轉換後的數字是否有效 (不是 NaN)
+            if (!isNaN(quantity)) {
+                totalQuantity += quantity; // 加到總和中
+            }
+        });
+        var max_count = {
+            "food":2,
+            "drink":9999,
+        };
+        if (totalQuantity >= max_count[type]) {
+            // 如果總和達到或超過上限，鎖定所有相關控件
+            $('.count_qty .plus').prop('disabled', true); // 鎖定所有 count_qty 內部的 button
+            $('.count_qty input[type="text"]').prop('disabled', true); // 鎖定所有 count_qty 內部的 input
+
+        } else {
+            // 如果總和未達到上限，則解鎖所有控件
+            $('.count_qty .plus').prop('disabled', false); // 解鎖所有 count_qty 內部的 button
+            $('.count_qty input[type="text"]').prop('disabled', false); // 解鎖所有 count_qty 內部的 input
+        }
+    }
+    // 確認菜單存入localStorage
+    function confirm(type){
+        var data = $("#" + type +"_form").find(".quantity-input").map(function(idx,comp){
+            if ( parseInt($(comp).val()) > 0 ){
+                // 記錄品項
+                var goods = $(comp).parents(".card-body").eq(0).find("h5").text();
+                var qty =  parseInt($(comp).val()) ;
+                var sugar = $(comp).parents(".card-body").eq(0).find('input[name^="sugar-option-"]:checked').val()??"";
+                var iced = $(comp).parents(".card-body").eq(0).find('input[name^="ice-option-"]:checked').val()??"";
+                var price = $(comp).parents(".card-body").eq(0).find('p').text()??"";
+                if( price !== ""){
+                    price = price.replace(/[^\d.]/g, ''); 
+                    price = parseInt(price);
+                }
+                return { goods:goods,qty:qty,sugar:sugar,iced:iced,price:price}
+            }
+        }).get();
+        localStorage.setItem(type, JSON.stringify(data));
+        // 檢查項目
+        let ck_local = 0;
+        $("#cart_total_qty").text(localStorage.length);
+        $("#" + type +"_form").modal("toggle");
+    }
+    function OpenModal(type){
+        // 如果有選好的餐點，先加上去
+        if ( localStorage.getItem(type)){
+            jsonString = localStorage.getItem(type);
+            order_list =  JSON.parse(jsonString);
+            // 比對 food_data 的 key值，去加總
+            order_list.forEach(function(order_item) {
+                var goods_name =order_item.goods;
+                // 找到包含這個字元的 card元件
+                var span = $('h5:contains('+goods_name+')');
+                var input = $(span).closest('.card-body').find('.quantity-input');
+                $(input).val(order_item.qty);
+                var sugar =  $(span).closest('.card-body').find('.option-group[data-option-type="sugar"]');
+                if( order_item.sugar !== ""){
+                    $(sugar).find('input[type="radio"][value="'+order_item.sugar+'"]').prop('checked', true);
+                }
+                var iced =  $(span).closest('.card-body').find('.option-group[data-option-type="ice"]');
+                if( order_item.iced !== ""){
+                    $(iced).find('input[type="radio"][value="'+order_item.iced+'"]').prop('checked', true);
+                }
+            })
+            if ( type == "drink"){
+                fillinDrinkList();
+            }
+            Sum(type);
+        }
+        $("#"+type+"_form").modal("toggle");
+    }
+    function fillinDrinkList(){
+        var listItem = "";
+        $("#drink_form").find(".quantity-input").each(function(idx,comp){
+            if ( parseInt($(comp).val()) > 0 ){
+                // 從觸發事件的元素 (例如 + 或 - 按鈕) 開始，找到最外層的 .card 容器
+                const $card = $(comp).closest('.card');
+                // 1. 取得飲料名稱
+                const drinkName = $card.find('.card-title').text();
+                // 2. 取得價格
+                // 移除 "價格: NT$" 並轉換為數字
+                const priceText = $card.find('.card-price').text();
+                const price = parseFloat(priceText.replace('價格: NT$', ''));
+                // 3. 取得甜度
+                // 找到甜度組中被選中的 radio 的值
+                const sugar = $card.find('input[name^="sugar-option-"]:checked').val();
+                const selectedSugar = sugar || '未選'; // 如果沒選，則顯示 '未選'
+                // 4. 取得冰塊
+                // 找到冰度組中被選中的 radio 的值
+                const ice = $card.find('input[name^="ice-option-"]:checked').val();
+                const selectedIce = ice || '未選'; // 如果沒選，則顯示 '未選'
+                // 5.數量
+                const quantity = parseInt($(comp).val());
+                listItem += `
+                    <li>
+                        <strong>${drinkName}</strong> - 價格: NT$${price}
+                        (甜度: ${selectedSugar}, 冰塊: ${selectedIce})
+                        數量: ${quantity}
+                    </li>
+                `;
+                }
+        })
+        // 將生成的清單項目添加到 ul 中
+        $('#drink_name').html(listItem);
+    }
+    // 送出訂單
+    function Confirm(buttom){
+        var modal = $(buttom).parents(".modal");
+        // 檢查是否都有填
+        var order_floor = $("#select_floor").combobox("getValue");
+        var order_name = $("#select_name").combobox("getValue");
+        var order_food = localStorage.getItem("food");
+        var order_drink = localStorage.getItem("drink");
+        if ( !order_floor || !order_name || !order_food || !order_drink ){
+            Swal.fire({
+            title: "請務必填寫完整",
+            icon: "warning"
+            });
+            return ;
+        }
+        Swal.fire({
+            title: "確定要送出訂單?",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            total = JSON.parse(order_drink).map( drink => (drink.price)*(drink.qty)).reduce((accumulator, currentValue) => {
+                return accumulator + currentValue;
+            }, 0);
+
+            var form_data = {
+                creatd_at:showDate(new Date()),
+                order_floor:order_floor,
+                order_name:order_name,
+                order_food:order_food,
+                order_drink:order_drink,
+                total:total,
+                over_bugget:230-total,
+            };
+            InsertGasData("6月表單回應",form_data);
+            Swal.fire("送出成功", "", "success");
+            localStorage.clear(); // 送出後清空紀錄
+            // 關閉modal
+            $("#cart_form").modal("toggle");
+        } 
+        });
+    }
+</script>
+</html>
