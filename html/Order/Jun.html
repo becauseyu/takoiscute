@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025/06 福康活動-不碌Monday</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
 </head>
     <style>
         body {
@@ -400,6 +406,16 @@
 </div>
 </body>
 <script type="text/javascript" src= "../../public/main/main.js" ></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
 <script type="text/javascript">
     // 閣樓上的鹹派，批次寫入
     const food_data = ["檸檬塔","蘋果肉桂派","坦都裡烤雞鹹派","明太子鮪魚鹹派","剝皮辣椒豚鹹派","野菇培根鹹派","菇菇蔬菜鹹派"];
@@ -463,39 +479,24 @@
             "莊園可可奶茶": { "price": 65, "onIy_iced": 0, "onIy_hot": 0, "normal_only": 0 }
         }
     }
-    // var drink_data;
-    // if ( location.href.includes("github")){
-    //     url = '/takoiscute/';
-    // }else{
-    //     url = "../../";
-    // }
-    // jsonFilePath = url + "public/json/日出茶太.json";
-    // fetch(jsonFilePath)
-    // .then(response => {
-    //     // 將響應解析為 JSON 格式
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     // 成功讀取並解析 JSON 後，將其賦值給變數
-    //     drink_data = data;
-    // })
+
     // 只要重整就是要重新填單
     localStorage.clear();
     // 先跑完加載，再跑自己的fn
-    loadResourcesAndRun().then(
-        (reslove)=>{
-            //-----------------------------------------------------------------------------------------
-            // 進入作業的圖片等讀取
-            //-----------------------------------------------------------------------------------------
-            try {
-                const iconPath = url + "public/TAKO.ico";
-                let link = document.createElement("link");
-                link.rel = "shortcut icon";
-                link.type = "image/x-icon";
-                link.href = iconPath;
-                document.head.appendChild(link);
-            } catch (iconError) {
-            }
+    // loadResourcesAndRun().then(
+    //     (reslove)=>{
+            // //-----------------------------------------------------------------------------------------
+            // // 進入作業的圖片等讀取
+            // //-----------------------------------------------------------------------------------------
+            // try {
+            //     const iconPath = url + "public/TAKO.ico";
+            //     let link = document.createElement("link");
+            //     link.rel = "shortcut icon";
+            //     link.type = "image/x-icon";
+            //     link.href = iconPath;
+            //     document.head.appendChild(link);
+            // } catch (iconError) {
+            // }
             // 讀取圖片
             if ( location.href.includes("github")){
                 url = '/takoiscute/';
@@ -806,8 +807,8 @@
                 html_order += `</td> `;
                 $("#order_list_ul").html(html_order);
             })
-        }
-    )
+    //     }
+    // )
     //-----------------------------------------------------------------------------------------
     // 一些好用的 function
     //-----------------------------------------------------------------------------------------
