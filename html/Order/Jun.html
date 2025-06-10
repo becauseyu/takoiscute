@@ -1040,6 +1040,7 @@
             InsertGasData("6月表單回應",form_data);
             Swal.fire("送出成功", "", "success");
             localStorage.clear(); // 送出後清空紀錄
+            $("#cart_total_qty").val(0); //購物車清0
             // 關閉modal
             $("#cart_form").modal("toggle");
         } 
