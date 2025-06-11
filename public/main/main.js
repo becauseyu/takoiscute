@@ -306,7 +306,7 @@ function GetLastDay(DateValue) {
 /*---------------------------------------------*/
 const member_list = {
     "我是張總":["張總","祐寧"],
-    "一樓":["竹君","美淑","麗華","惠貞","Jany","Mia","May","Bernice","Debby","Amy","Sandy","小Hank","Bella","Sophi","Melanie","Ariel"],
+    "一樓":["竹君","美淑","麗華","惠貞","Jany","Mia","May","Bernice","Debby","Amy",,"小Hank","Bella","Sophi","Melanie","Ariel"],
     "二樓":["藝芬","文琪","曜","怡廷","莠惠","享","明倫","宜芬","坤琳","兆閎","聖安","商榮"],
 };
 /*---------------------------------------------*/
