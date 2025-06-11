@@ -1035,7 +1035,7 @@
                 order_name:order_name,
                 order_food:order_food,
                 order_drink:order_drink,
-                total:total,
+                total:parseInt(150+total),
             };
             InsertGasData("6月表單回應",form_data);
             Swal.fire("送出成功", "", "success");
