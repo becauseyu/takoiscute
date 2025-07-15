@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025/07 福康活動-大暑吃大薯</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../../public/TAKO.ico">
-    <link rel="stylesheet icon" type="text/css" href="../../public/easyui/metro-red/easyui.css">
-    <link rel="stylesheet icon" type="text/css" href="../../public/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet icon" type="text/css" href="../../public/bootstrap/bootstrap-icons.min.css">
-    <link rel="stylesheet icon" type="text/css" href="../../public/sweetalert/sweetalert2.min.css">
-    <link rel="stylesheet icon" type="text/css" href="../../public/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet icon" type="text/css" href="../../public/main/main.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-red/easyui.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
     <style>
         body {
             margin: 0;
@@ -37,10 +37,60 @@
         h1 .highlight {
             color: orange;
         }
+        /* nav 選取後的顏色*/
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            background-color: rgb(214, 71, 71) !important;
+            color: white !important;
+        }
 
+        /* 購物車*/
+        .floating-cart {
+            position: fixed;   /* 讓它相對於視口懸浮固定 */
+            bottom: 20px;      /* 調整距離底部的高度 */
+            right: 20px;       /* 調整距離右側的距離 */
+            z-index: 1000;     /* 確保它在其他內容之上 */
+            width: 60px;       /* 設定圓形容器的寬度 */
+            height: 60px;      /* 設定圓形容器的高度 */
+            border-radius: 50%; /* 使其變成圓形 */
+            background-color: white; /* **新增：白色背景** */
+            display: flex;     /* 使用 Flexbox 讓圖示在圓形中居中 */
+            justify-content: center; /* 水平居中 */
+            align-items: center;   /* 垂直居中 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 選填：添加一個微妙的陰影 */
+        }
 
+        .floating-cart a {
+            position: relative; /* **關鍵**：使其成為徽章定位的參考點 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .floating-cart i {
+            font-size: 30px;
+            color: #333;
+        }
+        /* **新加的購物車徽章樣式** */
+        .cart-badge {
+            position: absolute; /* 相對於 .floating-cart a 定位 */
+            top: 0px; /* 調整位置，使其顯示在右上角 */
+            right: 0px;
+            background-color: red; /* 紅色背景 */
+            color: white; /* 白色文字 */
+            border-radius: 50%; /* 圓形 */
+            padding: 2px 6px; /* 調整內邊距，讓數字有足夠空間 */
+            font-size: 0.75em; /* 文字大小，相對父元素字體大小 */
+            min-width: 20px; /* 最小寬度，確保單個數字也是圓的 */
+            text-align: center; /* 文字居中 */
+            line-height: 1; /* 行高為1，垂直居中文字 */
+            font-weight: bold; /* 字體加粗 */
+        }
     </style>
-    
+
 </head>
 
 <body>
@@ -51,396 +101,1272 @@
         </div>
 
         <div>
-            <img id="mc_pic" src="" alt="Burger" style="width:15vw"/>
+            <img id="mc_pic" src="" alt="Burger" style="width:15vw" />
         </div>
-        <div class="easyui-tabs" data-options="tabWidth:112" style="width:100%;height:100%">
-            <div title="Home" style="padding:10px">
-                <p>Home Content.</p>
-            </div>
-            <div title="Maps" style="padding:10px">
-                <p>Maps Content.</p>
-            </div>
-            <div title="Journal" style="padding:10px">
-                <p>Journal Content.</p>
-            </div>
-            <div title="History" style="padding:10px">
-                <p>History Content.</p>
-            </div>
-            <div title="References" style="padding:10px">
-                <p>References Content.</p>
-            </div>
-            <div title="Contact" data-options="tabWidth:110" style="padding:10px">
-                <p>Contact Content.</p>
+        <div id="order_panel" style="width: 100%;" >
+
+        </div>
+        <!-- 餐點介面 -->
+        <div class="modal fade" id="set_form" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="product_name"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="set_list">
+            
+                    </div>
+                    <div class="modal-footer">
+                        <span>總金額：<span id ='product_total'></span></span>
+                        <button type="button" class="btn btn-info" onClick="addCart()">加入訂單</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-
+    <!-- 購物車 -->
+    <div class="modal fade" id="cart_form" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">我的訂單內容</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card" >
+                    <div class="card-header">
+                        〉訂餐人資訊
+                    </div>
+                    <div class="card-body" >
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1" >所屬樓層</span>
+                            </div>
+                            <input id ="select_floor" type="text" class="form-control easyui-combobox" aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                        </div> 
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">訂購大名(可複選)</span>
+                            </div>
+                            <input id ="select_name" type="text" class="form-control easyui-combobox"  aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                        </div> 
+                    </div>
+                    <div class="card-header">
+                        〉訂單資訊
+                    </div>
+                    <div class="card-body" >
+                        <div id="order_list_ul"></div>
+                    </div>
+                    <div class="card-header">
+                        〉備註
+                    </div>
+                    <div class="card-body" >
+                        <textarea placeholder="有特殊需求可於此備註"style="height: 10vh;width: 100%;" ></textarea>
+                    </div>
+                    <div class="card-header">
+                        〉總金額
+                    </div>
+                    <div class="card-body" >
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">訂單金額</span>
+                            <input id="personal_toal" class="form-control"/>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">剩餘額度</span>
+                            <input id="personal_rem" class="form-control"/>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Confirm(this)">確定送出</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 購物車圖示 -->
+    <div class="floating-cart">
+        <a href="#" onclick="$('#cart_form').modal('toggle')">
+            <i class="bi bi-cart4"></i>
+            <span class="cart-badge" id="cart_total_qty">0</span>
+        </a>
     </div>
 </body>
-<script type="text/javascript" src="../../public/main/main.js"></script>
-<script type="text/javascript" src="../../public/easyui/jquery.min.js"></script>
-<script type="text/javascript" src="../../public/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../../public/easyui/locale/easyui-lang-zh_TW.js"></script>
-<script type="text/javascript" src="../../public/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../public/sweetalert/sweetalert2.min.js"></script>
-<script type="text/javascript" src="../../public/daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="../../public/jquery.actual-master/jquery.actual.min.js"></script>
-<script type="text/javascript" src="../../public/daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="../../public/gas/gas.js"></script>
-<script type="text/javascript" src="../../public/animation/anime.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/main/main.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
 <script type="text/javascript">
     // 只要重整就是要重新填單
     localStorage.clear();
     // 先跑完加載，再跑自己的fn
     // 讀取圖片
-    $("#mc_pic").attr('src', "../../public/img/july_pic.png");
+    $("#mc_pic").attr('src', "/takoiscute/public/img/july_pic.png");
     //-----------------------------------------------------------------------------------------
-    // 每行（每個 card-group）顯示的卡片數量
-    let group_size = 4;
+    const budget = 350;
     //-----------------------------------------------------------------------------------------
     // 食物的讀取
     //-----------------------------------------------------------------------------------------
-    // let food_html = ""; // 用於累積所有 card-group 的 HTML
-    // // 外層迴圈：根據每組的數量來迭代，生成多個 card-group
-    // for (let i = 0; i < food_data.length; i += group_size) {
-    //     let current_card_group_html = `<div class="card-group mb-3">`; // 為每個 card-group 增加底部邊距，使其與下一組有間隔
-    //     // 內層迴圈：處理每個 card-group 中的卡片
-    //     for (let j = 0; j < group_size; j++) {
-    //         let current_index = i + j; // 計算當前卡片的索引
-    //         // 檢查是否還有數據，避免超出 food_data 陣列的範圍
-    //         if (current_index < food_data.length) {
-    //             current_card_group_html += `
-    //                         <div class="card h-100"> <img src="` + url + "public/img/20250618/" + food_data[current_index] + `.png" class="card-img-top food-card-img" alt="...">
-    //                             <div class="card-body">
-    //                                 <h5 class="card-title text-center">` + food_data[current_index] + `</h5>
-    //                                 <div class="input-group justify-content-center mt-2 count_qty">
-    //                                     <button class="btn btn-outline-secondary" type="button" onClick="Minus_qty(this,'food')" > - </button>
-    //                                     <input type="text" class="form-control text-center quantity-input" disabled placeholder="" aria-label="數量"  value=0 style="max-width: 60px;" >
-    //                                     <button class="btn btn-outline-secondary plus" type="button" onClick="Plus_qty(this,'food')"> + </button>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     `;
-    //         } else {
-    //             // 如果這行不足 group_size 個卡片，可以用空的卡片補齊，
-    //             // 這樣可以讓 card-group 保持每列的寬度一致。
-    //             // 這對於 card-group 很重要，因為它會自動調整內部卡片的寬度。
-    //             current_card_group_html += `<div class="card card-placeholder invisible"></div>`; // 使用 invisible 讓其不顯示但佔據空間
-    //         }
-    //     }
-    //     current_card_group_html += `</div>`; // 結束當前 card-group 的 div
-    //     food_html += current_card_group_html; // 將完成的 card-group 加入總 HTML 字符串
-    // }
-    // $("#food_cards").append(food_html);
+    const nuggets_sel = ["醣醋醬包","蜂蜜芥末醬包","泰式香辣醬包","不要醬包"];
+    const salad_sel = ["千島沙拉醬","和風沙拉醬","不要沙拉醬"];
+    const chicken_sel = ["原味","辣味"];
+    const drink_select = {
+        "焦糖奶茶(冰)": 69,
+        "台灣鮮榨柳丁汁": 69,
+        "奶茶(熱)": 51,"奶茶(冰)": 51,"紅茶(熱)": 38,
+        "無糖紅茶(冰)": 44,"無糖綠茶(冰)": 44,
+        "可樂(中)": 38,"雪碧(中)": 38,"零卡可樂(中)": 38,"檸檬風味紅茶(冰)": 38,
+        "玉米湯(大)":56,"玉米湯(小)":46,"鮮乳": 33,
+    };
+    const side_select = {
+        "麥克鷄塊(4塊)+薯條(大)": 114,
+        "麥克鷄塊(6塊)+薯條(大)": 134,
+        "大薯+原味麥脆鷄腿(1塊)": 134,
+        "大薯+辣味麥脆鷄腿(1塊)": 134,
+        "原味麥脆鷄腿(1塊)": 68,
+        "辣味麥脆鷄腿(1塊)": 68,
+        "經典大薯": 65,
+        "經典中薯": 49,
+        "清爽沙拉": 54
+    }
+    const menu_list = {
+        "分享餐": [
+            {
+                "product_name": "好時鷄豪飽餐 (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 473,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/67927.png?",
+                "set_detail":{
+                    "勁辣鷄腿堡":{},
+                    "20塊麥克鷄塊":{nuggets_sel:4},
+                    "薯條(大)":{},
+                    "麥脆鷄腿(2塊)":{ chicken_sel:1,},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            },
+            {
+                "product_name": "鷄塊鷄腿分享餐 (原/辣味) (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 601,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66992.png?",
+                "set_detail":{
+                    "鷄塊鷄腿分享盒(雞塊)":{nuggets_sel:2},
+                    "鷄塊鷄腿分享盒(雞腿)":{chicken_sel:1},
+                    "薯條(大)1":{},
+                    "薯條(大)2":{},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            },
+            {
+                "product_name": "原/辣味麥脆鷄腿分享餐 (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 508,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66990.png?",
+                "set_detail":{
+                    "鷄腿排盒":{chicken_sel:1},
+                    "薯條(大)1":{},
+                    "薯條(大)2":{},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            },
+            {
+                "product_name": "30塊麥克鷄塊分享餐",
+                "product_price": 368,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66987.png?",
+                "set_detail":{
+                    "30塊麥克鷄塊":{nuggets_sel:6},
+                    "薯條(大)":{},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            },
+            {
+                "product_name": "勁辣香鷄翅分享餐",
+                "product_price": 319,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66989.png?",
+                "set_detail":{
+                    "勁辣香鷄翅盒":{},
+                    "薯條(大)":{},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            },
+            {
+                "product_name": "20塊麥克鷄塊分享餐",
+                "product_price": 275,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66986.png?",
+                "set_detail":{
+                    "20塊麥克鷄塊":{nuggets_sel:4},
+                    "薯條(大)":{},
+                    "飲料1":{drink_select:1,drink_cost:38},
+                    "飲料2":{drink_select:1,drink_cost:38}
+                },
+            }
+        ],
+        "極選系列": [
+            {
+                "product_name": "蕈菇主廚鷄腿堡",
+                "product_price": 200,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41389.png?",
+                "set_detail": {
+                    "蕈菇主廚鷄腿堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "帕瑪森安格斯牛肉堡",
+                "product_price": 195,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1102.png?",
+                "set_detail": {
+                    "帕瑪森安格斯牛肉堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "帕瑪森主廚鷄腿堡",
+                "product_price": 195,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41385.png?",
+                "set_detail": {
+                    "帕瑪森主廚鷄腿堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "BLT安格斯牛肉堡",
+                "product_price": 190,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1086.png?",
+                "set_detail": {
+                    "BLT安格斯牛肉堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "BLT嫩煎鷄腿堡",
+                "product_price": 190,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41334.png?",
+                "set_detail": {
+                    "BLT嫩煎鷄腿堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "蕈菇安格斯牛肉堡",
+                "product_price": 200,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1088.png?",
+                "set_detail": {
+                    "蕈菇安格斯牛肉堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "藜麥沙拉",
+                "product_price": 177,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1614.png?",
+                "set_detail": {
+                    "藜麥沙拉": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "藜麥鱈魚沙拉",
+                "product_price": 207,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1615.png?",
+                "set_detail": {
+                    "藜麥鱈魚沙拉": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "藜麥烤雞沙拉",
+                "product_price": 207,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1616.png?",
+                "set_detail": {
+                    "藜麥烤雞沙拉": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "藜麥辣脆雞沙拉",
+                "product_price": 207,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1617.png?",
+                "set_detail": {
+                    "藜麥辣脆雞沙拉": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            }
+        ],
+        "超值全餐": [
+            {
+                "product_name": "雙層麥香魚",
+                "product_price": 165,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1212.png?",
+                "set_detail": {
+                    "雙層麥香魚": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "雙層四盎司牛肉堡",
+                "product_price": 200,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1105.png?",
+                "set_detail": {
+                    "雙層四盎司牛肉堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "四盎司牛肉堡",
+                "product_price": 160,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1104.png?",
+                "set_detail": {
+                    "四盎司牛肉堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "大麥克",
+                "product_price": 146,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1095.png?",
+                "set_detail": {
+                    "大麥克": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "雙層牛肉吉事堡",
+                "product_price": 140,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1098.png?",
+                "set_detail": {
+                    "雙層牛肉吉事堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "嫩煎鷄腿堡",
+                "product_price": 151,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41322.png?",
+                "set_detail": {
+                    "嫩煎鷄腿堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "麥脆鷄腿(2塊) (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 129,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41330.png?",
+                "set_detail": {
+                    "麥脆鷄腿(2塊)": {
+                        "chicken_sel": 1
+                    },
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "麥克鷄塊(10塊)",
+                "product_price": 110,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41350.png?",
+                "set_detail": {
+                    "麥克鷄塊(10塊)": {
+                        "nuggets_sel": 2
+                    },
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "麥克鷄塊(6塊)",
+                "product_price": 69,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31371.png?",
+                "set_detail": {
+                    "麥克鷄塊(6塊)": {
+                        "nuggets_sel": 1
+                    },
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "勁辣鷄腿堡",
+                "product_price": 146,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31373.png?",
+                "set_detail": {
+                    "勁辣鷄腿堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "雙層麥香鷄",
+                "product_price": 146,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41384.png?",
+                "set_detail": {
+                    "雙層麥香鷄": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "麥香鷄",
+                "product_price": 116,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31368.png?",
+                "set_detail": {
+                    "麥香鷄": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "麥香魚",
+                "product_price": 125,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1229.png?",
+                "set_detail": {
+                    "麥香魚": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            }
+        ],
+
+
+        "單點堡類": [
+            {
+                "product_name": "蕈菇主廚鷄腿堡",
+                "product_price": 135,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41389.png?",
+                "set_detail": {
+                    "蕈菇主廚鷄腿堡": {}
+                }
+            },
+            {
+                "product_name": "帕瑪森安格斯牛肉堡",
+                "product_price": 130,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1102.png?",
+                "set_detail": {
+                    "帕瑪森安格斯牛肉堡": {}
+                }
+            },
+            {
+                "product_name": "帕瑪森主廚鷄腿堡",
+                "product_price": 130,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41385.png?",
+                "set_detail": {
+                    "帕瑪森主廚鷄腿堡": {}
+                }
+            },
+            {
+                "product_name": "BLT安格斯牛肉堡",
+                "product_price": 125,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1086.png?",
+                "set_detail": {
+                    "BLT安格斯牛肉堡": {}
+                }
+            },
+            {
+                "product_name": "BLT嫩煎鷄腿堡",
+                "product_price": 125,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41334.png?",
+                "set_detail": {
+                    "BLT嫩煎鷄腿堡": {}
+                }
+            },
+            {
+                "product_name": "蕈菇安格斯牛肉堡",
+                "product_price": 135,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1088.png?",
+                "set_detail": {
+                    "蕈菇安格斯牛肉堡": {}
+                }
+            },
+            {
+                "product_name": "藜麥沙拉",
+                "product_price": 112,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1614.png?",
+                "set_detail": {
+                    "藜麥沙拉": {}
+                }
+            },
+            {
+                "product_name": "藜麥鱈魚沙拉",
+                "product_price": 142,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1615.png?",
+                "set_detail": {
+                    "藜麥鱈魚沙拉": {}
+                }
+            },
+            {
+                "product_name": "藜麥烤雞沙拉",
+                "product_price": 142,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1616.png?",
+                "set_detail": {
+                    "藜麥烤雞沙拉": {}
+                }
+            },
+            {
+                "product_name": "藜麥辣脆雞沙拉",
+                "product_price": 142,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1617.png?",
+                "set_detail": {
+                    "藜麥辣脆雞沙拉": {}
+                }
+            },
+            {
+                "product_name": "雙層麥香魚",
+                "product_price": 100,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1212.png?",
+                "set_detail": {
+                    "雙層麥香魚": {}
+                }
+            },
+            {
+                "product_name": "雙層四盎司牛肉堡",
+                "product_price": 135,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1105.png?",
+                "set_detail": {
+                    "雙層四盎司牛肉堡": {}
+                }
+            },
+            {
+                "product_name": "四盎司牛肉堡",
+                "product_price": 95,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1104.png?",
+                "set_detail": {
+                    "四盎司牛肉堡": {}
+                }
+            },
+            {
+                "product_name": "大麥克",
+                "product_price": 81,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1095.png?",
+                "set_detail": {
+                    "大麥克": {}
+                }
+            },
+            {
+                "product_name": "雙層牛肉吉事堡",
+                "product_price": 75,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1098.png?",
+                "set_detail": {
+                    "雙層牛肉吉事堡": {}
+                }
+            },
+            {
+                "product_name": "嫩煎鷄腿堡",
+                "product_price": 86,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41322.png?",
+                "set_detail": {
+                    "嫩煎鷄腿堡": {}
+                }
+            },
+            {
+                "product_name": "麥脆鷄腿(2塊) (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 129,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41330.png?",
+                "set_detail": {
+                    "麥脆鷄腿(2塊)": {
+                        "chicken_sel": 1
+                    }
+                }
+            },
+            {
+                "product_name": "麥克鷄塊(10塊)",
+                "product_price": 110,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41350.png?",
+                "set_detail": {
+                    "麥克鷄塊(10塊)": {
+                        "nuggets_sel": 2
+                    }
+                }
+            },
+            {
+                "product_name": "麥克鷄塊(6塊)",
+                "product_price": 69,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31371.png?",
+                "set_detail": {
+                    "麥克鷄塊(6塊)": {
+                        "nuggets_sel": 1
+                    }
+                }
+            },
+            {
+                "product_name": "勁辣鷄腿堡",
+                "product_price": 81,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31373.png?",
+                "set_detail": {
+                    "勁辣鷄腿堡": {}
+                }
+            },
+            {
+                "product_name": "雙層麥香鷄",
+                "product_price": 81,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41384.png?",
+                "set_detail": {
+                    "雙層麥香鷄": {}
+                }
+            },
+            {
+                "product_name": "麥香鷄",
+                "product_price": 51,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31368.png?",
+                "set_detail": {
+                    "麥香鷄": {}
+                }
+            },
+            {
+                "product_name": "麥香魚",
+                "product_price": 60,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1229.png?",
+                "set_detail": {
+                    "麥香魚": {}
+                }
+            }
+        ],
+        "點心": [
+            {
+                "product_name": "迷你Q紫薯",
+                "product_price": 59,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/4038.png?",
+                "set_detail":{
+                    "迷你Q紫薯":{},
+                },
+                
+            },
+            {
+                "product_name": "勁辣香鷄翅 (6塊)",
+                "product_price": 131,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41349.png?",
+                "set_detail":{
+                    "勁辣香鷄翅 (6塊)":{},
+                },
+            },
+            {
+                "product_name": "原/辣味麥脆鷄腿(2塊) (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 129,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41331.png?",
+                "set_detail":{
+                    "原/辣味麥脆鷄腿(2塊)":{chicken_sel:1},
+                },
+            },
+            {
+                "product_name": "原/辣味麥脆鷄腿(1塊) (棒腿或大腿 部位恕不指定、更換)",
+                "product_price": 69,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41329.png?",
+                "set_detail":{
+                    "原/辣味麥脆鷄腿(1塊)":{chicken_sel:1},
+                },
+            },
+            {
+                "product_name": "勁辣香鷄翅(2塊)",
+                "product_price": 50,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1330.png?",
+                "set_detail":{    
+                    "勁辣香鷄翅(2塊)":{},
+                },
+            },
+            {
+                "product_name": "麥克鷄塊(4塊)",
+                "product_price": 49,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/37422.png?",
+                "set_detail":{
+                    "麥克鷄塊(4塊)":{nuggets_sel:1},
+                },
+            },
+            {
+                "product_name": "OREO冰炫風 2入組",
+                "product_price": 120,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/66820.png?",
+                "set_detail":{    
+                    "OREO冰炫風 2入組":{},
+                },
+            },
+            {
+                "product_name": "雙倍OREO冰炫風",
+                "product_price": 66,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/4390.png?",
+                "set_detail":{    
+                    "雙倍OREO冰炫風":{},
+                },
+            },
+            {
+                "product_name": "OREO冰炫風",
+                "product_price": 60,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/4361.png?",
+                "set_detail":{    
+                    "OREO冰炫風":{},
+                },
+            },
+            {
+                "product_name": "薯條",
+                "product_price": 50,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/67444.png?",
+                "set_detail":{    
+                    "薯條":{},
+                },
+            },
+            {
+                "product_name": "薯條(大)",
+                "product_price": 66,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/67445.png?",
+                "set_detail":{    
+                    "薯條(大)":{},
+                },
+            },
+            {
+                "product_name": "蘋果派",
+                "product_price": 41,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/4135.png?",
+                "set_detail":{    
+                    "蘋果派":{},
+                },
+            },
+            {
+                "product_name": "玉米湯(小)",
+                "product_price": 46,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1417.png?",
+                "set_detail":{    
+                    "玉米湯(小)":{},
+                },
+            },
+            {
+                "product_name": "玉米湯(大)",
+                "product_price": 56,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1417.png?",
+                "set_detail":{    
+                    "玉米湯(大)":{},
+                },
+            },
+            {
+                "product_name": "水果袋-蘋果",
+                "product_price": 43,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/4009.png?",
+                "set_detail":{    
+                    "水果袋-蘋果":{},
+                },
+            },
+            {
+                "product_name": "四季沙拉",
+                "product_price": 56,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1611.png?",
+                "set_detail":{
+                    "四季沙拉":{salad_sel:1,},
+                },
+            }
+        ],
+
+    };
     //-----------------------------------------------------------------------------------------
-    // 飲料的讀取
+    // 依照 菜單 產生標籤
     //-----------------------------------------------------------------------------------------
-    // 第一層迴圈：遍歷每個飲料類別
-    // var drinkCategories = Object.keys(drink_data);
-    // var drink_html = "";
-    // var key = 1;
-    // for (let i = 0; i < drinkCategories.length; i++) {
-    //     const categoryName = drinkCategories[i];
-    //     const drinksInThisCategory = drink_data[categoryName];
-    //     drink_html += `
-    //                             <div class="card drink-category" >
-    //                                 <div class="card-header">
-    //                                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_${i}" aria-expanded="true" aria-controls="collapseOne">
-    //                                     〉${categoryName}
-    //                                     </button>
-    //                                 </div>
-    //                                 <div id="collapse_${i}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_drink">
-    //                                 `;
-    //     // 將該類別下的所有飲品名稱轉換成陣列，方便使用索引進行分組
-    //     const drinkNamesArray = Object.keys(drinksInThisCategory);
-    //     const cardsPerRow = 4; // 每組顯示的卡片數量
-    //     for (let j = 0; j < drinkNamesArray.length; j++) {
-    //         // 每當 j 是 cardsPerRow 的倍數時（包括 j=0），就開始一個新的 card-group
-    //         if (j % cardsPerRow === 0) {
-    //             // 如果不是第一個 card-group，先結束前一個
-    //             if (j !== 0) {
-    //                 // **補齊剩餘的佔位卡片**
-    //                 drink_html += `</div>`; // 結束上一個 card-group
-    //             }
-    //             // 開始新的 card-group，並增加底部邊距
-    //             drink_html += `<div class="card-group mb-3">`;
-    //         }
-    //         const drinkName = drinkNamesArray[j];
-    //         const drinkDetails = drinksInThisCategory[drinkName];
-    //         drink_html += `
-    //                     <div class="card h-100">
-    //                         <div class="card-body">
-    //                             <h5 class="card-title text-center">${drinkName}</h5>
-    //                             <p class="card-price text-center">價格: NT$${drinkDetails.price}</p>`;
-    //         // 檢查是否甜度冰塊正常
-    //         var ice = ['正常冰', '少冰', '去冰', '溫'];
-    //         var sugar = ['正常糖', '半糖', '微糖', '無糖'];
-    //         if (drinkDetails.normal_only === 1) {
-    //             drink_html += `<div class="option-group" data-option-type="sugar">
-    //                                         <input type="radio" id="sugar-normal-${key}" name="sugar-option-${key}" value="甜度固定" class="hidden-radio">
-    //                                         <label for="sugar-normal-${key}" class="option-label-radio">甜度固定</label>
-    //                                     </div>
-    //                                     <div class="option-group" data-option-type="ice">
-    //                                         <input type="radio" id="ice-normal-${key}" name="ice-option-${key}" value="冰塊固定" class="hidden-radio">
-    //                                         <label for="ice-normal-${key}" class="option-label-radio">冰塊固定</label>
-    //                                     </div>`;
-    //         } else {
-    //             drink_html += `
-    //                                     <div class="option-group" data-option-type="sugar">
-    //                                         <input type="radio" id="sugar-normal-${key}" name="sugar-option-${key}" value="正常糖" class="hidden-radio">
-    //                                         <label for="sugar-normal-${key}" class="option-label-radio">正常糖</label>
-    //                                         <input type="radio" id="sugar-half-${key}" name="sugar-option-${key}" value="半糖" class="hidden-radio">
-    //                                         <label for="sugar-half-${key}" class="option-label-radio">半糖</label>
-    //                                         <input type="radio" id="sugar-slight-${key}" name="sugar-option-${key}" value="微糖" class="hidden-radio">
-    //                                         <label for="sugar-slight-${key}" class="option-label-radio">微糖</label>
-    //                                         <input type="radio" id="sugar-none-${key}" name="sugar-option-${key}" value="無糖" class="hidden-radio">
-    //                                         <label for="sugar-none-${key}" class="option-label-radio">無糖</label>
-    //                                     </div>
-    //                                     <div class="option-group" data-option-type="ice">`;
-    //             if (drinkDetails.onIy_iced === 1 || drinkDetails.onIy_hot === 0) {
-    //                 drink_html += `    <input type="radio" id="ice-normal-${key}" name="ice-option-${key}" value="正常冰" class="hidden-radio">
-    //                                         <label for="ice-normal-${key}" class="option-label-radio">正常冰</label>
-    //                                         <input type="radio" id="ice-less-${key}" name="ice-option-${key}" value="少冰" class="hidden-radio">
-    //                                         <label for="ice-less-${key}" class="option-label-radio">少冰</label>
-    //                                         <input type="radio" id="ice-no-${key}" name="ice-option-${key}" value="去冰" class="hidden-radio">
-    //                                         <label for="ice-no-${key}" class="option-label-radio">去冰</label>`;
-    //             } else if (drinkDetails.onIy_hot === 1 || drinkDetails.onIy_iced === 0) {
-    //                 drink_html += `
-    //                                         <input type="radio" id="sugar-none-${key}" name="sugar-option-${key}" value="溫" class="hidden-radio">
-    //                                         <label for="sugar-none-${key}" class="option-label-radio">溫</label>`;
-    //             }
-    //             drink_html += `
-    //                     </div>
-    //                                 <div class="count_qty"> <div class="input-group justify-content-center mt-2">
-    //                                         <button class="btn btn-outline-secondary add_text" type="button" onClick="Minus_qty(this,'drink')" > - </button>
-    //                                         <input type="text" class="form-control text-center quantity-input" placeholder="" aria-label="數量" value="0" style="max-width: 60px;" id="quantity-input-drink-${key}">
-    //                                         <button class="btn btn-outline-secondary add_text" type="button" onClick="Plus_qty(this,'drink')" > + </button>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     `;
-    //         }
-    //         key++;
-    //     }
-    //     // **迴圈結束後，處理最後一個 card-group 的補齊問題**
-    //     // 計算最後一個 card-group 還差多少個卡片
-    //     const remaining_cards = drinkNamesArray.length % cardsPerRow;
-    //     if (remaining_cards !== 0) { // 如果最後一行不是滿的
-    //         const placeholders_to_add = cardsPerRow - remaining_cards;
-    //         for (let k = 0; k < placeholders_to_add; k++) {
-    //             drink_html += `<div class="card card-placeholder"></div>`;
-    //         }
-    //     }
-    //     // 確保每個類別的最後一個 card-group 被正確關閉
-    //     if (drinkNamesArray.length > 0) { // 只有當這個類別有飲品時才需要關閉 card-group
-    //         drink_html += `</div>`; // 結束最後一個 card-group
-    //     }
-    //     drink_html += `</div></div>`; // 結束 drink-category
-    // }
-    // $("#drink_cards").append(drink_html);
-    // // 如果有加減項目，就把選過的品項寫上去
-    // $(".add_text").on("click", function () {
-    //     // 先檢查是否有選甜度冰塊
-    //     var sugar_ck_comp = $(this).closest('.card').find('input[name^="sugar-option-"]:checked').val();
-    //     var ice_ck_comp = $(this).closest('.card').find('input[name^="ice-option-"]:checked').val();
-    //     if (!sugar_ck_comp || !ice_ck_comp) {
-    //         Swal.fire({
-    //             title: "請先選擇甜度冰塊",
-    //             icon: "warning"
-    //         });
-    //         // 把值歸零
-    //         $(this).siblings("input").val(0);
-    //         return;
-    //     }
-    //     fillinDrinkList();
-    // })
+    // 設定固定寬度
+    let tab_html = `<ul class="nav nav-pills nav-justified flex-column flex-sm-row" >`;
+    let card_html = `<div class="tab-content" id="myTabContent">`;
+    for (let tab in menu_list) {
+        tab_html += ` 
+            <li class="nav-item" >
+                <a style="color:red" class="flex-sm-fill text-sm-center nav-link" id="${tab}-tab" data-toggle="tab" data-target="#${tab}" type="button" role="tab" aria-controls="${tab}" aria-selected="false">${tab}</a>
+            </li>
+        `;
+        card_html += `
+        <div class="tab-pane fade" id="${tab}" role="tabpanel" aria-labelledby="${tab}-tab">
+        `;
+        let food_data = menu_list[tab];
+        card_html += `<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-3">`; 
+        for (let i = 0; i < food_data.length; i ++) {
+            card_html += `
+            <div class="col d-flex align-items-stretch">
+                <div class="card border-danger w-100">
+                    <img src="${food_data[i]["product_url"]}" class="card-img-top" alt="...">
+                    <div class="card-body text-danger">
+                        <span style="font-size:2vh" class="card-title text-center">${food_data[i]["product_name"]}</span>
+                    </div>
+                    <div class="card-footer bg-transparent border-danger d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-danger" onclick="InsertMeal('${tab}','${food_data[i]["product_name"]}')">新增</button>
+                    </div>
+
+                </div>
+            </div>
+            `;
+        }
+        card_html += `</div></div>`;
+    }
+    tab_html += "</ul>";
+    card_html += "</div>";
+    $("#order_panel").html(tab_html + card_html);
     //-----------------------------------------------------------------------------------------
-    // 重製表單狀態
+    // 點擊新增
     //-----------------------------------------------------------------------------------------
-    // 監聽所有具有 'modal' 類別的元素，當它們觸發 'hidden.bs.modal' 事件時
-    // $('.modal').on('hidden.bs.modal', function () {
-    //     $('.count_qty input[type="text"]').prop('disabled', false); // 鎖定所有 count_qty 內部的 input
-    //     $('.count_qty input[type="text"]').val(0); // 鎖定所有 count_qty 內部的 input
-    //     // 2. 展開 Modal 內部所有的 Accordion 項目
-    //     // 找到 Modal 內部所有具有 'accordion-collapse' 類別的摺疊內容區塊
-    //     $(this).find('.collapse').each(function () {
-    //         $(this).removeClass("show");
-    //     });
-    //     // 清空選取的 radio
-    //     $('.hidden-radio:checked').each(function (idx, val) {
-    //         $(val).prop("checked", false);
-    //     })
-    // });
-    // //-----------------------------------------------------------------------------------------
-    // // 一些好用的 function
-    // //-----------------------------------------------------------------------------------------
-    // // 增加數量
-    // function Minus_qty(btn, type) {
-    //     var input = $(btn).next('.quantity-input');
-    //     var value = parseInt($(input).val());
-    //     $(input).val(value - 1 < 0 ? 0 : value - 1);
-    //     Sum(type);
-    // }
-    // // 減少數量
-    // function Plus_qty(btn, type) {
-    //     var input = $(btn).prev('.quantity-input');
-    //     var value = parseInt($(input).val());
-    //     $(input).val(value + 1);
-    //     Sum(type);
-    // }
-    // // 減少數量
-    // function Sum(type) {
-    //     // 取得所有的數字
-    //     let totalQuantity = 0;
-    //     $('.quantity-input').each(function () {
-    //         // 取得每個 input 的值
-    //         let quantity = parseInt($(this).val()); // 使用 parseInt 將值轉換為整數
-    //         // 檢查轉換後的數字是否有效 (不是 NaN)
-    //         if (!isNaN(quantity)) {
-    //             totalQuantity += quantity; // 加到總和中
-    //         }
-    //     });
-    //     var max_count = {
-    //         "food": 2,
-    //         "drink": 9999,
-    //     };
-    //     if (totalQuantity >= max_count[type]) {
-    //         // 如果總和達到或超過上限，鎖定所有相關控件
-    //         $('.count_qty .plus').prop('disabled', true); // 鎖定所有 count_qty 內部的 button
-    //         //$('.count_qty input[type="text"]').prop('disabled', true); // 鎖定所有 count_qty 內部的 input
-    //     } else {
-    //         // 如果總和未達到上限，則解鎖所有控件
-    //         $('.count_qty .plus').prop('disabled', false); // 解鎖所有 count_qty 內部的 button
-    //         //$('.count_qty input[type="text"]').prop('disabled', false); // 解鎖所有 count_qty 內部的 input
-    //     }
-    // }
-    // // 確認菜單存入localStorage
-    // function confirm(type) {
-    //     var data = $("#" + type + "_form").find(".quantity-input").map(function (idx, comp) {
-    //         if (parseInt($(comp).val()) > 0) {
-    //             // 記錄品項
-    //             var goods = $(comp).parents(".card-body").eq(0).find("h5").text();
-    //             var qty = parseInt($(comp).val());
-    //             var sugar = $(comp).parents(".card-body").eq(0).find('input[name^="sugar-option-"]:checked').val() ?? "";
-    //             var iced = $(comp).parents(".card-body").eq(0).find('input[name^="ice-option-"]:checked').val() ?? "";
-    //             var price = $(comp).parents(".card-body").eq(0).find('p').text() ?? "";
-    //             if (price !== "") {
-    //                 price = price.replace(/[^\d.]/g, '');
-    //                 price = parseInt(price);
-    //             }
-    //             return { goods: goods, qty: qty, sugar: sugar, iced: iced, price: price }
-    //         }
-    //     }).get();
-    //     localStorage.setItem(type, JSON.stringify(data));
-    //     // 檢查項目
-    //     let ck_local = 0;
-    //     $("#cart_total_qty").text(localStorage.length);
-    //     $("#" + type + "_form").modal("toggle");
-    // }
-    // function OpenModal(type) {
-    //     // 如果有選好的餐點，先加上去
-    //     if (localStorage.getItem(type)) {
-    //         jsonString = localStorage.getItem(type);
-    //         order_list = JSON.parse(jsonString);
-    //         // 比對 food_data 的 key值，去加總
-    //         order_list.forEach(function (order_item) {
-    //             var goods_name = order_item.goods;
-    //             // 找到包含這個字元的 card元件
-    //             var span = $('h5:contains(' + goods_name + ')');
-    //             var input = $(span).closest('.card-body').find('.quantity-input');
-    //             $(input).val(order_item.qty);
-    //             var sugar = $(span).closest('.card-body').find('.option-group[data-option-type="sugar"]');
-    //             if (order_item.sugar !== "") {
-    //                 $(sugar).find('input[type="radio"][value="' + order_item.sugar + '"]').prop('checked', true);
-    //             }
-    //             var iced = $(span).closest('.card-body').find('.option-group[data-option-type="ice"]');
-    //             if (order_item.iced !== "") {
-    //                 $(iced).find('input[type="radio"][value="' + order_item.iced + '"]').prop('checked', true);
-    //             }
-    //         })
-    //         if (type == "drink") {
-    //             fillinDrinkList();
-    //         }
-    //         Sum(type);
-    //     }
-    //     $("#" + type + "_form").modal("toggle");
-    //     $("#cart_total_qty").val(0); //購物車清0
-    // }
-    // function fillinDrinkList() {
-    //     var listItem = "";
-    //     $("#drink_form").find(".quantity-input").each(function (idx, comp) {
-    //         if (parseInt($(comp).val()) > 0) {
-    //             // 從觸發事件的元素 (例如 + 或 - 按鈕) 開始，找到最外層的 .card 容器
-    //             const $card = $(comp).closest('.card');
-    //             // 1. 取得飲料名稱
-    //             const drinkName = $card.find('.card-title').text();
-    //             // 2. 取得價格
-    //             // 移除 "價格: NT$" 並轉換為數字
-    //             const priceText = $card.find('.card-price').text();
-    //             const price = parseFloat(priceText.replace('價格: NT$', ''));
-    //             // 3. 取得甜度
-    //             // 找到甜度組中被選中的 radio 的值
-    //             const sugar = $card.find('input[name^="sugar-option-"]:checked').val();
-    //             const selectedSugar = sugar || '未選'; // 如果沒選，則顯示 '未選'
-    //             // 4. 取得冰塊
-    //             // 找到冰度組中被選中的 radio 的值
-    //             const ice = $card.find('input[name^="ice-option-"]:checked').val();
-    //             const selectedIce = ice || '未選'; // 如果沒選，則顯示 '未選'
-    //             // 5.數量
-    //             const quantity = parseInt($(comp).val());
-    //             listItem += `
-    //                 <li>
-    //                     <strong>${drinkName}</strong> - 價格: NT$${price}
-    //                     (甜度: ${selectedSugar}, 冰塊: ${selectedIce})
-    //                     數量: ${quantity}
-    //                 </li>
-    //             `;
-    //         }
-    //     })
-    //     // 將生成的清單項目添加到 ul 中
-    //     $('#drink_name').html(listItem);
-    // }
-    // // 送出訂單
-    // function Confirm(buttom) {
-    //     var modal = $(buttom).parents(".modal");
-    //     // 檢查是否都有填
-    //     var order_floor = $("#select_floor").combobox("getValue");
-    //     var order_name = $("#select_name").combobox("getValue");
-    //     var order_food = localStorage.getItem("food");
-    //     var order_drink = localStorage.getItem("drink");
-    //     if (!order_floor || !order_name || !order_food || !order_drink) {
-    //         Swal.fire({
-    //             title: "請務必填寫完整",
-    //             icon: "warning"
-    //         });
-    //         return;
-    //     }
-    //     Swal.fire({
-    //         title: "確定要送出訂單?",
-    //         showCancelButton: true,
-    //         confirmButtonText: "確定",
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             total = JSON.parse(order_drink).map(drink => (drink.price) * (drink.qty)).reduce((accumulator, currentValue) => {
-    //                 return accumulator + currentValue;
-    //             }, 0);
-    //             var form_data = {
-    //                 creatd_at: showDate(new Date()),
-    //                 order_floor: order_floor,
-    //                 order_name: order_name,
-    //                 order_food: order_food,
-    //                 order_drink: order_drink,
-    //                 total: parseInt(150 + total),
-    //             };
-    //             InsertGasData("6月表單回應", form_data);
-    //             Swal.fire("送出成功", "", "success");
-    //             localStorage.clear(); // 送出後清空紀錄
-    //             // 關閉modal
-    //             $("#cart_form").modal("toggle");
-    //         }
-    //     });
-    // }
+    function InsertMeal(Class,product){
+        // 如果有自定義的明細，以自定義為主，沒有就是套餐
+        var product_data = menu_list[Class].filter( x=> x.product_name ==product);
+        price = product_data.length > 0? product_data[0]["product_price"] :set_select["price"];
+        set_detail = product_data[0]["set_detail"]??set_select["set_detail"];
+        // var set_detail = menu_list[Class].filter( x=>)
+        if (set_detail){
+            // 標題：產品名稱
+            $("#product_name").html(product);
+            $("#product_total").html(price);
+            form_html = "";
+            //生成 span + input 的組合
+            for ( let name in set_detail){
+                form_html += `<div class="input-group mb-3">`;
+                if ( Object.values(set_detail[name]).length >0 ){
+                    let options = set_detail[name];
+                    form_html +=`<span class="input-group-text" style="width:48%">${name}</span>`;
+                    // 依照類別新增選項
+                    let other_options_html =""; 
+                    if ( options.hasOwnProperty("drink_select")){
+                        other_options_html = GetDrinkList(options["drink_cost"]);
+                    }else if (options.hasOwnProperty("side_select")){
+                        other_options_html = GetSideList(options["side_cost"]);
+                    }else if (options.hasOwnProperty("nuggets_sel")){
+                        other_options_html = GetNuggestList(options["nuggets_sel"]);
+                    }else if (options.hasOwnProperty("chicken_sel")){
+                        other_options_html = GetChickenList();
+                    }else if (options.hasOwnProperty("salad_sel")){
+                        other_options_html = GetSaladList();
+                    }
+                    form_html += other_options_html;
+                }else{
+                    form_html +=`<span class="input-group-text" style="width:100%">${name}</span>`;
+                }
+                form_html += `</div>`;
+            }
+            $("#set_list").html(form_html);
+        }
+        // 飲品選擇後，會有onchange事件
+        $(".drink_sel").on("change",function(){
+            sum_total();
+        })
+        // 附餐選擇後，會有onchange事件
+        $(".side_sel").on("change",function(){
+            sum_total();
+        })
+
+        function sum_total(){   
+            var total = Number(price);
+            $("#set_form").find(".drink_sel,.side_sel").each(function(idx,val){
+                let cost = $(val).find("option:selected").attr("cost");
+                total += Number(cost);
+            })
+            $("#product_total").html(total);
+        }
+        // 把品項加到選項中
+        $("#set_form").modal("toggle");
+    };
+    //-----------------------------------------------------------------------------------------
+    // 餐點選項
+    //-----------------------------------------------------------------------------------------
+    function GetDrinkList ( drink_cost ){
+        let html ="";
+        html +=`<select class="form-select drink_sel" style="width:52%" name ="drink"  >`;
+        for ( let drink in  drink_select ){
+            html += `<option value="${drink}" ${drink =="可樂(中)"?"selected":""} cost =${ drink_select[drink] -drink_cost }>
+                ${drink} (${ drink_select[drink] -drink_cost })
+            </option>`;
+        }
+        html += `</select>`;
+        return html;
+    }
+    function GetSideList( side_cost ){
+        let html ="";
+        html +=`<select class="form-select side_sel" style="width:52%" name ="side"  >`;
+        for ( let side in  side_select ){
+            html += `<option value="${side}" ${side =="經典中薯"?"selected":""} cost =${ side_select[side] -side_cost } >
+                ${side} (${ side_select[side] -side_cost })
+            </option>`;
+        }
+        html += `</select>`;
+        return html;
+    }
+    function GetNuggestList (nuggets_count){
+        let html ="";
+        width_p = 52;
+        for ( let i = 0 ; i< nuggets_count ; i++ ){
+            html +=`<select class="form-select" style="width:${52/nuggets_count}%" name ="nuggest_${i}" >`;
+            for ( let i = 0 ; i< nuggets_sel.length ; i++ ){
+                html += `<option value="${nuggets_sel[i]}" ${i==0?"selected":""} >
+                    ${nuggets_sel[i]}
+                </option>`;
+            }
+            html += `</select>`;
+        }
+        return html;
+    }
+    function GetChickenList (){
+        let html ="";
+        html +=`<select class="form-select" style="width:52%" name ="chicken" >`;
+        for ( let i = 0 ; i< chicken_sel.length ; i++ ){
+            html += `<option value="${chicken_sel[i]}" ${i==0?"selected":""} >
+                ${chicken_sel[i]}
+            </option>`;
+        }
+        html += `</select>`;
+        return html;
+    }
+    function GetSaladList (){
+        let html ="";
+        html +=`<select class="form-select" style="width:52%" name ="chicken" >`;
+        for ( let i = 0 ; i< salad_sel.length ; i++ ){
+            html += `<option value="${salad_sel[i]}" ${i==0?"selected":""} >
+                ${salad_sel[i]}
+            </option>`;
+        }
+        html += `</select>`;
+        return html;
+    }    
+    //-----------------------------------------------------------------------------------------
+    // 加入購物車(Loacl Storage)
+    //-----------------------------------------------------------------------------------------
+    function addCart(){
+        var data = {};
+        $("#set_form").find(".input-group").each(function(idx,input_group){
+            var key = $(input_group).find(".input-group-text").text(); // 品項名稱
+            var value = $(input_group).find("select").length >0? 
+            $.map($(input_group).find("select"), function(element, index) {
+                return $(element).find("option:selected").val();
+            }):
+            [];
+            data[key] = value;
+        })
+        // 整理初選向
+        var product_name = $("#product_name").text().trim();
+        var product_price = $("#product_total").text();
+
+        // 拿出 localStorage的值
+        var order = localStorage.getItem("order")? JSON.parse(localStorage.getItem("order")):[];
+        order.push( {product_name:product_name,product_price:product_price,product_detail:data});
+        localStorage.setItem("order",JSON.stringify(order));
+        $("#cart_total_qty").text(order.length);
+        // 關閉modal
+        $("#set_form").modal("toggle");
+    }
+    //-----------------------------------------------------------------------------------------
+    // 購物車的開啟
+    //-----------------------------------------------------------------------------------------
+    $('#cart_form').on('show.bs.modal', function (event) {
+        var total = 0;
+        /*---------------------------------------------*/
+        // 讀取列表，並依照建立時間先排序
+        /*---------------------------------------------*/
+        var form_data = GetGasData("7月表單回應");
+        // 將資料轉化為可讀取的資料
+        var [header, ...data] = form_data;
+        form_data = data
+        .map((row) =>
+            header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+        );
+        const remainingMembers = {};
+        const reportedMembersByFloor = {};
+        // 1. 建立已報到人員的快速查找結構
+        // 遍歷 form_data，將已報到的人員按樓層歸類
+        form_data.forEach(person => {
+            let floorKey = person.order_floor ;
+            if (!reportedMembersByFloor[floorKey]) {
+                reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+            }
+            // 有兩位以上
+            let order_names = person.order_name.split(";");
+            $(order_names).each( function(idx,val){
+                reportedMembersByFloor[floorKey].add(val);
+            })
+        });
+
+        // 2. 遍歷 member_list，找出每個樓層剩餘的人
+        for (const floorKey in member_list) {
+            if (member_list.hasOwnProperty(floorKey)) {
+                const floorMembers = member_list[floorKey];
+                const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+                const remainingInThisFloor = [];
+                floorMembers.forEach(member => {
+                    if (!currentReportedMembers.has(member)) {
+                        remainingInThisFloor.push(member);
+                    }
+                });
+                remainingMembers[floorKey] = remainingInThisFloor;
+            }
+        }
+
+        // 比對一下每個樓層剩餘的人數
+        // 依照剩餘人數準備 data
+        let loadData_floor = [];
+        for( let floor in remainingMembers){
+            let data = {};
+            data.id = floor;
+            data.text = floor;
+            loadData_floor.push(data);
+        }
+        $("#select_floor").combobox({
+            required:true,
+            editable: false,
+            panelHeight:'auto',
+            panelMaxHeight:'335',
+            valueField:'id',
+            textField:'text',
+            data:loadData_floor,
+            onChange:function(newValue,oldValue){
+                if (newValue !== oldValue){
+                    $("#select_name").combobox("clear")
+                    data = remainingMembers[newValue].map((x) => { return{id:x,text:x} });
+                }
+                $("#select_name").combobox("loadData",data);
+            }
+        })
+        $("#select_name").combobox({
+            required:true,
+            editable: false,
+            multiple:true,
+            separator:";",
+            panelHeight:'auto',
+            panelMaxHeight:'250',
+            valueField:'id',
+            textField:'text',
+            idField:"id",
+            textField:"text",
+            onChange:function(newValue,oldValue){
+                // 計算人數
+                let count = newValue.length;
+                let sum_total =  $("#personal_toal").val();
+                //  剩餘預算
+                $("#personal_rem").val((budget*count) - sum_total);
+            }
+        })
+        /*---------------------------------------------*/
+        // 點餐清單
+        /*---------------------------------------------*/
+        // 把 訂單的內容使用 table呈現
+        var sum_total = 0;
+        var order = localStorage.getItem("order")? 
+                    JSON.parse(localStorage.getItem("order")):
+                    [];
+        var html_order ="<ul>";
+        for ( let i = 0 ; i < order.length; i ++){
+            sum_total += Number(order[i]["product_price"]);
+            html_order += `<li>${order[i]["product_name"]}(${order[i]["product_price"]})<ul>`;
+            for ( let item in order[i]["product_detail"] ){
+                html_order += `<li>${item}`;
+                // 如果有內容物，把結果串接起來
+                html_order += order[i]["product_detail"][item].length >0 ?"－"+ order[i]["product_detail"][item].join("、"):"";
+                html_order += "</li>";
+            }
+            html_order += "</ul></li>";
+        }
+        html_order +="</ul>";
+        //  訂單內容
+        $("#order_list_ul").html(html_order);
+        //  訂單總金額
+        $("#personal_toal").val(sum_total);
+        //  剩餘預算(清空)
+        $("#personal_rem").val(0);
+    })
+    /*---------------------------------------------*/
+    // 送出訂單
+    /*---------------------------------------------*/
+    function Confirm(buttom) {
+        var modal = $(buttom).parents(".modal");
+        // 檢查是否都有填
+        var order_floor = $("#select_floor").combobox("getValue");
+        var order_name = $("#select_name").combobox("getValues");
+        var order_total = $("#personal_toal").val();
+        if (!order_floor || !order_name || order_total ==0) {
+            Swal.fire({
+                title: "請務必填寫完整",
+                icon: "warning"
+            });
+            return;
+        }
+        Swal.fire({
+            title: "確定要送出訂單?",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText:"取消",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form_data = {
+                    creatd_at: showDate(new Date()),
+                    order_floor: order_floor,
+                    order_name: order_name.join(";"),
+                    order_food :localStorage.getItem("order"),
+                    total: order_total,
+                };
+                InsertGasData("7月表單回應", form_data);
+                Swal.fire("送出成功", "", "success");
+                localStorage.clear(); // 送出後清空紀錄
+                $("#cart_total_qty").text(0); // 清空購物車
+                // 關閉modal
+                $("#cart_form").modal("toggle");
+            }
+        });
+    }
 </script>
 
 </html>
