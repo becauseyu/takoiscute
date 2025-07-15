@@ -168,7 +168,7 @@
                         〉備註
                     </div>
                     <div class="card-body" >
-                        <textarea placeholder="有特殊需求可於此備註"style="height: 10vh;width: 100%;" ></textarea>
+                        <textarea id="personal_remark" placeholder="有特殊需求可於此備註"style="height: 10vh;width: 100%;" ></textarea>
                     </div>
                     <div class="card-header">
                         〉總金額
@@ -1337,6 +1337,7 @@
         var order_floor = $("#select_floor").combobox("getValue");
         var order_name = $("#select_name").combobox("getValues");
         var order_total = $("#personal_toal").val();
+        var remark = $("#personal_remark").val();
         if (!order_floor || !order_name || order_total ==0) {
             Swal.fire({
                 title: "請務必填寫完整",
@@ -1357,6 +1358,7 @@
                     order_name: order_name.join(";"),
                     order_food :localStorage.getItem("order"),
                     total: order_total,
+                    remark:remark,
                 };
                 InsertGasData("7月表單回應", form_data);
                 Swal.fire("送出成功", "", "success");
