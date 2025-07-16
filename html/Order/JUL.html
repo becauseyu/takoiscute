@@ -101,7 +101,7 @@
         </div>
 
         <div>
-            <img id="mc_pic" src="" alt="Burger" style="width:15vw" />
+            <img id="mc_pic" src="" alt="Burger" style="width:15vw;cursor: pointer;" title="點擊觀看最可愛的生物" onclick="GetTako()" />
         </div>
         <div id="order_panel" style="width: 100%;" >
 
@@ -1459,6 +1459,14 @@
                 // 關閉modal
                 $("#cart_form").modal("toggle");
             }
+        });
+    }
+    function GetTako(){
+        Swal.fire({
+            imageUrl: "/takoiscute/public/img/tako_01.jpg",
+            showConfirmButton: false,
+            timer: 15000,
+            timerProgressBar: true,
         });
     }
 </script>
