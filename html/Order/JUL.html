@@ -1361,6 +1361,8 @@
         })
         // 呼叫填入訂單
         FillOrder();
+        //  剩餘預算(清空)
+        $("#personal_rem").val(0);
     })
     /*---------------------------------------------*/
     // 填入訂單
@@ -1388,8 +1390,6 @@
         $("#order_list_ul").html(html_order);
         //  訂單總金額
         $("#personal_toal").val(sum_total);
-        //  剩餘預算(清空)
-        $("#personal_rem").val(0);
         // 購物車的數量
         $("#cart_total_qty").text(order.length);
     }
@@ -1417,6 +1417,11 @@
                 }
                 // 呼叫填入訂單
                 FillOrder();
+                // 計算人數
+                let count = $("#select_name").combobox("getValues").length;
+                sum_total =  $("#personal_toal").val();
+                //  剩餘預算
+                $("#personal_rem").val((budget*count) - sum_total);
             } 
         });
     }
