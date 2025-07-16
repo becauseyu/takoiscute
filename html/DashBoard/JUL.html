@@ -207,10 +207,15 @@
                     }
                     table_html += "</ul></li>";
                 }
+                // 有備註的話加上去
+                if (  floor_order_list[i]["remark"] ){
+                    table_html += `<li>備註：${floor_order_list[i]["remark"]}</li>`;
+                }
                 table_html +="</ul></td>";
             }
             // 加上訂單總金額
-            table_html += `<td>${floor_order_list[i]["total"]}</td></tr>`;
+            table_html += `<td>${floor_order_list[i]["total"]}</td>`;
+
             order_total += Number(floor_order_list[i]["total"]);
         }
         //全部做完後，順便做個總計
