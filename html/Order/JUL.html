@@ -223,6 +223,7 @@
     // 食物的讀取
     //-----------------------------------------------------------------------------------------
     const nuggets_sel = ["醣醋醬包","蜂蜜芥末醬包","泰式香辣醬包","不要醬包"];
+    const salad_pro_sel = ["凱撒沙拉醬","義式油醋沙拉醬","不要沙拉醬"];
     const salad_sel = ["千島沙拉醬","和風沙拉醬","不要沙拉醬"];
     const chicken_sel = ["原味","辣味"];
     const drink_select = {
@@ -234,15 +235,23 @@
         "玉米湯(大)":56,"玉米湯(小)":46,"鮮乳": 33,
     };
     const side_select = {
-        "麥克鷄塊(4塊)+薯條(大)": 114,
-        "麥克鷄塊(6塊)+薯條(大)": 134,
+        "麥克鷄塊(4塊 + 糖醋醬)+薯條(大)": 114,
+        "麥克鷄塊(4塊 + 蜂蜜芥末醬包)+薯條(大)": 114,
+        "麥克鷄塊(4塊 + 泰式香辣醬包)+薯條(大)": 114,
+        "麥克鷄塊(4塊 + 不要醬包)+薯條(大)": 114,
+        "麥克鷄塊(6塊 + 糖醋醬)+薯條(大)": 134,
+        "麥克鷄塊(6塊 + 蜂蜜芥末醬包)+薯條(大)": 134,
+        "麥克鷄塊(6塊 + 泰式香辣醬包)+薯條(大)": 134,
+        "麥克鷄塊(6塊 + 不要醬包)+薯條(大)": 134,
         "大薯+原味麥脆鷄腿(1塊)": 134,
         "大薯+辣味麥脆鷄腿(1塊)": 134,
         "原味麥脆鷄腿(1塊)": 68,
         "辣味麥脆鷄腿(1塊)": 68,
         "經典大薯": 65,
         "經典中薯": 49,
-        "清爽沙拉": 54
+        "清爽沙拉(千島沙拉醬)": 54,
+        "清爽沙拉(和風沙拉醬)": 54,
+        "清爽沙拉(不要沙拉醬)": 54,
     }
     const menu_list = {
         "分享餐": [
@@ -420,7 +429,7 @@
                 "product_price": 177,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1614.png?",
                 "set_detail": {
-                    "藜麥沙拉": {},
+                    "藜麥沙拉":{salad_pro_sel:1,},
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -436,7 +445,7 @@
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1615.png?",
                 "set_detail": {
-                    "藜麥鱈魚沙拉": {},
+                    "藜麥鱈魚沙拉":{salad_pro_sel:1,},
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -452,7 +461,7 @@
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1616.png?",
                 "set_detail": {
-                    "藜麥烤雞沙拉": {},
+                    "藜麥烤雞沙拉":{salad_pro_sel:1,},
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -468,7 +477,7 @@
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1617.png?",
                 "set_detail": {
-                    "藜麥辣脆雞沙拉": {},
+                    "藜麥辣脆雞沙拉":{salad_pro_sel:1,},
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -752,7 +761,7 @@
                 "product_price": 112,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1614.png?",
                 "set_detail": {
-                    "藜麥沙拉": {}
+                    "藜麥沙拉": {salad_pro_sel:1,}
                 }
             },
             {
@@ -760,7 +769,7 @@
                 "product_price": 142,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1615.png?",
                 "set_detail": {
-                    "藜麥鱈魚沙拉": {}
+                    "藜麥鱈魚沙拉":{salad_pro_sel:1,},
                 }
             },
             {
@@ -768,7 +777,7 @@
                 "product_price": 142,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1616.png?",
                 "set_detail": {
-                    "藜麥烤雞沙拉": {}
+                    "藜麥烤雞沙拉":{salad_pro_sel:1,},
                 }
             },
             {
@@ -776,7 +785,7 @@
                 "product_price": 142,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1617.png?",
                 "set_detail": {
-                    "藜麥辣脆雞沙拉": {}
+                    "藜麥辣脆雞沙拉":{salad_pro_sel:1,},
                 }
             },
             {
@@ -1092,7 +1101,9 @@
                     }else if (options.hasOwnProperty("chicken_sel")){
                         other_options_html = GetChickenList();
                     }else if (options.hasOwnProperty("salad_sel")){
-                        other_options_html = GetSaladList();
+                        other_options_html = GetSaladList("salad");
+                    }else if (options.hasOwnProperty("salad_pro_sel")){
+                        other_options_html = GetSaladList("salad_pro");
                     }
                     form_html += other_options_html;
                 }else{
@@ -1172,12 +1183,17 @@
         html += `</select>`;
         return html;
     }
-    function GetSaladList (){
+    function GetSaladList (salad_class){
+        if ( salad_class == "salad_pro" ){
+            data = salad_pro_sel;
+        }else{
+            data = salad_sel;
+        }
         let html ="";
-        html +=`<select class="form-select" style="width:52%" name ="chicken" >`;
-        for ( let i = 0 ; i< salad_sel.length ; i++ ){
-            html += `<option value="${salad_sel[i]}" ${i==0?"selected":""} >
-                ${salad_sel[i]}
+        html +=`<select class="form-select" style="width:52%" name ="salad" >`;
+        for ( let i = 0 ; i< data.length ; i++ ){
+            html += `<option value="${data[i]}" ${i==0?"selected":""} >
+                ${data[i]}
             </option>`;
         }
         html += `</select>`;
