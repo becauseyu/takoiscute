@@ -97,7 +97,7 @@
     <div class="container">
         <h1><em> <span class="highlight">JULY 22</span> 大暑吃大薯</em></h1>
         <div class="subtext">
-            7/21 國際垃圾食物日、7/22 大暑、在大暑這天吃大薯，好好感受垃圾食物的魅力！
+            7/21 國際垃圾食物日、7/22 大暑，在大暑這天吃大薯，好好感受垃圾食物的魅力！
         </div>
 
         <div>
@@ -213,7 +213,9 @@
 <script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
 <script type="text/javascript">
     // 只要重整就是要重新填單
-    localStorage.clear();
+    // localStorage.clear();
+    var order = localStorage.getItem("order")?JSON.parse(localStorage.getItem("order")):[];
+    $("#cart_total_qty").text(order.length);
     // 先跑完加載，再跑自己的fn
     // 讀取圖片
     $("#mc_pic").attr('src', "/takoiscute/public/img/july_pic.png");
@@ -255,19 +257,6 @@
     }
     const menu_list = {
         "分享餐": [
-            {
-                "product_name": "好時鷄豪飽餐 (棒腿或大腿 部位恕不指定、更換)",
-                "product_price": 473,
-                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/67927.png?",
-                "set_detail":{
-                    "勁辣鷄腿堡":{},
-                    "20塊麥克鷄塊":{nuggets_sel:4},
-                    "薯條(大)":{},
-                    "麥脆鷄腿(2塊)":{ chicken_sel:1,},
-                    "飲料1":{drink_select:1,drink_cost:38},
-                    "飲料2":{drink_select:1,drink_cost:38}
-                },
-            },
             {
                 "product_name": "鷄塊鷄腿分享餐 (原/辣味) (棒腿或大腿 部位恕不指定、更換)",
                 "product_price": 601,
@@ -329,7 +318,7 @@
         ],
         "極選系列": [
             {
-                "product_name": "蕈菇主廚鷄腿堡",
+                "product_name": "蕈菇主廚鷄腿堡(套餐)",
                 "product_price": 200,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41389.png?",
                 "set_detail": {
@@ -345,7 +334,7 @@
                 }
             },
             {
-                "product_name": "帕瑪森安格斯牛肉堡",
+                "product_name": "帕瑪森安格斯牛肉堡(套餐)",
                 "product_price": 195,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1102.png?",
                 "set_detail": {
@@ -361,7 +350,7 @@
                 }
             },
             {
-                "product_name": "帕瑪森主廚鷄腿堡",
+                "product_name": "帕瑪森主廚鷄腿堡(套餐)",
                 "product_price": 195,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41385.png?",
                 "set_detail": {
@@ -377,7 +366,7 @@
                 }
             },
             {
-                "product_name": "BLT安格斯牛肉堡",
+                "product_name": "BLT安格斯牛肉堡(套餐)",
                 "product_price": 190,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1086.png?",
                 "set_detail": {
@@ -393,7 +382,7 @@
                 }
             },
             {
-                "product_name": "BLT嫩煎鷄腿堡",
+                "product_name": "BLT嫩煎鷄腿堡(套餐)",
                 "product_price": 190,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41334.png?",
                 "set_detail": {
@@ -409,7 +398,7 @@
                 }
             },
             {
-                "product_name": "蕈菇安格斯牛肉堡",
+                "product_name": "蕈菇安格斯牛肉堡(套餐)",
                 "product_price": 200,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1088.png?",
                 "set_detail": {
@@ -425,11 +414,13 @@
                 }
             },
             {
-                "product_name": "藜麥沙拉",
+                "product_name": "藜麥沙拉(套餐)",
                 "product_price": 177,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1614.png?",
                 "set_detail": {
-                    "藜麥沙拉":{salad_pro_sel:1,},
+                    "藜麥沙拉": {
+                        "salad_pro_sel": 1
+                    },
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -441,11 +432,13 @@
                 }
             },
             {
-                "product_name": "藜麥鱈魚沙拉",
+                "product_name": "藜麥鱈魚沙拉(套餐)",
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1615.png?",
                 "set_detail": {
-                    "藜麥鱈魚沙拉":{salad_pro_sel:1,},
+                    "藜麥鱈魚沙拉": {
+                        "salad_pro_sel": 1
+                    },
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -457,11 +450,13 @@
                 }
             },
             {
-                "product_name": "藜麥烤雞沙拉",
+                "product_name": "藜麥烤雞沙拉(套餐)",
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1616.png?",
                 "set_detail": {
-                    "藜麥烤雞沙拉":{salad_pro_sel:1,},
+                    "藜麥烤雞沙拉": {
+                        "salad_pro_sel": 1
+                    },
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -473,11 +468,13 @@
                 }
             },
             {
-                "product_name": "藜麥辣脆雞沙拉",
+                "product_name": "藜麥辣脆雞沙拉(套餐)",
                 "product_price": 207,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1617.png?",
                 "set_detail": {
-                    "藜麥辣脆雞沙拉":{salad_pro_sel:1,},
+                    "藜麥辣脆雞沙拉": {
+                        "salad_pro_sel": 1
+                    },
                     "飲料": {
                         "drink_select": 1,
                         "drink_cost": 38
@@ -491,7 +488,39 @@
         ],
         "超值全餐": [
             {
-                "product_name": "雙層麥香魚",
+                "product_name": "美式熔岩起司排雙牛堡(套餐)",
+                "product_price": 194,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1109.png?",
+                "set_detail": {
+                    "美式熔岩起司排雙牛堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "美式起司雙牛堡(套餐)",
+                "product_price": 174,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1108.png?",
+                "set_detail": {
+                    "美式起司雙牛堡": {},
+                    "飲料": {
+                        "drink_select": 1,
+                        "drink_cost": 38
+                    },
+                    "附餐": {
+                        "side_select": 1,
+                        "side_cost": 49
+                    }
+                }
+            },
+            {
+                "product_name": "雙層麥香魚(套餐)",
                 "product_price": 165,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1212.png?",
                 "set_detail": {
@@ -507,7 +536,7 @@
                 }
             },
             {
-                "product_name": "雙層四盎司牛肉堡",
+                "product_name": "雙層四盎司牛肉堡(套餐)",
                 "product_price": 200,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1105.png?",
                 "set_detail": {
@@ -523,7 +552,7 @@
                 }
             },
             {
-                "product_name": "四盎司牛肉堡",
+                "product_name": "四盎司牛肉堡(套餐)",
                 "product_price": 160,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1104.png?",
                 "set_detail": {
@@ -539,7 +568,7 @@
                 }
             },
             {
-                "product_name": "大麥克",
+                "product_name": "大麥克(套餐)",
                 "product_price": 146,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1095.png?",
                 "set_detail": {
@@ -555,7 +584,7 @@
                 }
             },
             {
-                "product_name": "雙層牛肉吉事堡",
+                "product_name": "雙層牛肉吉事堡(套餐)",
                 "product_price": 140,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1098.png?",
                 "set_detail": {
@@ -571,7 +600,7 @@
                 }
             },
             {
-                "product_name": "嫩煎鷄腿堡",
+                "product_name": "嫩煎鷄腿堡(套餐)",
                 "product_price": 151,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41322.png?",
                 "set_detail": {
@@ -587,7 +616,7 @@
                 }
             },
             {
-                "product_name": "麥脆鷄腿(2塊) (棒腿或大腿 部位恕不指定、更換)",
+                "product_name": "麥脆鷄腿(2塊) (棒腿或大腿 部位恕不指定、更換)(套餐)",
                 "product_price": 129,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41330.png?",
                 "set_detail": {
@@ -605,7 +634,7 @@
                 }
             },
             {
-                "product_name": "麥克鷄塊(10塊)",
+                "product_name": "麥克鷄塊(10塊)(套餐)",
                 "product_price": 110,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41350.png?",
                 "set_detail": {
@@ -623,7 +652,7 @@
                 }
             },
             {
-                "product_name": "麥克鷄塊(6塊)",
+                "product_name": "麥克鷄塊(6塊)(套餐)",
                 "product_price": 69,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31371.png?",
                 "set_detail": {
@@ -641,7 +670,7 @@
                 }
             },
             {
-                "product_name": "勁辣鷄腿堡",
+                "product_name": "勁辣鷄腿堡(套餐)",
                 "product_price": 146,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31373.png?",
                 "set_detail": {
@@ -657,7 +686,7 @@
                 }
             },
             {
-                "product_name": "雙層麥香鷄",
+                "product_name": "雙層麥香鷄(套餐)",
                 "product_price": 146,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/41384.png?",
                 "set_detail": {
@@ -673,7 +702,7 @@
                 }
             },
             {
-                "product_name": "麥香鷄",
+                "product_name": "麥香鷄(套餐)",
                 "product_price": 116,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/31368.png?",
                 "set_detail": {
@@ -689,7 +718,7 @@
                 }
             },
             {
-                "product_name": "麥香魚",
+                "product_name": "麥香魚(套餐)",
                 "product_price": 125,
                 "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1229.png?",
                 "set_detail": {
@@ -705,9 +734,23 @@
                 }
             }
         ],
-
-
         "單點堡類": [
+            {
+                "product_name": "美式熔岩起司排雙牛堡",
+                "product_price": 129,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1109.png?",
+                "set_detail": {
+                    "美式熔岩起司排雙牛堡": {},
+                }
+            },
+            {
+                "product_name": "美式起司雙牛堡",
+                "product_price": 109,
+                "product_url": "https://www.mcdelivery.com.tw/tw//static/1751871705984/assets/886/products/1108.png?",
+                "set_detail": {
+                    "美式起司雙牛堡": {},
+                }
+            },
             {
                 "product_name": "蕈菇主廚鷄腿堡",
                 "product_price": 135,
@@ -1316,9 +1359,13 @@
                 $("#personal_rem").val((budget*count) - sum_total);
             }
         })
-        /*---------------------------------------------*/
-        // 點餐清單
-        /*---------------------------------------------*/
+        // 呼叫填入訂單
+        FillOrder();
+    })
+    /*---------------------------------------------*/
+    // 填入訂單
+    /*---------------------------------------------*/
+    function FillOrder(){
         // 把 訂單的內容使用 table呈現
         var sum_total = 0;
         var order = localStorage.getItem("order")? 
@@ -1327,7 +1374,7 @@
         var html_order ="<ul>";
         for ( let i = 0 ; i < order.length; i ++){
             sum_total += Number(order[i]["product_price"]);
-            html_order += `<li>${order[i]["product_name"]}(${order[i]["product_price"]})<ul>`;
+            html_order += `<li>${order[i]["product_name"]}(${order[i]["product_price"]}) <a href="javascript:void(0)" onclick="DeleteOrder('${order[i]["product_name"]}')"> x 刪除</a><ul>`;
             for ( let item in order[i]["product_detail"] ){
                 html_order += `<li>${item}`;
                 // 如果有內容物，把結果串接起來
@@ -1343,7 +1390,36 @@
         $("#personal_toal").val(sum_total);
         //  剩餘預算(清空)
         $("#personal_rem").val(0);
-    })
+        // 購物車的數量
+        $("#cart_total_qty").text(order.length);
+    }
+    /*---------------------------------------------*/
+    // 刪除訂單
+    /*---------------------------------------------*/
+    function DeleteOrder(product_name){
+        Swal.fire({
+            title: `是否確定要刪除${product_name}?`,
+            icon:"question",
+            showCancelButton: true,
+            confirmButtonText: "刪除",
+            confirmButtonColor:"#ff000a",
+            cancelButtonText:'取消',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 取得刪除的清單內容
+                var order = localStorage.getItem("order")?JSON.parse(localStorage.getItem("order")):[];
+                var diff_data = order.filter( x => x.product_name !== product_name );
+                // 如果沒有值了，直接清空 local
+                if (diff_data.length == 0){
+                    localStorage.clear();
+                }else{
+                    localStorage.setItem("order",JSON.stringify(diff_data));
+                }
+                // 呼叫填入訂單
+                FillOrder();
+            } 
+        });
+    }
     /*---------------------------------------------*/
     // 送出訂單
     /*---------------------------------------------*/
@@ -1354,7 +1430,7 @@
         var order_name = $("#select_name").combobox("getValues");
         var order_total = $("#personal_toal").val();
         var remark = $("#personal_remark").val();
-        if (!order_floor || !order_name || order_total ==0) {
+        if (!order_floor || !order_name || order_name.length==0 || order_total ==0) {
             Swal.fire({
                 title: "請務必填寫完整",
                 icon: "warning"
