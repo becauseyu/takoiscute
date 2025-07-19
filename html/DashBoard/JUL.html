@@ -184,128 +184,127 @@
         }else{
             floor_order_list = form_data.filter( x => x.order_floor == floor_key);
         }
-        /*---------------------------------------------*/
-        // 全部訂單
-        /*---------------------------------------------*/
-        // 開始組裝資訊
-        // var table_html = "";
-        // var order_total = 0;
-        // for ( let i = 0 ; i < floor_order_list.length ; i++ ){
-        //     var order = floor_order_list[i]["order_food"];
-        //     table_html += `<tr><td>${floor_order_list[i]["order_name"]}</td>`;
-        //     if(order){
-        //         order = JSON.parse(order);
-        //         table_html +="<td><ul>";
-        //         for ( let i = 0 ; i < order.length; i ++){
-        //             // sum_total += Number(order[i]["product_price"]);
-        //             table_html += `<li>${order[i]["product_name"]}(${order[i]["product_price"]})<ul>`;
-        //             for ( let item in order[i]["product_detail"] ){
-        //                 table_html += `<li>${item}`;
-        //                 // 如果有內容物，把結果串接起來
-        //                 table_html += order[i]["product_detail"][item].length >0 ?"－"+ order[i]["product_detail"][item].join("、"):"";
-        //                 table_html += "</li>";
-        //             }
-        //             table_html += "</ul></li>";
-        //         }
-        //         // 有備註的話加上去
-        //         if (  floor_order_list[i]["remark"] ){
-        //             table_html += `<li>備註：${floor_order_list[i]["remark"]}</li>`;
-        //         }
-        //         table_html +="</ul></td>";
-        //     }
-        //     // 加上訂單總金額
-        //     table_html += `<td>${floor_order_list[i]["total"]}</td>`;
-
-        //     order_total +
-        // = Number(floor_order_list[i]["total"]);
-        // }
 
         var table_html = "";
-    var order_total = 0;
+        var order_total = 0;
+        var order_num = 1;
+        // 假設 floor_order_list 是您的訂單資料陣列
 
-    // 假設 floor_order_list 是您的訂單資料陣列
+        for (let i = 0; i < floor_order_list.length; i += 3) {
+            // 每三筆訂單為一組，i 為第一筆訂單的索引
+            // i + 1 為第二筆，i + 2 為第三筆 (如果存在的話)
 
-    for (let i = 0; i < floor_order_list.length; i += 2) {
-        // 每兩筆訂單為一組，i 為第一筆訂單的索引
-        // i + 1 為第二筆訂單的索引 (如果存在的話)
+            const order1 = floor_order_list[i];
+            const order2 = floor_order_list[i + 1]; // 可能會是 undefined
+            const order3 = floor_order_list[i + 2]; // 可能會是 undefined
 
-        const order1 = floor_order_list[i];
-        const order2 = floor_order_list[i + 1]; // 可能會是 undefined
+            table_html += `<tr>`; // 新的一行開始
 
-        table_html += `<tr>`; // 新的一行開始
-
-        // --- 處理第一張訂單 ---
-        table_html += `<td>`;
-        table_html += `<h3>${order1["order_name"]}</h3>`; // 顯示訂單名稱，可以用 H3 突出
-        
-        // 檢查是否有訂購食物
-        if (order1["order_food"]) {
-            const order_food1 = JSON.parse(order1["order_food"]);
-            table_html += "<ul>";
-            for (let j = 0; j < order_food1.length; j++) {
-                table_html += `<li>${order_food1[j]["product_name"]}(${order_food1[j]["product_price"]})<ul>`;
-                for (let item in order_food1[j]["product_detail"]) {
-                    table_html += `<li>${item}`;
-                    table_html += order_food1[j]["product_detail"][item].length > 0 ? "－" + order_food1[j]["product_detail"][item].join("、") : "";
-                    table_html += "</li>";
-                }
-                table_html += "</ul></li>";
-            }
-            // 有備註的話加上去
-            if (order1["remark"]) {
-                table_html += `<li>備註：${order1["remark"]}</li>`;
-            }
-            table_html += "</ul>";
-        } else {
-            table_html += `<p>無點餐內容</p>`; // 如果沒有點餐內容
-        }
-        table_html += `<p>總金額: ${order1["total"]}</p>`; // 顯示單張訂單總金額
-        table_html += `</td>`;
-
-        // 累加總金額
-        order_total += Number(order1["total"]);
-
-        // --- 處理第二張訂單 (如果存在的話) ---
-        if (order2) {
+            // --- 處理第一張訂單 ---
             table_html += `<td>`;
-            table_html += `<h3>${order2["order_name"]}</h3>`;
+            table_html += `<h3>${order1["order_name"]}</h3>`;
+
             
-            if (order2["order_food"]) {
-                const order_food2 = JSON.parse(order2["order_food"]);
+            if (order1["order_food"]) {
+                const order_food1 = JSON.parse(order1["order_food"]);
                 table_html += "<ul>";
-                for (let j = 0; j < order_food2.length; j++) {
-                    table_html += `<li>${order_food2[j]["product_name"]}(${order_food2[j]["product_price"]})<ul>`;
-                    for (let item in order_food2[j]["product_detail"]) {
+                for (let j = 0; j < order_food1.length; j++) {
+                    table_html += `<li>${order_food1[j]["product_name"]}(${order_food1[j]["product_price"]})<ul>`;
+                    for (let item in order_food1[j]["product_detail"]) {
                         table_html += `<li>${item}`;
-                        table_html += order_food2[j]["product_detail"][item].length > 0 ? "－" + order_food2[j]["product_detail"][item].join("、") : "";
+                        table_html += order_food1[j]["product_detail"][item].length > 0 ? "－" + order_food1[j]["product_detail"][item].join("、") : "";
                         table_html += "</li>";
                     }
                     table_html += "</ul></li>";
                 }
-                if (order2["remark"]) {
-                    table_html += `<li>備註：${order2["remark"]}</li>`;
+                if (order1["remark"]) {
+                    table_html += `<li>備註：${order1["remark"]}</li>`;
                 }
                 table_html += "</ul>";
+                order_num++;
+
             } else {
                 table_html += `<p>無點餐內容</p>`;
             }
-            table_html += `<p>總金額: ${order2["total"]}</p>`;
+            table_html += `<p>總金額: ${order1["total"]}</p>`;
             table_html += `</td>`;
 
-            // 累加總金額
-            order_total += Number(order2["total"]);
-        } else {
-            // 如果沒有第二張訂單，則補一個空的 td，保持表格結構完整
-            table_html += `<td></td>`;
+
+            order_total += Number(order1["total"]);
+
+            // --- 處理第二張訂單 ---
+            if (order2) {
+                table_html += `<td>`;
+                table_html += `<h3>${order2["order_name"]}</h3>`;
+                
+                if (order2["order_food"]) {
+                    const order_food2 = JSON.parse(order2["order_food"]);
+                    table_html += "<ul>";
+                    for (let j = 0; j < order_food2.length; j++) {
+                        table_html += `<li>${order_food2[j]["product_name"]}(${order_food2[j]["product_price"]})<ul>`;
+                        for (let item in order_food2[j]["product_detail"]) {
+                            table_html += `<li>${item}`;
+                            table_html += order_food2[j]["product_detail"][item].length > 0 ? "－" + order_food2[j]["product_detail"][item].join("、") : "";
+                            table_html += "</li>";
+                        }
+                        table_html += "</ul></li>";
+                    }
+                    if (order2["remark"]) {
+                        table_html += `<li>備註：${order2["remark"]}</li>`;
+                    }
+                    table_html += "</ul>";
+                } else {
+                    table_html += `<p>無點餐內容</p>`;
+                }
+                table_html += `<p>總金額: ${order2["total"]}</p>`;
+                table_html += `</td>`;
+
+                order_total += Number(order2["total"]);
+                order_num++;
+            } else {
+                // 如果沒有第二張訂單，則補一個空的 td
+                table_html += `<td></td>`;
+            }
+
+
+            // --- 處理第三張訂單 ---
+            if (order3) {
+                table_html += `<td>`;
+                table_html += `<h3>${order3["order_name"]}</h3>`;
+                
+                if (order3["order_food"]) {
+                    const order_food3 = JSON.parse(order3["order_food"]);
+                    table_html += "<ul>";
+                    for (let j = 0; j < order_food3.length; j++) {
+                        table_html += `<li>${order_food3[j]["product_name"]}(${order_food3[j]["product_price"]})<ul>`;
+                        for (let item in order_food3[j]["product_detail"]) {
+                            table_html += `<li>${item}`;
+                            table_html += order_food3[j]["product_detail"][item].length > 0 ? "－" + order_food3[j]["product_detail"][item].join("、") : "";
+                            table_html += "</li>";
+                        }
+                        table_html += "</ul></li>";
+                    }
+                    if (order3["remark"]) {
+                        table_html += `<li>備註：${order3["remark"]}</li>`;
+                    }
+                    table_html += "</ul>";
+                } else {
+                    table_html += `<p>無點餐內容</p>`;
+                }
+                table_html += `<p>總金額: ${order3["total"]}</p>`;
+                table_html += `</td>`;
+
+                order_total += Number(order3["total"]);
+                order_num++;
+            } else {
+                // 如果沒有第三張訂單，則補一個空的 td
+                table_html += `<td></td>`;
+            }
+
+            table_html += `</tr>`; // 結束一行
         }
 
-        table_html += `</tr>`; // 結束一行
-    }
 
-    // 您可以在這裡顯示 order_total，例如：
-    // document.getElementById("total_sum_display").innerText = order_total;
-
-    console.log(table_html);
         //全部做完後，順便做個總計
         table_html += `<tr class="table-secondary"><td>全部金額</td><td class="text-center" colspan = 2>${order_total}</td><tr>`;
         $("#grid_total-"+floors[i]["code"]).html(table_html);
