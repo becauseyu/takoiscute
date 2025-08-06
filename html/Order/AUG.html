@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025/08 福康活動-極限筋肉王</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-orange/easyui.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/css/AUG.css">
+
+</head>
+
+<body>
+    <div class="index">
+        <div class="title-container">
+            <h1 style="font-family: Playfair Display;">【八月福康活動】極限筋肉王</h1>
+        </div>
+
+        <div class="rules-box">
+            <p>活動日期：2025/08/22(五)</p>
+            <p>活動時間：11:30-12:00</p>
+            <p>活動地點：二樓資訊部會議室</p>
+            <p>活動項目：
+                <button type="button" class="btn btn-danger">肌力 - 伏地挺身</button>
+                <button type="button" class="btn btn-danger">肌力 - 深蹲</button>
+                <button type="button" class="btn btn-danger">耐力 - 瘦背操</button>
+                <button type="button" class="btn btn-danger">耐力 - 棒式平板撐</button>
+            </p>
+            <p>活動獎勵：</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-ligh">參加獎：報名一個項目，即得健身仔雞胸肉一塊(最多四塊)</li>
+                <li class="list-group-item list-group-item-ligh">極限筋肉王-$300全聯禮券、迪卡儂高級健身用品</li>
+                <li class="list-group-item list-group-item-ligh">肌力王-$200全聯禮券、迪卡儂高級健身用品</li>
+                <li class="list-group-item list-group-item-ligh">耐力王-$200全聯禮券、迪卡儂高級健身用品</li>
+                <li class="list-group-item list-group-item-ligh">終極魔鬼筋肉王(霸榜)-$800全聯禮券、健身仔雞胸肉*3，獎項已含上述獎項</li>
+            </ul>
+        </div>
+
+
+        <div class="left-interactive-area">
+            <div class="sp"></div>
+            <div class="hover-image left-image"></div>
+            <a href="#" class="button left-button" onclick="OpenModal('#sign_in_modal',true)">我想參賽</a>
+        </div>
+
+        <div class="right-interactive-area">
+            <div class="fd"></div>
+            <a href="#" class="button right-button" onclick="OpenModal('#order_modal',true)">我想點餐</a>
+        </div>
+
+        <div class="mobile-button-container">
+            <a href="#" class="button left-button" onclick="OpenModal('#sign_in_modal',true)">我想參賽</a>
+            <a href="#" class="button right-button" onclick="OpenModal('#order_modal',true)">我想點餐</a>
+        </div>
+    </div>
+    <div class="modal fade" id="sign_in_modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+        <form class="needs-validation" action="javascript:void(0)" id="sign_in_form">
+            <div class="modal-dialog modal-lg ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title event_name">極限筋肉王-報名</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 所屬樓層 -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">所屬樓層</span>
+                            </div>
+                            <select type="text" class="form-control select_floor">
+                            </select>
+                        </div>
+                        <!-- 報名人員 -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">報名人員</span>
+                            </div>
+                            <select type="text" class="form-control select_name"></select>
+                        </div>
+                        <!-- 報名項目 -->
+                        <div class='input-group mb-3' id="sign_in" style="display: flex; align-items: center;">
+                            <span class="input-group-text " style="font-size:14px;width:100%;">
+                                報名項目(可複選)
+                            </span>
+                            <div class="form-control" style="display: flex; align-items: center;width:100%;">
+                                <input class="chicken" type="checkbox" style="margin-right: 10px;" value="伏地挺身">
+                                <label for="report_order_1" style="margin-right: 15px;">1.肌力 - 兩分鐘伏地挺身。 1下 x2 = 得分</label>
+                            </div>
+                            <div class="form-control" style="display: flex; align-items: center;width:100%;">
+                                <input class="chicken" type="checkbox" style="margin-right: 10px;" value="深蹲">
+                                <label for="report_order_2">2.肌力 - 兩分鐘深蹲。1下 x1 = 得分</label>
+                            </div>
+                            <div class="form-control" style="display: flex; align-items: center;width:100%;">
+                                <input class="chicken" type="checkbox" style="margin-right: 10px;" value="瘦背操">
+                                <label for="report_order_2">3.耐力 - 瘦背操。1接 x0.3 = 得分</label>
+                            </div>
+                            <div class="form-control" style="display: flex; align-items: center;width:100%;">
+                                <input class="chicken" type="checkbox" style="margin-right: 10px;" value="棒式平板撐">
+                                <label for="report_order_2">4.耐力 - 棒式平板撐。 1秒 x1.2 = 得分</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <span>你可以獲得<span id="total_ck">0</span>塊雞胸肉<img style="width: 2vw;" src="/takoiscute/public/img/aug_01.png"></span>
+                        <button type="submit" class="btn btn-success" onclick="Confirm('#sign_in_modal')">確認報名</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="order_modal" class="modal fade order_modal" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-dialog2 modal-lg" style="margin-top: 0px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">╳</button>
+                </div>
+                <div class="myModalClass" style="overflow-y: auto;height:80vh;" id="moScroll">
+                    <div class="modal-body" style="height: auto;">
+                        <div class="product_info on" style="height: 100%;width:100%">
+                            <p class="food_name">彩碗ColorBowl Poke東海店</p>
+                            <pre class="food_remark">自選彩碗</pre>
+                            <pre id="autolink" class="food_remark">含基底【1份】、蛋白質【自選】、配菜【5種】、醬料【1種】、點綴【1種】、脆脆【1種】。</pre>
+                            <div class="memo">
+                                <div class="">
+                                    <h4>訂單人員
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select base">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">所屬樓層</span>
+                                        </div>
+                                        <select type="text" class="form-control select_floor">
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">訂餐人員</span>
+                                        </div>
+                                        <select type="text" class="form-control select_name"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+                                <div class="">
+                                    <h4>基底選擇
+                                        <small>單選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select base">
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>藜麥白米</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>胚芽米</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>天使細麵</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>生菜</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>藜麥白米+天使細麵各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>藜麥白米+生菜各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>藜麥白米+胚芽米各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>胚芽米+天使細麵各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>胚芽米+生菜各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="base">
+                                            <div class="control_bg"></div><span>天使細麵+生菜各半</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>蛋白質加購
+                                        <small>複選</small>
+                                    </h4>
+                                </div>
+                                <div class="select meat_base">
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>金鮮蛋</span><span
+                                                class="float_right optionCash">20</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>老豆腐</span><span
+                                                class="float_right optionCash">20</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>椒鹽天貝 (純素)</span><span
+                                                class="float_right optionCash">40</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>骰子雞</span><span
+                                                class="float_right optionCash">45</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>手剝甜蝦(白蝦)</span><span
+                                                class="float_right optionCash">60</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>生食級挪威鮭魚</span><span
+                                                class="float_right optionCash">85</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>煙燻鮭魚（半熟）</span><span
+                                                class="float_right optionCash">85</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>炙燒干貝</span><span
+                                                class="float_right optionCash">85</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>墨西哥辣雞</span><span
+                                                class="float_right optionCash">55</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>嫩煎鮪魚（半熟、小辣</span><span
+                                                class="float_right optionCash">70</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>炙燒鴨胸</span><span
+                                                class="float_right optionCash">85</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>蔥爆豬</span><span
+                                                class="float_right optionCash">55</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>小份蛋白質自選
+                                        <small>複選</small>
+                                    </h4>
+                                </div>
+                                <div class="select meat_base_sm">
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>生食級挪威鮭魚(小份)</span><span
+                                                class="float_right optionCash">60</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>炙燒鴨胸 (小份)
+                                            </span><span class="float_right optionCash">55</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>煙燻鮭魚 (小份)
+                                            </span><span class="float_right optionCash">55</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>骰子雞 (小份)
+                                            </span><span class="float_right optionCash">30</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>墨西哥辣雞 (小份)
+                                            </span><span class="float_right optionCash">35</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>手剝甜蝦/白蝦 (小份)
+                                            </span><span class="float_right optionCash">40</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>嫩煎鮪魚 (小份)
+                                            </span><span class="float_right optionCash">45</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>蔥爆豬（小份</span><span
+                                                class="float_right optionCash">35</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo topping">
+
+                                <div class="">
+                                    <h4>配菜(必選5種).
+                                        <small>複選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select topping_base">
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>毛豆仁</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>火龍果</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>玉米</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>地瓜泥 </span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>青花菜</span><span
+                                                class="float_right optionCash">5</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>海藻沙拉</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>日式辣豆芽
+                                            </span><span class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>醋香木耳 (五辛素、含香菜)
+                                            </span><span class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>鷹嘴豆（五辛素）</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>南瓜丁</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>油醋杏鮑菇</span><span
+                                                class="float_right optionCash">5</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>麻竹筍絲</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>黃金泡菜（五辛素）</span><span
+                                                class="float_right optionCash">5</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>酸甜白蘿蔔</span><span
+                                                class="float_right optionCash">0</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>配菜加點
+                                        <small>複選</small>
+
+                                    </h4>
+                                </div>
+                                <div class="select topping_add">
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>毛豆仁</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>火龍果</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>玉米</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>地瓜泥</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>青花菜</span><span
+                                                class="float_right optionCash">15</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>海藻沙拉</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>日式辣豆芽
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>醋香木耳 (五辛素、含香菜)</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>鷹嘴豆（五辛素</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>油醋杏鮑菇</span><span
+                                                class="float_right optionCash">15</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>南瓜丁</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>酸甜白蘿蔔</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>麻竹筍絲</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>黃金泡菜（五辛素）</span><span
+                                                class="float_right optionCash">15</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>珍珠魚卵</span><span
+                                                class="float_right optionCash">29</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+                                <div class="">
+                                    <h4>手做特調醬料
+                                        <small>單選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select sauce">
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>不要醬料</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>經典醬油（全素）</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>焙煎胡麻（蛋素）</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>辣味美乃滋（五辛素）</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>橘子醋（全素）
+                                            </span><span class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>開胃韓式醬（五辛素）
+                                            </span><span class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>夏威夷燒烤醬（五辛素）</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>和風芥籽（葷） </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce">
+                                            <div class="control_bg"></div><span>蜀香干鍋醬（五辛素、中辣）</span><span
+                                                class="float_right optionCash">5</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>醬料份量
+                                        <small>單選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select sauce_size">
+                                    <div><label class="control"><input type="radio" name="sauce_size">
+                                            <div class="control_bg"></div><span>醬料正常</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce_size">
+                                            <div class="control_bg"></div><span>醬料多</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="sauce_size">
+                                            <div class="control_bg"></div><span>醬料少 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>醬另外裝
+                                        <small>單選</small>
+
+                                    </h4>
+                                </div>
+                                <div class="select sauce_togo">
+                                    <div><label class="control"><input type="checkbox" name="sauce_togo">
+                                            <div class="control_bg"></div><span>醬料另外裝</span><span
+                                                class="float_right optionCash">2</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>醬料選購
+                                        <small>複選</small>
+
+                                    </h4>
+                                </div>
+                                <div class="select sauce_extra">
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>和風芥籽（葷）
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>開胃韓式醬 （五辛素）
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>辣味美乃滋（五辛素）</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>夏威夷燒烤醬（五辛素）
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>橘子醋（全素）
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>經典醬油（全素）
+                                            </span><span class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>焙煎胡麻（蛋素）</span><span
+                                                class="float_right optionCash">10</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div>
+                                        <div class="control" style="padding: 0px;"><button
+                                                class="addBallbtn2">+</button><span>蜀香干鍋醬（五辛素、中辣）
+                                            </span><span class="float_right optionCash">15</span></div>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>脆脆找口感
+                                        <small>單選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select crispy">
+                                    <div><label class="control"><input type="radio" name="crispy">
+                                            <div class="control_bg"></div><span>蔥酥 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="crispy">
+                                            <div class="control_bg"></div><span>蒜酥</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="crispy">
+                                            <div class="control_bg"></div><span>堅果 </span><span
+                                                class="float_right optionCash">5</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="crispy">
+                                            <div class="control_bg"></div><span>玉米脆片</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="crispy">
+                                            <div class="control_bg"></div><span>不需要脆脆</span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memo">
+
+                                <div class="">
+                                    <h4>點綴增風味
+                                        <small>單選</small>
+                                        <span class="badge float_right">必填</span>
+                                    </h4>
+                                </div>
+                                <div class="select ganish">
+                                    <div><label class="control"><input type="radio" name="ganish">
+                                            <div class="control_bg"></div><span>墨西哥辣椒 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="ganish">
+                                            <div class="control_bg"></div><span>紅藜麥 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="ganish">
+                                            <div class="control_bg"></div><span>芥末 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="ganish">
+                                            <div class="control_bg"></div><span>海苔絲 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                    <div><label class="control"><input type="radio" name="ganish">
+                                            <div class="control_bg"></div><span>不需要點綴 </span><span
+                                                class="float_right optionCash">0</span>
+                                        </label>
+                                        <div class="myAttInfoDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer ">
+                    <table style=" width: 100%;">
+                        <tr>
+                            <td>已點金額</td>
+                            <td><span id="order_total">NT 109</span></td>
+                        </tr>
+                        <tr>
+                            <td>每人預算</td>
+                            <td><span id="cost_total">NT 300</span></td>
+                        </tr>
+                        <tr>
+                            <td>剩餘預算</td>
+                            <td><span id="rem_cost">NT 191</span></td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="btn btn-success" onclick="Confirm('#order_modal')">確認點餐</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript" src="/takoiscute/public/main/main.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        localStorage.clear();
+    })
+    //-----------------------------------------------------------------------------------------
+    // 購物車的開啟
+    //-----------------------------------------------------------------------------------------
+    // $('#sign_in_modal').on('show.bs.modal', function (event) {
+
+
+    // })
+    // 開啟時檢查 topping數量
+    var topping_count = 0;
+    $('#order_modal').on("show.bs.modal", function () {
+        const toppingValues = $(this).find(".topping").find("input").map(function () {
+            return parseInt($(this).val()) || 0; // Use || 0 to handle cases where parseInt returns NaN
+        }).get(); // Convert the jQuery object to a native JavaScript array
+
+        // Use the reduce method to sum up all the values in the array
+        topping_count = toppingValues.reduce((sum, current) => sum + current, 0);
+
+
+    })
+
+    $('#order_modal').on('click', '.addBallbtn2', function () {
+
+        if ($(this).parents(".topping").length > 0) {
+            if (topping_count + 1 > 5) {
+                return;
+            }
+            topping_count++;
+        }
+
+        const footerCashSpan = $('#order_total');
+        const parentDiv = $(this).closest('.control');
+        const priceSpan = parentDiv.find('.optionCash');
+        const itemPrice = parseInt(priceSpan.text());
+        const itemName = parentDiv.find('span').first().text();
+
+        // Change the '+' button to a new control group
+        parentDiv.html(`
+            <button class="addBallbtn">+</button>
+            <input disabled="" style="text-align: center; padding: 0px; border: 0px; cursor: pointer; opacity: 1; background: rgba(0, 0, 0, 0); position: initial; width: 40px;" value="1">
+            <button class="delBallbtn">-</button>
+            <span>${itemName}</span>
+            <span class="float_right optionCash">${itemPrice}</span>
+        `);
+
+        // Update the total price and count in the footer
+        let currentTotal = parseInt(footerCashSpan.text().replace('NT ', ''));
+        footerCashSpan.text(`NT ${currentTotal + itemPrice}`);
+        $("#rem_cost").text(`NT ${300 - (currentTotal + itemPrice)}`);
+    });
+
+    // Handle clicks on the '-' button
+    $('#order_modal').on('click', '.delBallbtn', function () {
+        if ($(this).parents(".topping").length > 0) topping_count--;
+
+        const footerCashSpan = $('#order_total');
+        const parentDiv = $(this).closest('.control');
+        const input = parentDiv.find('input');
+        const priceSpan = parentDiv.find('.optionCash');
+        const itemPrice = parseInt(priceSpan.text());
+        let currentItemCount = parseInt(input.val());
+
+        if (currentItemCount > 1) {
+            input.val(currentItemCount - 1);
+            let currentTotal = parseInt(footerCashSpan.text().replace('NT ', ''));
+            footerCashSpan.text(`NT ${currentTotal - itemPrice}`);
+            $("#rem_cost").text(`NT ${300 - (currentTotal - itemPrice)}`);
+        } else {
+            // Revert back to the initial '+' button if count is 1
+            const itemName = parentDiv.find('span').first().text();
+            parentDiv.html(`
+                <button class="addBallbtn2">+</button>
+                <span>${itemName}</span>
+                <span class="float_right optionCash">${itemPrice}</span>
+            `);
+            let currentTotal = parseInt(footerCashSpan.text().replace('NT ', ''));
+            footerCashSpan.text(`NT ${currentTotal - itemPrice}`);
+            $("#rem_cost").text(`NT ${300 - (currentTotal - itemPrice)}`);
+        }
+    });
+
+    // Handle clicks on the '+' button for incrementing an existing item
+    $('#order_modal').on('click', '.addBallbtn', function () {
+        if ($(this).parents(".topping").length > 0) {
+            if (topping_count + 1 > 5) {
+                return;
+            }
+            topping_count++;
+        }
+        const footerCashSpan = $('#order_total');
+        const parentDiv = $(this).closest('.control');
+        const input = parentDiv.find('input');
+        const priceSpan = parentDiv.find('.optionCash');
+        const itemPrice = parseInt(priceSpan.text());
+        let currentItemCount = parseInt(input.val());
+
+        input.val(currentItemCount + 1);
+        let currentTotal = parseInt(footerCashSpan.text().replace('NT ', ''));
+        footerCashSpan.text(`NT ${currentTotal + itemPrice}`);
+        $("#rem_cost").text(`NT ${300 - (currentTotal + itemPrice)}`);
+    });
+    // 監聽所有在 class="select" 裡面的 radio button 的 change 事件
+    $('.select input[type="radio"]').on('change', function () {
+        // 取得目前被選中的 radio button 的 name 屬性
+        const radioName = $(this).attr('name');
+        const footerCashSpan = $('#order_total');
+
+        // 取得舊的總金額，並確保它是數字
+        let currentTotal = parseFloat(parseInt(footerCashSpan.text().replace('NT ', ''))) || 0;
+
+        // 找到這個 radio group 中所有 radio button
+        const allRadiosInGroup = $(`input[name="${radioName}"]`);
+
+        // 遍歷這個群組中的所有選項，找出舊的價格並減去
+        allRadiosInGroup.each(function () {
+            // 找到上一個被選中但現在已經取消選取的選項
+            if ($(this).is(':checked') === false && $(this).data('previous-state') === 'checked') {
+                const previousPriceText = $(this).closest('label').find('.optionCash').text();
+                const previousPrice = parseFloat(previousPriceText) || 0;
+                currentTotal -= previousPrice;
+            }
+        });
+
+        // 取得目前被選中的 radio button 的價格
+        const newPriceText = $(this).closest('label').find('.optionCash').text();
+        const newPrice = parseFloat(newPriceText) || 0;
+        currentTotal += newPrice;
+
+        // 更新總金額
+        $('#order_total').text(`NT ${currentTotal}`);
+        $("#rem_cost").text(`NT ${300 - (currentTotal)}`);
+
+        // 更新所有 radio button 的狀態，為下一次改變做準備
+        allRadiosInGroup.each(function () {
+            $(this).data('previous-state', $(this).is(':checked') ? 'checked' : 'unchecked');
+        });
+    });
+    
+    $("input:checkbox[name='sauce_togo']").on('change', function () {
+        // 取得目前的總金額，並確保它是數字
+        const footerCashSpan = $('#order_total');
+        // 取得舊的總金額，並確保它是數字
+        let currentTotal = parseFloat(parseInt(footerCashSpan.text().replace('NT ', ''))) || 0;
+
+        // 檢查 checkbox 是否被勾選
+        if ($(this).is(':checked')) {
+            // 如果被勾選，總金額增加 2
+            currentTotal += 2;
+        } else {
+            // 如果取消勾選，總金額減少 2
+            currentTotal -= 2;
+        }
+
+        // 更新總金額
+        $('#order_total').text(`NT ${currentTotal}`);
+        $("#rem_cost").text(`NT ${300 - (currentTotal)}`);
+    });
+
+    $(".chicken").on('change', function () {
+        let ck = parseInt($("#total_ck").text()) ;
+        if ($(this).is(':checked')) {
+            ck += 1;
+        } else {
+            ck -= 1;
+        }
+        $("#total_ck").text(ck)
+    });
+
+    function Confirm(modal) {
+        // 檢查是否都有填
+        var order_floor = $(modal).find(".select_floor").val();
+        var order_name = $(modal).find(".select_name").val();
+        let required_ck = true;
+        // 遍歷所有標記為「必填」的元素
+        let msg = "";
+        if (!order_floor || !order_name ) {
+            required_ck = false;
+            msg = "請選擇樓層或大名"
+        }else{
+            if (modal == "#order_modal") {
+                $(modal).find(".badge").each(function () {
+                    // 向上尋找最接近的 class='memo' 父元素
+                    let $memo_div = $(this).closest(".memo");
+        
+                    // 檢查這個 .memo 區塊中是否有單選按鈕 (radio)
+                    let $radio_inputs = $memo_div.find("input[type='radio']");
+        
+                    // 檢查這個 .memo 區塊中是否有帶數量的 input
+                    let $quantity_inputs = $memo_div.find(".control input:not([type='radio'])");
+        
+                    // 檢查這個 .memo 區塊中是否有「純選取」選項 (例如，透過添加 selected class)
+                    let $selectable_controls = $memo_div.find(".control");
+        
+                    // 驗證邏輯
+                    if ($radio_inputs.length > 0) {
+                        // 處理單選情況 (有 radio)
+                        if (!$radio_inputs.is(':checked')) {
+                            msg = $memo_div.find("h4").text().trim();
+                            required_ck = false;
+                            return false; // 中斷迴圈
+                        }
+                    } else if ($quantity_inputs.length > 0) {
+                        msg = $memo_div.find("h4").text().trim();
+                        // 處理複選 (有 input) 情況
+                        let total_quantity = 0;
+                        $quantity_inputs.each(function () {
+                            let val = parseInt($(this).val());
+                            if (!isNaN(val)) {
+                                total_quantity += val;
+                            }
+                        });
+                        // 如果是 topping_base，要 == 5
+                        if ($memo_div.hasClass("topping")) {
+                            if (total_quantity !== 5) {
+                                msg = "配料請選滿5種";
+                                required_ck = false;
+                                return false; // 中斷迴圈
+                            }
+        
+                        } else {
+                            if (total_quantity === 0) {
+                                msg = $memo_div.find("h4").text().trim();
+                                required_ck = false;
+                                return false; // 中斷迴圈
+                            }
+                        }
+                    } else if ($selectable_controls.length > 0) {
+                        // 處理複選 (無 input) 情況
+                        // 假設選取後會給 .control 添加 .selected class
+                        if ($selectable_controls.filter('.selected').length === 0) {
+                            msg = $memo_div.find("h4").text().trim();
+                            required_ck = false;
+                            return false; // 中斷迴圈
+                        }
+                    }
+                });
+            }else{
+                // 二樓的人至少要選擇兩項
+                if (order_floor == "二樓"){
+                    if ($('#sign_in input[type="checkbox"]:checked').length < 2){
+                        required_ck = false;
+                        msg = "請至少選擇兩項";
+                    }
+                }else{
+                    if ($('#sign_in input[type="checkbox"]:checked').length < 1){
+                        required_ck = false;
+                        msg = "請至少選擇一項";
+                    }
+                }
+            }
+        }
+
+        if (!required_ck) {
+            Swal.fire({
+                title: "請務必填寫完整",
+                text: msg,
+                icon: "warning"
+            });
+            return;
+        }
+        Swal.fire({
+            title: "確定要送出訂單?",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 先取得資料
+                var form_data = localStorage.getItem("order")?JSON.parse(localStorage.getItem("order")):{};
+                if (modal == "#order_modal") {
+                    var order_food = {};
+                    $("#order_modal").find(".memo").each(function (idx, div) {
+                        var prop = $(div).find('h4').contents().filter(function () {
+                            // 檢查節點類型是否為文字節點
+                            return this.nodeType === 3;
+                        }).text().trim();
+                        // 如果是單選
+                        if ($(div).find("input[type='radio']").length > 0) {
+                            order_food[prop] = $(div).find("input[type='radio']:checked").nextAll('span').first().text();
+                        }
+                        // 如果是 布林值
+                        else if ($(div).find("input[type='checkbox']").length > 0) {
+                            order_food[prop] = $(div).find("input[type='checkbox']").is("checked")
+                        }
+                        // 都不是，就是數量的
+                        else {
+                            let qty_list = [];
+                            let opts = $(div).find(".control").each(function (idx, ctrl) {
+                                let opt = $(ctrl).find("span:not('.float_right')").text().trim();
+                                let val = $(ctrl).find("input").length > 0 ? $(ctrl).find("input").val() : 0;
+                                if (val > 0) {
+                                    qty_list.push(`${opt}*${val}`);
+                                }
+                            })
+                            order_food[prop] = qty_list.join("\n");
+                        }
+                    })
+                    form_data.creatd_at= showDate(new Date());
+                    form_data.order_floor= order_floor;
+                    form_data.order_name= order_name;
+                    form_data.order_food= order_food;
+                    form_data.total= parseFloat(parseInt($('#order_total').text().replace('NT ', ''))) || 0;
+                    // 挑戰寫完了，直接送丹
+                    if (form_data.hasOwnProperty("sign_in")){
+                        AfterModal(modal,form_data);
+                    }else{
+                        let title = order_floor == "二樓"?"走吧!還要報名運動呢":"是否繼續報名挑戰?";
+                        let icon = order_floor == "二樓"?"warning":"question";
+                        let showCancelButton = order_floor == "二樓"?false:true;
+                        let confirmButtonText = order_floor == "二樓"?"認命報名去":"好，我要報名挑戰";
+                        let cancelButtonText = order_floor == "二樓"?"":"不了，我吃飯就好";
+                        // 跳出詢問，是否要繼續報名
+                         Swal.fire({
+                            title: title,
+                            icon: icon,
+                            allowOutsideClick: false,
+                            showCancelButton: showCancelButton,
+                            confirmButtonText: confirmButtonText,
+                            cancelButtonText: cancelButtonText,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // 把資料存到 localStorage
+                                localStorage.setItem("order", JSON.stringify(form_data))
+                                // 開啟 運動報名的
+                                OpenModal("#sign_in_modal", false);
+                                $("#sign_in_modal").find(".select_floor").val(order_floor);
+                                $("#sign_in_modal").find(".select_floor").attr("disabled", true);
+                                $("#sign_in_modal").find(".select_name").val(order_name);
+                                $("#sign_in_modal").find(".select_name").attr("disabled", true);
+                                $(modal).modal("toggle");
+                            }else{
+                                AfterModal(modal,form_data);
+                            }
+                        });
+                    }
+                }
+                // 如果是 挑戰的報名
+                else {
+                    form_data.creatd_at= showDate(new Date());
+                    form_data.order_floor= order_floor;
+                    form_data.order_name= order_name;
+                    form_data.sign_in= $('#sign_in input[type="checkbox"]:checked')
+                    .map(function() {
+                        return $(this).val();
+                    })
+                    .get().join(",");
+                    // 確認是否點過餐了
+                    if (form_data.hasOwnProperty("total")){
+                        AfterModal(modal,form_data);
+                    }
+                    // 沒有的話開啟點餐
+                    else{
+                        // 把資料存到 localStorage
+                        localStorage.setItem("order", JSON.stringify(form_data))
+                        // 關閉modal
+                        $(modal).modal("toggle");
+                        OpenModal("#order_modal", false);
+                        $("#order_modal").find(".select_floor").val(order_floor);
+                        $("#order_modal").find(".select_floor").attr("disabled", true);
+                        $("#order_modal").find(".select_name").val(order_name);
+                        $("#order_modal").find(".select_name").attr("disabled", true);
+                    }
+                }
+            }
+        });
+    }
+    function OpenModal(modal_id, load_floor) {
+        if (load_floor) {
+            /*---------------------------------------------*/
+            // 讀取列表，並依照建立時間先排序
+            /*---------------------------------------------*/
+            var form_data = GetGasData("8月表單回應");
+            // 將資料轉化為可讀取的資料
+            var [header, ...data] = form_data;
+            form_data = data
+                .map((row) =>
+                    header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+                );
+            const remainingMembers = {};
+            const reportedMembersByFloor = {};
+            // 1. 建立已報到人員的快速查找結構
+            // 遍歷 form_data，將已報到的人員按樓層歸類
+            form_data.forEach(person => {
+                let floorKey = person.order_floor;
+                if (!reportedMembersByFloor[floorKey]) {
+                    reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+                }
+                // 有兩位以上
+                let order_names = person.order_name.split(";");
+                $(order_names).each(function (idx, val) {
+                    reportedMembersByFloor[floorKey].add(val);
+                })
+            });
+
+            // 2. 遍歷 member_list，找出每個樓層剩餘的人
+            for (const floorKey in member_list) {
+                if (member_list.hasOwnProperty(floorKey)) {
+                    const floorMembers = member_list[floorKey];
+                    const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+                    const remainingInThisFloor = [];
+                    floorMembers.forEach(member => {
+                        if (!currentReportedMembers.has(member)) {
+                            remainingInThisFloor.push(member);
+                        }
+                    });
+                    remainingMembers[floorKey] = remainingInThisFloor;
+                }
+            }
+            // 填入可以選的樓層
+            let html_floor = "";
+            for (let floor in remainingMembers) {
+                html_floor += `<option value="${floor}">${floor}</option>`;
+            }
+            $(".select_floor").each(function(idx,item){
+                $(item).html(html_floor);
+                floorKey = $(".select_floor").val();
+                let html_name = "";
+                for (let index = 0; index < remainingMembers[floorKey].length; index++) {
+                    html_name += `<option value="${remainingMembers[floorKey][index]}">${remainingMembers[floorKey][index]}</option>`;
+
+                }
+                $(".select_name").each(function(idx,item){
+                    $(item).html(html_name);
+                })
+            })
+
+            $(".select_floor").each(function(idx,item){
+                $(item).on("change", function () {
+                    floorKey = $(this).val();
+                    let html_name = "";
+                    for (let index = 0; index < remainingMembers[floorKey].length; index++) {
+                        html_name += `<option value="${remainingMembers[floorKey][index]}">${remainingMembers[floorKey][index]}</option>`;
+
+                    }
+                    $(".select_name").each(function(idx,item){
+                        $(item).html(html_name);
+                    })
+                })
+            })
+        } 
+        $(modal_id).modal("toggle");
+    }
+    function AfterModal(modal,form_data){
+        InsertGasData("8月表單回應", form_data);
+        Swal.fire({
+            title: "送單完成",
+            icon: "success",
+            width: 800,
+        })
+        localStorage.clear();
+        $(modal).modal("toggle");
+        $(modal).trigger('reset');
+        $(".select_floor").each(function(idx,item){
+            $(item).attr("disabled",false);
+        })
+        $(".select_name").each(function(idx,item){
+            $(item).attr("disabled",false);
+        })
+    }
+</script>
+
+</html>
