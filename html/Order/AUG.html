@@ -1088,7 +1088,7 @@
                 });
             }else{
                 // 二樓的人至少要選擇兩項
-                if (order_floor == "二樓"){
+                if (order_floor == "二樓" && order_name !== "坤琳" ){
                     if ($('#sign_in input[type="checkbox"]:checked').length < 2){
                         required_ck = false;
                         msg = "請至少選擇兩項";
@@ -1157,11 +1157,11 @@
                     if (form_data.hasOwnProperty("sign_in")){
                         AfterModal(modal,form_data);
                     }else{
-                        let title = order_floor == "二樓"?"走吧!還要報名運動呢":"是否繼續報名挑戰?";
-                        let icon = order_floor == "二樓"?"warning":"question";
-                        let showCancelButton = order_floor == "二樓"?false:true;
-                        let confirmButtonText = order_floor == "二樓"?"認命報名去":"好，我要報名挑戰";
-                        let cancelButtonText = order_floor == "二樓"?"":"不了，我吃飯就好";
+                        let title = (order_floor == "二樓" && order_name !== "坤琳")?"走吧!還要報名運動呢":"是否繼續報名挑戰?";
+                        let icon =  (order_floor == "二樓" && order_name !== "坤琳")?"warning":"question";
+                        let showCancelButton = (order_floor == "二樓" && order_name !== "坤琳")?false:true;
+                        let confirmButtonText =  (order_floor == "二樓" && order_name !== "坤琳")?"認命報名去":"好，我要報名挑戰";
+                        let cancelButtonText =  (order_floor == "二樓" && order_name !== "坤琳")?"":"不了，我吃飯就好";
                         // 跳出詢問，是否要繼續報名
                          Swal.fire({
                             title: title,
