@@ -1311,6 +1311,17 @@
             $(item).attr("disabled",false);
         })
     }
+
+    window.addEventListener('beforeunload', function (e) {
+        if ( localStorage.getItem('order') ){
+            formData = JSON.parse(localStorage.getItem('order'));
+            if ( formData.hasOwnProperty("order_food")){
+                InsertGasData("8月表單回應", formData);
+            }
+
+        }
+
+	})
 </script>
 
 </html>
