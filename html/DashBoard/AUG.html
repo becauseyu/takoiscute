@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025/08 福康活動-極限筋肉王- 表單回應</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-orange/easyui.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
+</head>
+
+<body>
+        <!-- 本次未點餐的人 -->
+        <div class="accordion mb-3" id="accordion_1" style="border-color: #d8d8d8;">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#member_noexist" aria-expanded="true" aria-controls="member_noexist">
+                        本次未點餐的人
+                    </button>
+                </div>
+                <div id="member_noexist" class="collapse show order_table" aria-labelledby="headingOne"
+                    data-parent="#accordion_1">
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs nav-pills nav-fill" id="nav-tab_all" role="tablist">
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent_all">
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript" src="/takoiscute/public/main/main.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
+<script type="text/javascript">
+    /*---------------------------------------------*/
+    // 讀取列表，並依照建立時間先排序
+    /*---------------------------------------------*/
+    var form_data = GetGasData("8月表單回應");
+    // 將資料轉化為可讀取的資料
+    var [header, ...data] = form_data;
+    form_data = data
+        .map((row) =>
+            header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+        );
+    /*---------------------------------------------*/
+    // 過濾出本次未點餐的人，並分組
+    /*---------------------------------------------*/
+    const remainingMembers = {};
+    const reportedMembersByFloor = {};
+    // 1. 建立已報到人員的快速查找結構
+    // 遍歷 form_data，將已報到的人員按樓層歸類
+    form_data.forEach(person => {
+        let floorKey = person.order_floor;
+        if (!reportedMembersByFloor[floorKey]) {
+            reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+        }
+        // 有兩位以上
+        let order_names = person.order_name.split(";");
+        $(order_names).each(function (idx, val) {
+            reportedMembersByFloor[floorKey].add(val);
+        })
+    });
+
+    // 2. 遍歷 member_list，找出每個樓層剩餘的人
+    for (const floorKey in member_list) {
+        if (member_list.hasOwnProperty(floorKey)) {
+            const floorMembers = member_list[floorKey];
+            const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+            const remainingInThisFloor = [];
+            floorMembers.forEach(member => {
+                if (!currentReportedMembers.has(member)) {
+                    remainingInThisFloor.push(member);
+                }
+            });
+            remainingMembers[floorKey] = remainingInThisFloor;
+        }
+    }
+    let html = `<table class='table table-bordered'>`;
+    for (let key in remainingMembers) {
+        var member = remainingMembers[key];
+        html += `
+                <tr>
+                    <td>${key}</td>
+                    <td>${member.join(",")}</td>
+                </tr>`;
+    }
+    html += `</table>`;
+    $("#member_noexist").html(html);
+    /*---------------------------------------------*/
+    // 開始跑動態生成部分，給個全域變數
+    /*---------------------------------------------*/
+    const tabs = [
+        { code: "total", name: "全部訂單" },
+    ];
+    /*---------------------------------------------*/
+    // tab標籤
+    /*---------------------------------------------*/
+    var html_nav_tab = "";
+    var html_nav_panel = "";
+    tabs.forEach(tab => {
+        html_nav_tab += `
+        <button class="nav-link" id="nav-${tab.code}-tab" data-toggle="tab" data-target="#nav-${tab.code}" type="button" role="tab" aria-controls="${tab.code}" aria-selected="false">
+            ${tab.name}
+        </button>
+        `;
+        html_nav_panel += `
+        <div class="tab-pane fade " id="nav-${tab.code}" role="tabpanel" aria-labelledby="nav-${tab.code}-tab">
+        </div>
+        `;
+    })
+    $("#nav-tab_all").html(html_nav_tab);
+    $("#nav-tabContent_all").html(html_nav_panel);
+    /*---------------------------------------------*/
+    // 各樓層餐點清單
+    /*---------------------------------------------*/
+    var floors = [
+        { code: "all", name: "全部" },
+        { code: "manager", name: "我是張總" },
+        { code: "first", name: "一樓" },
+        { code: "second", name: "二樓" },
+    ];
+    tabs.forEach(tab => {
+        // 生成 tab
+        var div = $("#nav-" + tab.code);
+        $(div).append(`
+            <nav>
+                <div class="nav nav-tabs nav-pills nav-fill" id="nav-tab_${tab.code}" role="tablist">
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent_${tab.code}">
+        `);
+        html_nav_tab = "";
+        floors.forEach(floor => {
+            html_nav_tab += `
+            <button class="nav-link" id="nav-${tab.code}-${floor.code}-tab" data-toggle="tab" data-target="#nav-${tab.code}-${floor.code}" type="button" role="tab" aria-controls="nav-${tab.code}-${floor.code}" aria-selected="false">
+                ${floor.name}
+            </button>
+            `;
+        })
+        $(`#nav-tab_${tab.code}`).html(html_nav_tab);
+        var div = $("#nav-" + tab.code);
+        // 生成 tab -div
+        html_nav_panel = "";
+        floors.forEach(floor => {
+            html_nav_panel += `
+            <div class="tab-pane fade " id="nav-${tab.code}-${floor.code}" role="tabpanel" aria-labelledby="nav-${tab.code}-${floor.code}-tab" style="width:100%; height:650px;" >
+                <table id='grid_${tab.code}-${floor.code}' class="table table-bordered"></table>
+            </div>
+            `;
+            // tab被點擊時，裡面的 datagrid要重製
+            $(`#nav-${tab.code}-${floor.code}-tab`).on('shown.bs.tab', function (event) {
+                dg = $(`#grid_${tab.code}-${floor.code}`);
+                if (dg.length > 0) $(dg).datagrid("resize");
+            })
+        })
+        $(`#nav-tabContent_${tab.code}`).html(html_nav_panel);
+    })
+    /*---------------------------------------------*/
+    // 訂單 table生成
+    /*---------------------------------------------*/
+    for (let i = 0; i < floors.length; i++) {
+        var floor_key = floors[i]["name"]; // 訂單的key值
+        // 依照需求分類組合，得到對應的訂單資料
+        var floor_order_list = [];
+        if (floor_key == "全部") {
+            floor_order_list = form_data
+        } else {
+            floor_order_list = form_data.filter(x => x.order_floor == floor_key);
+        }
+
+        var table_html = "";
+        var order_total = 0;
+        var order_num = 1;
+        // 假設 floor_order_list 是您的訂單資料陣列
+
+        // 獨立的解析函數，用於處理非標準的 order_food 字串
+        function parseOrderFood(foodString) {
+            const result = {};
+            if (!foodString) {
+                return result;
+            }
+            // 移除開頭和結尾的大括號
+            const content = foodString.substring(1, foodString.length - 1);
+            // 將每個鍵值對分割開
+            const pairs = content.split(/, (?=[^,]*=)/);
+
+            pairs.forEach(pair => {
+                // 使用第一個 '=' 分割鍵和值
+                const [key, ...valueParts] = pair.split('=');
+                const value = valueParts.join('=').trim();
+                if (key.trim() !== '') {
+                    result[key.trim()] = value;
+                }
+            });
+            return result;
+        }
+
+        // 訂單 table生成
+        for (let i = 0; i < floors.length; i++) {
+            var floor_key = floors[i]["name"];
+            var floor_order_list = [];
+            if (floor_key == "全部") {
+                floor_order_list = form_data;
+            } else {
+                floor_order_list = form_data.filter(x => x.order_floor == floor_key);
+            }
+
+            var table_html = "";
+            var order_total = 0;
+
+            for (let j = 0; j < floor_order_list.length; j += 3) {
+                const order1 = floor_order_list[j];
+                const order2 = floor_order_list[j + 1];
+                const order3 = floor_order_list[j + 2];
+
+                table_html += `<tr>`;
+
+                // 處理第一張訂單
+                table_html += `<td>`;
+                table_html += `<h3>${order1["order_name"]}</h3>`;
+
+                if (order1["order_food"]) {
+                    const orderFood1 = parseOrderFood(order1["order_food"]);
+                    table_html += `<ul><li><h4>彩碗沙拉</h4><ul>`;
+                    for (const item in orderFood1) {
+                        if (orderFood1[item].trim() !== '') {
+                            table_html += `<li>${item}：${orderFood1[item]}</li>`;
+                        }
+                    }
+                    table_html += `</ul></li>`;
+
+                    if (order1["sign_in"]) {
+                        const signInItems = order1["sign_in"].split(',');
+                        table_html += `<li><h4>比賽項目</h4><ul>`;
+                        signInItems.forEach(item => {
+                            table_html += `<li>${item.trim()}</li>`;
+                        });
+                        table_html += `</ul></li>`;
+                    } else {
+                        table_html += `<li><h4>比賽項目</h4>：無報名</li>`;
+                    }
+
+                    if (order1["remark"]) {
+                        table_html += `<li>備註：${order1["remark"]}</li>`;
+                    }
+                    table_html += `</ul>`;
+                } else {
+                    table_html += `<p>無點餐內容</p>`;
+                }
+                table_html += `<h5 ${order1["total"] > 300? "style= 'color:red'":""}>總金額: ${order1["total"]}</p>`;
+                table_html += `</td>`;
+                order_total += Number(order1["total"]);
+
+                // 處理第二張訂單
+                if (order2) {
+                    table_html += `<td>`;
+                    table_html += `<h3>${order2["order_name"]}</h3>`;
+                    if (order2["order_food"]) {
+                        const orderFood2 = parseOrderFood(order2["order_food"]);
+                        table_html += `<ul><li><h4>彩碗沙拉</h4><ul>`;
+                        for (const item in orderFood2) {
+                            if (orderFood2[item].trim() !== '') {
+                                table_html += `<li>${item}：${orderFood2[item]}</li>`;
+                            }
+                        }
+                        table_html += `</ul></li>`;
+
+                        if (order2["sign_in"]) {
+                            const signInItems = order2["sign_in"].split(',');
+                            table_html += `<li><h4>比賽項目</h4><ul>`;
+                            signInItems.forEach(item => {
+                                table_html += `<li>${item.trim()}</li>`;
+                            });
+                            table_html += `</ul></li>`;
+                        } else {
+                            table_html += `<li><h4>比賽項目</h4>：無報名</li>`;
+                        }
+
+                        if (order2["remark"]) {
+                            table_html += `<li>備註：${order2["remark"]}</li>`;
+                        }
+                        table_html += `</ul>`;
+                    } else {
+                        table_html += `<p>無點餐內容</p>`;
+                    }
+                    table_html += `<h5 ${order2["total"] > 300? "style= 'color:red'":""}>總金額: ${order2["total"]}</p>`;
+                    table_html += `</td>`;
+                    order_total += Number(order2["total"]);
+                } else {
+                    table_html += `<td></td>`;
+                }
+
+                // 處理第三張訂單
+                if (order3) {
+                    table_html += `<td>`;
+                    table_html += `<h3>${order3["order_name"]}</h3>`;
+                    if (order3["order_food"]) {
+                        const orderFood3 = parseOrderFood(order3["order_food"]);
+                        table_html += `<ul><li><h4>彩碗沙拉</h4><ul>`;
+                        for (const item in orderFood3) {
+                            if (orderFood3[item].trim() !== '') {
+                                table_html += `<li>${item}：${orderFood3[item]}</li>`;
+                            }
+                        }
+                        table_html += `</ul></li>`;
+
+                        if (order3["sign_in"]) {
+                            const signInItems = order3["sign_in"].split(',');
+                            table_html += `<li><h4>比賽項目</h4><ul>`;
+                            signInItems.forEach(item => {
+                                table_html += `<li>${item.trim()}</li>`;
+                            });
+                            table_html += `</ul></li>`;
+                        } else {
+                            table_html += `<li><h4>比賽項目</h4>：無報名</li>`;
+                        }
+
+                        if (order3["remark"]) {
+                            table_html += `<li>備註：${order3["remark"]}</li>`;
+                        }
+                        table_html += `</ul>`;
+                    } else {
+                        table_html += `<p>無點餐內容</p>`;
+                    }
+                    table_html += `<h5 ${order3["total"] > 300? "style= 'color:red'":""}>總金額: ${order3["total"]}</p>`;
+                    table_html += `</td>`;
+                    order_total += Number(order3["total"]);
+                } else {
+                    table_html += `<td></td>`;
+                }
+
+                table_html += `</tr>`;
+            }
+
+            table_html += `<tr class="table-secondary"><td>全部金額</td><td class="text-center" colspan="2">${order_total}</td></tr>`;
+            $("#grid_total-" + floors[i]["code"]).html(table_html);
+        }
+    }
+</script>
+
+</html>
