@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025/11 福康活動-感恩大放送</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/takoiscute/public/TAKO.ico">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/easyui/metro-orange/easyui.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/bootstrap/bootstrap-icons.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
+</head>
+<style>
+    body {
+        font-family: 'Noto Sans CJK TC', sans-serif;
+        /* You might need to import a suitable Chinese font */
+    }
+
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        /* Full viewport height */
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        /* For better text readability */
+        overflow: hidden;
+        /* 確保偽元素不會超出容器 */
+    }
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://shop1688.com.tw/aom20201027029/img/banner1.jpg');
+        /* 您的圖片 URL */
+        background-size: cover;
+        background-position: center;
+        opacity: 0.4;
+        /* 設置透明度為 60% */
+        z-index: -1;
+        /* 將偽元素置於內容下方 */
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        /* Adjust for desired darkness */
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 2rem;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.8rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .sprig-sky-text {
+        font-size: 2.5rem;
+        font-family: 'Playfair Display', serif;
+        /* Or any elegant font for "Sprig & Sky" */
+        margin-top: 1rem;
+    }
+
+    .media_sm {
+        display: none;
+    }
+
+    /* 當螢幕寬度小於等於 768px 時，顯示手機版搜尋框，隱藏電腦版搜尋框 */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+        }
+
+        .sprig-sky-text {
+            font-size: 1rem;
+            margin-top: 0rem;
+        }
+
+        .media_bg {
+            display: none;
+        }
+
+        .media_sm {
+            display: block !important;
+        }
+    }
+
+    .info-box {
+        background-color: rgba(255, 255, 255, 0.1);
+        /* Slightly transparent white background */
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        backdrop-filter: blur(5px);
+        /* Optional: adds a blur effect to the background */
+        -webkit-backdrop-filter: blur(5px);
+        /* Safari support */
+    }
+
+    .btn-custom {
+        background-color: #e0b0ff;
+        /* A light purple color similar to the image */
+        border-color: #e0b0ff;
+        color: #333;
+        /* Darker text for contrast */
+        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        border-radius: 2rem;
+        /* Rounded corners */
+    }
+
+    .btn-custom:hover {
+        background-color: #cc99ff;
+        border-color: #cc99ff;
+        color: #333;
+    }
+
+    /* 確保圖片有固定高度且不變形 */
+    .food-card-img {
+        height: 180px;
+        /* 設置您希望的圖片高度，例如 180px */
+        object-fit: cover;
+        /* 圖片會被裁切以填滿指定的高度和寬度 */
+        width: 100%;
+        /* 確保圖片寬度佔滿卡片 */
+    }
+
+    .floating-cart {
+        position: fixed;
+        /* 讓它相對於視口懸浮固定 */
+        bottom: 20px;
+        /* 調整距離底部的高度 */
+        right: 20px;
+        /* 調整距離右側的距離 */
+        z-index: 1000;
+        /* 確保它在其他內容之上 */
+        width: 60px;
+        /* 設定圓形容器的寬度 */
+        height: 60px;
+        /* 設定圓形容器的高度 */
+        border-radius: 50%;
+        /* 使其變成圓形 */
+        background-color: white;
+        /* **新增：白色背景** */
+        display: flex;
+        /* 使用 Flexbox 讓圖示在圓形中居中 */
+        justify-content: center;
+        /* 水平居中 */
+        align-items: center;
+        /* 垂直居中 */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        /* 選填：添加一個微妙的陰影 */
+    }
+
+    .floating-cart a {
+        position: relative;
+        /* **關鍵**：使其成為徽章定位的參考點 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .floating-cart i {
+        font-size: 30px;
+        color: #333;
+    }
+
+    /* **新加的購物車徽章樣式** */
+    .cart-badge {
+        position: absolute;
+        /* 相對於 .floating-cart a 定位 */
+        top: 0px;
+        /* 調整位置，使其顯示在右上角 */
+        right: 0px;
+        background-color: red;
+        /* 紅色背景 */
+        color: white;
+        /* 白色文字 */
+        border-radius: 50%;
+        /* 圓形 */
+        padding: 2px 6px;
+        /* 調整內邊距，讓數字有足夠空間 */
+        font-size: 0.75em;
+        /* 文字大小，相對父元素字體大小 */
+        min-width: 20px;
+        /* 最小寬度，確保單個數字也是圓的 */
+        text-align: center;
+        /* 文字居中 */
+        line-height: 1;
+        /* 行高為1，垂直居中文字 */
+        font-weight: bold;
+        /* 字體加粗 */
+    }
+
+    /* 選填：添加懸停效果 */
+    .floating-cart:hover {
+        opacity: 0.9;
+        /* 懸停時略微變透明 */
+        cursor: pointer;
+        /* 懸停時鼠標變為手型 */
+
+    }
+
+    /* 隱藏原生 radio 按鈕 */
+    .hidden-radio {
+        display: none;
+    }
+
+    /* 容器樣式 */
+    .option-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        /* 選項之間的間距 */
+        margin-bottom: 10px;
+        /* 每組選項（甜度/冰度）之間的間距 */
+    }
+
+    /* 可點擊的 Label 樣式 (模擬按鈕) */
+    .option-label-radio {
+        background-color: #f0f0f0;
+        /* 預設淺灰色背景 */
+        color: #333;
+        /* 預設文字顏色 */
+        padding: 5px 5px;
+        border-radius: 15px;
+        /* 圓角 */
+        cursor: pointer;
+        /* 鼠標變成手型 */
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        /* 過渡效果 */
+        border: 1px solid #ddd;
+        /* 預設邊框 */
+        white-space: nowrap;
+        /* 防止文字換行 */
+        font-size: 1rem;
+        /* 確保 label 內容不會被選中 */
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* 標準語法 */
+    }
+
+    .option-label-radio:hover {
+        background-color: #e0e0e0;
+        /* 鼠標懸停時顏色變深 */
+    }
+
+    /* 當相關聯的 hidden-radio 被選中時，應用到 label 的樣式 */
+    /* 使用 CSS 鄰近選擇器 (~) 來選中 input 後面的 label */
+    .hidden-radio:checked+.option-label-radio {
+        background-color: #6A0DAD;
+        /* 選中時的深紫色背景 */
+        color: white;
+        /* 選中時的白色文字 */
+        border-color: #6A0DAD;
+        /* 選中時的邊框顏色與背景一致 */
+    }
+</style>
+</head>
+
+<body>
+    <section class="hero-section">
+        <div class="overlay"></div>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <h1 class="hero-title">
+                        <span style="font-weight: bold;color:rgb(235, 89, 89);">感恩大放送</span><span
+                            style="font-family: Playfair Display;"></span><br />
+                    </h1>
+                    <hr class="w-100 border-light border-3 my-3">
+                    <p class="sprig-sky-text" style="font-family:'JasonHandwriting2'">
+                        2025不知不覺即將要到達尾聲<br>
+                        這個年度，你想感謝誰呢?
+                    </p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-end text-end">
+                    <div class="info-box">
+                        <div class="container text-start py-4">
+                            <div class="row ">
+                                <div class="col-3 mb-3 media_bg">
+                                    活動日期：
+                                </div>
+                                <div class="col-9 mb-3 media_bg">
+                                    2025年11月26日(三)
+                                </div>
+                                <div class="col mb-3 media_sm">
+                                    活動日期：2025年11月26日(三)
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-3 mb-3 media_bg">
+                                    活動時間：
+                                </div>
+                                <div class="col-9 mb-3 media_bg">
+                                    下午 15:00
+                                </div>
+                                <div class="col mb-3 media_sm">
+                                    活動時間：下午 15:00
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-3 mb-3 media_bg">
+                                    活動地點：
+                                </div>
+                                <div class="col-9 mb-3 media_bg">
+                                    與你的夥伴共同奮鬥、舉杯、一起作戰的辦公室
+                                </div>
+                                <div class="col mb-3 media_sm">
+                                    活動地點：與你的夥伴共同奮鬥、舉杯、一起作戰的辦公室
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-3 mb-3 media_bg">
+                                    餐食提供：
+                                </div>
+                                <div class="col-12 mb-3 media_sm">
+                                    餐食提供：
+                                </div>
+                                <div class="col-9 mb-3">
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-md-4 mb-3">
+                                    <a href="#" id="link_food">
+                                        <img id="logo_food" alt="拉奇怪勒絲 Logo" class="img-fluid rounded"
+                                            onclick="$('#food_form').modal('toggle')">
+                                    </a>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <a href="#" id="link_drink">
+                                        <img id="logo_drink" alt="匯茗 Logo" class="img-fluid rounded"
+                                            onclick="$('#drink_form').modal('toggle')">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    點擊圖片點餐
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 拉奇怪勒絲 -->
+    <div class="modal fade" id="food_form" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <form id="frm_food" class="needs-validation" action="javascript:void(0)" novalidate >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">拉奇怪勒絲</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="card">
+                            <div class="card-header">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                    〉每人兩隻
+                                </button>
+                            </div>
+                            <div class="card-body" id="food_cards">
+
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                    〉目前已選擇的鯛魚燒:
+                                </button>
+                            </div>
+                            <div class="card-body" id="food_cards">
+                                <ul id="food_check" class="selected_items">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="submit" class="btn btn-info" onClick="confirm('food')">加入訂單</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 匯茗 -->
+    <div class="modal fade" id="drink_form" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabe2" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <form id="frm_drink" class="needs-validation" action="javascript:void(0)" novalidate >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabe2">匯茗</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="card">
+                            <div class="card-header">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                    〉每人一杯
+                                </button>
+                            </div>
+                            <div class="card-body" id="drink_cards">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">品項</span>
+                                    </div>
+                                    <input id="drink_items" type="text" class="form-control easyui-combobox"style="width: 500px;" 
+                                    data-options="valueField:'value',textField:'text',groupField:'group',panelMaxHeight:200,required:true,onChange:CheckDrink">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">甜度</span>
+                                    </div>
+                                    <input id="drink_sweet" type="text" class="form-control easyui-combobox"style="width: 500px;" 
+                                    data-options="valueField:'value',textField:'text',panelHeight: 'auto',required:true,onChange:CheckDrink">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">冰塊</span>
+                                    </div>
+                                    <input id="drink_iced" type="text" class="form-control easyui-combobox"style="width: 500px;" 
+                                    data-options="valueField:'value',textField:'text',panelHeight: 'auto',required:true,onChange:CheckDrink">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">加料</span>
+                                    </div>
+                                    <input id="drink_topping" type="text" class="form-control easyui-combobox"style="width: 500px;" 
+                                    data-options="valueField:'value',textField:'text',panelHeight: 'auto',onChange:CheckDrink">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                    〉目前已選擇的飲料:
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <ul id="drink_check" class="selected_items">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="submit" class="btn btn-info" onClick="confirm('drink')">加入訂單</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 購物車 -->
+    <div class="modal fade" id="cart_form" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabe3" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabe3">我的訂單內容</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            〉訂餐人資訊
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">所屬樓層</span>
+                                </div>
+                                <input id="select_floor" type="text" class="form-control easyui-combobox"
+                                    aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">訂購大名</span>
+                                </div>
+                                <input id="select_name" type="text" class="form-control easyui-combobox"
+                                    aria-label="Username" aria-describedby="basic-addon1" style="width: 500px;">
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            〉訂單資訊
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tbody id="order_list_ul">
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="Confirm(this)">確定送出</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 購物車圖示 -->
+    <div class="floating-cart">
+        <a href="#" onclick="$('#cart_form').modal('toggle')">
+            <i class="bi bi-cart4"></i>
+            <span class="cart-badge" id="cart_total_qty">0</span>
+        </a>
+    </div>
+    </div>
+</body>
+<script type="text/javascript" src="/takoiscute/public/main/main.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/easyui/locale/easyui-lang-zh_TW.js"></script>
+<script type="text/javascript" src="/takoiscute/public/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/sweetalert/sweetalert2.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/jquery.actual-master/jquery.actual.min.js"></script>
+<script type="text/javascript" src="/takoiscute/public/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/takoiscute/public/gas/gas.js"></script>
+<script type="text/javascript" src="/takoiscute/public/animation/anime.min.js"></script>
+<script type="text/javascript">
+    // 只要重整就是要重新填單
+    localStorage.clear();
+    // 讀取圖片
+    if (location.href.includes("github")) {
+        url = '/takoiscute/';
+    } else {
+        url = "/takoiscute/";
+    }
+    $("#logo_food").attr('src', url + "public/img/Nov/dessert.png")
+    $("#logo_drink").attr('src', url + "public/img/Nov/drink.png")
+    //-----------------------------------------------------------------------------------------
+    // 食物的讀取
+    //-----------------------------------------------------------------------------------------
+    const food_data = {
+        "addition": { "原味": 0, "麻糬": 5, "珍珠": 5, "葡萄乾": 5 },
+        "flavor": {
+            "奶油": 35, "奶茶": 35, "花生": 35, "巧克力": 35, "紅豆": 35, "起司火腿": 35, "香蒜玉米": 35,
+            "抹茶紅豆": 45, "抹茶奶油": 45
+        },
+    };
+    let food_html = "";
+    // 使用 table，X 軸為 加料 / Y 軸為 口味
+    // 取得 "addition" 的鍵名和值，用於表格標頭和計算價格
+    var additionKeys = Object.keys(food_data.addition);
+    var additionValues = Object.values(food_data.addition);
+
+    // 用於儲存每個 Combobox 的名稱和價格資訊
+    let comboInfo = [];
+
+    // 開始建立 HTML 字串
+    food_html += '<table class="table table-bordered">';
+    // 1. 建立表格標頭 (第一行 tr)
+    food_html += '<tr>';
+    food_html += '<td></td>'; // 左上角空白格
+    for (const key of additionKeys) {
+        const price = food_data.addition[key];
+        const priceDisplay = price === 0 ? `(${price})` : `(+${price})`;
+        food_html += `<td>${key}${priceDisplay}</td>`;
+    }
+    food_html += '</tr>';
+
+    // 2. 建立表格內容 (口味行)
+    for (const [flavorKey, basePrice] of Object.entries(food_data.flavor)) {
+        food_html += '<tr>';
+        food_html += `<td>${flavorKey}(${basePrice})</td>`;
+
+        for (let i = 0; i < additionKeys.length; i++) {
+            const additionKey = additionKeys[i];
+            const additionPrice = additionValues[i];
+            const totalPrice = basePrice + additionPrice;
+
+            const comboboxData = [
+                { id: totalPrice * 0, text: 0 },
+                { id: totalPrice * 1, text: 1 },
+                { id: totalPrice * 2, text: 2 }
+            ];
+
+            const dataOptions = `valueField:'id',textField:'text',data:${JSON.stringify(comboboxData).replace(/"/g, "'")},editable:false,panelHeight:'auto',onChange:CheckFood`;
+
+            // **關鍵：將訂單所需的文字資訊存為 HTML data 屬性，方便之後取用**
+            const customData = `data-custom-info='{"flavorKey":"${flavorKey}", "additionKey":"${additionKey}", "basePrice":${basePrice}, "additionPrice":${additionPrice}, "totalPrice":${totalPrice}}'`;
+
+            food_html += `
+                        <td>
+                            <input type="text" class="easyui-combobox food_item" ${customData} data-options="${dataOptions}">
+                        </td>
+                    `;
+        }
+        food_html += '</tr>';
+    }
+
+    // 結束表格
+    food_html += '</table>';
+
+    $("#food_cards").append(food_html);
+    //-----------------------------------------------------------------------------------------
+    // 檢查數量
+    //-----------------------------------------------------------------------------------------
+    function CheckFood() {
+        // 可以選擇的最大總數
+        const MAX_TOTAL = 2; // 總數限制
+        let currentTotal = 0;
+        const $allCombobox = $('.food_item');
+
+        // 1. 計算當前總數
+        $allCombobox.each(function () {
+            // 使用 EasyUI 的 getValue 方法取得當前選中的值 (id，例如 0, 35, 70, 80 等)
+            const selectedId = $(this).combobox('getValue');
+
+            // 從 data 屬性解析出單價，並計算選購數量
+            const optionsStr = $(this).attr('data-options');
+            // 這裡需要更穩健的方式從 ID 找回數量 (text)
+            const dataArray = $(this).combobox('options').data;
+
+            let selectedQuantity = 0;
+            for (const item of dataArray) {
+                if (item.id == selectedId) {
+                    selectedQuantity = item.text;
+                    break;
+                }
+            }
+            currentTotal += selectedQuantity;
+        });
+
+        $('#currentTotal').text(currentTotal); // 更新顯示總數
+
+        // 2. 更新點餐內容 (在限制選項前先更新，確保顯示是最新的)
+        updateFoodCheck(currentTotal);
+
+        // 2. 根據總數限制其他選項
+        const remainingSpace = MAX_TOTAL - currentTotal;
+
+        $allCombobox.each(function () {
+            const $combo = $(this);
+            const currentQuantity = $combo.combobox('getText'); // 當前選單的數量 (0, 1, 2)
+
+            // 取得這個 combobox 的原始選項
+            const originalData = $combo.combobox('options').data;
+
+            let newData = [];
+            for (const item of originalData) {
+                const quantity = item.text; // 0, 1, 或 2
+
+                // 總數限制邏輯
+                if (quantity == 0) {
+                    // 數量 0 永遠允許
+                    newData.push(item);
+                } else if (currentQuantity == quantity) {
+                    // 當前選中的數量必須保留
+                    newData.push(item);
+                } else if (quantity <= remainingSpace + Number(currentQuantity)) {
+                    // 如果選擇這個數量 (item.text)，總數會是 currentTotal - currentQuantity + quantity
+                    // 且這個新總數必須 <= MAX_TOTAL
+                    // 簡化：只有當這個數量 (quantity) 小於等於 (剩餘空間 + 當前數量) 時，才允許選
+                    newData.push(item);
+                }
+            }
+
+            // 重新載入數據，並保持當前選中的值不變
+            const currentValue = $combo.combobox('getValue');
+            $combo.combobox('loadData', newData);
+            $combo.combobox('setValue', currentValue);
+            // 歸0鎖起來
+            if (newData.length == 1) {
+                $combo.combobox('disable');
+            } else {
+                $combo.combobox('enable');
+            }
+        });
+    }
+    //-----------------------------------------------------------------------------------------
+    // 更新餐點下方的顯示與金額
+    //-----------------------------------------------------------------------------------------
+    function updateFoodCheck(totalCount) {
+        const selectedItems = [];
+        let grandTotal = 0;
+
+        // 遍歷所有儲存的 Combobox 資訊
+        $('.food_item').each(function () {
+            const $combo = $(this);
+            const comboData = $combo.data('custom-info'); // 取回在 generateFoodTable 中儲存的資訊
+
+            // 取得 Combobox 選中的數量 (text) 和總價格 (value)
+            const selectedQuantity = Number($combo.combobox('getText') || 0);
+            const selectedTotalValue = Number($combo.combobox('getValue') || 0);
+
+            if (selectedQuantity > 0) {
+                const { flavorKey, additionKey, totalPrice } = comboData;
+
+                // 格式化單個項目的顯示文字
+                // 奶油(原味)*1 $35
+                selectedItems.push(`${flavorKey}(${additionKey})*${selectedQuantity}，$${totalPrice * selectedQuantity}`);
+                grandTotal += selectedTotalValue;
+            }
+        });
+
+        let display_html = "";
+        if (selectedItems.length > 0) {
+            for (let j = 0; j < selectedItems.length; j++) {
+                display_html += `<li>${selectedItems[j]}</li>`;
+            }
+        }
+
+        // 更新 Input 的 Value
+        $('#food_check').html(display_html);
+    }
+    //-----------------------------------------------------------------------------------------
+    // 飲料的讀取
+    //-----------------------------------------------------------------------------------------
+    // 飲料的品項
+    var drink_data  = [
+        {
+            "value": "40",
+            "text": "香茗金萱 ($40)",
+            "group": "金萱"
+        },
+        {
+            "value": "50",
+            "text": "香茗嫩仙草金萱 ($50)",
+            "group": "金萱"
+        },
+        {
+            "value": "55",
+            "text": "香茗金萱奶茶 ($55)",
+            "group": "金萱"
+        },
+        {
+            "value": "60",
+            "text": "香茗脆梅金萱 ($60)",
+            "group": "金萱"
+        },
+        {
+            "value": "65",
+            "text": "香茗金萱拿鐵 ($65)",
+            "group": "金萱"
+        },
+        {
+            "value": "35",
+            "text": "集萃綠茶 ($35)",
+            "group": "綠茶"
+        },
+        {
+            "value": "50",
+            "text": "集萃奶綠 ($50)",
+            "group": "綠茶"
+        },
+        {
+            "value": "50",
+            "text": "集萃鮮檸綠 ($50)",
+            "group": "綠茶"
+        },
+        {
+            "value": "55",
+            "text": "集萃脆梅綠 ($55)",
+            "group": "綠茶"
+        },
+        {
+            "value": "60",
+            "text": "集萃鮮橙綠 ($60)",
+            "group": "綠茶"
+        },
+        {
+            "value": "60",
+            "text": "集萃綠茶拿鐵 ($60)",
+            "group": "綠茶"
+        },
+        {
+            "value": "55",
+            "text": "桔梅綠 ($55)",
+            "group": "綠茶"
+        },
+        {
+            "value": "40",
+            "text": "韃靼蕎麥 ($40)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "55",
+            "text": "韃靼蜂蜜凍蕎麥 ($55)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "55",
+            "text": "韃靼蕎麥奶茶 ($55)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "65",
+            "text": "韃靼蕎麥拿鐵 ($65)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "60",
+            "text": "金茗梅 ($60)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "50",
+            "text": "桔梅茶 ($50)",
+            "group": "無咖啡因"
+        },
+        {
+            "value": "40",
+            "text": "茶沁烏龍 ($40)",
+            "group": "烏龍"
+        },
+        {
+            "value": "55",
+            "text": "茶沁烏龍奶茶 ($55)",
+            "group": "烏龍"
+        },
+        {
+            "value": "65",
+            "text": "茶沁烏龍拿鐵 ($65)",
+            "group": "烏龍"
+        },
+        {
+            "value": "80",
+            "text": "茶沁烏龍茶凍拿鐵 ($80)",
+            "group": "烏龍"
+        },
+        {
+            "value": "65",
+            "text": "金茗梅烏龍 ($65)",
+            "group": "烏龍"
+        },
+        {
+            "value": "35",
+            "text": "匯玉紅茶 ($35)",
+            "group": "紅茶"
+        },
+        {
+            "value": "50",
+            "text": "匯玉奶茶 ($50)",
+            "group": "紅茶"
+        },
+        {
+            "value": "60",
+            "text": "匯玉珍珠奶茶 ($60)",
+            "group": "紅茶"
+        },
+        {
+            "value": "50",
+            "text": "匯玉鮮檸紅 ($50)",
+            "group": "紅茶"
+        },
+        {
+            "value": "60",
+            "text": "匯玉紅茶拿鐵 ($60)",
+            "group": "紅茶"
+        },
+        {
+            "value": "65",
+            "text": "金茗梅紅茶 ($65)",
+            "group": "紅茶"
+        }
+    ];
+
+    var drink_iced = [
+        {
+            "value": "正常冰",
+            "text": '正常冰(40%)',
+        },
+        {
+            "value": "少冰",
+            "text": '少冰(30%)',
+        },
+        {
+            "value": "微冰",
+            "text": '微冰(5%)',
+        },
+        {
+            "value": "去冰",
+            "text":'去冰(0%)',
+        },
+        {
+            "value": "溫",
+            "text": '溫(50C)',
+        },
+        {
+            "value": "熱",
+            "text": '熱(60C)',
+        },
+    ];
+    var drink_sweet = [
+        {
+            "value": "正常糖",
+            "text": '正常糖(100%)',
+        },
+        {
+            "value": "七分糖",
+            "text": '七分糖(70%)',
+        },
+        {
+            "value": "五分糖",
+            "text": '五分糖(50%)',
+        },
+        {
+            "value": "三分糖",
+            "text": '三分糖(30%)',
+        },
+        {
+            "value": "一分糖",
+            "text": '一分糖(10%)',
+        },
+        {
+            "value": "無糖",
+            "text": '無糖(0%)',
+        },
+    ];
+    var drink_topping =[
+        {
+            "value": "0",
+            "text": '　',
+        },
+        {
+            "value": "10",
+            "text": '珍珠(+10)',
+        },
+        {
+            "value": "10",
+            "text": '椰果(+10)',
+        },
+        {
+            "value": "10",
+            "text": '嫩仙草(+10)',
+        },
+        {
+            "value": "15",
+            "text": '茶凍(+15)',
+        },
+        {
+            "value": "15",
+            "text": '蜂蜜凍(+15)',
+        },
+        {
+            "value": "15",
+            "text": '蜜紅豆(+15)',
+        },
+    ];
+    //-----------------------------------------------------------------------------------------
+    // 飲料品項讀取
+    //-----------------------------------------------------------------------------------------
+    $(function(){
+        $("#drink_items").combobox("loadData",drink_data);
+        $("#drink_iced").combobox("loadData",drink_iced);
+        $("#drink_sweet").combobox("loadData",drink_sweet);
+        $("#drink_topping").combobox("loadData",drink_topping);
+    })
+    //-----------------------------------------------------------------------------------------
+    // 飲料combo選擇的事件
+    //-----------------------------------------------------------------------------------------
+    function CheckDrink(){
+        // 取得 品項 + 甜度 + 冰塊 + 小料 的組合 與計算金額
+        let drink_item = $("#drink_items").combobox("getText");
+        let drink_iced = $("#drink_iced").combobox("getValue");
+        let drink_sweet = $("#drink_sweet").combobox("getValue");
+        let drink_topping = $("#drink_topping").combobox("getText");
+        let drink_price = parseInt($("#drink_items").combobox("getValue")) + 
+        parseInt($("#drink_topping").combobox("getValue").trim() == ""?0:$("#drink_topping").combobox("getValue"));
+
+        $('#drink_check').html(`
+        <li>
+        ${drink_item}
+        ${drink_iced.trim()==""?"":"，"+drink_iced}
+        ${drink_sweet.trim()==""?"":"，"+drink_sweet}
+        ${drink_topping.trim()==""?"":"，"+drink_topping}
+        ， $${drink_price}
+        </li>`);
+    }
+    //-----------------------------------------------------------------------------------------
+    // 購物車的開啟
+    //-----------------------------------------------------------------------------------------
+    $('#cart_form').on('show.bs.modal', function (event) {
+        var total = 0;
+        /*---------------------------------------------*/
+        // 讀取列表，並依照建立時間先排序
+        /*---------------------------------------------*/
+        var form_data = GetGasData("11月表單回應");
+        // 將資料轉化為可讀取的資料
+        var [header, ...data] = form_data;
+        form_data = data
+            .map((row) =>
+                header.reduce((acc, key, index) => ({ ...acc, [key]: row[index] }), {})
+            );
+        const remainingMembers = {};
+        const reportedMembersByFloor = {};
+        // 1. 建立已報到人員的快速查找結構
+        // 遍歷 form_data，將已報到的人員按樓層歸類
+        form_data.forEach(person => {
+            let floorKey = person.order_floor;
+            if (!reportedMembersByFloor[floorKey]) {
+                reportedMembersByFloor[floorKey] = new Set(); // 使用 Set 進行高效查找
+            }
+            reportedMembersByFloor[floorKey].add(person.order_name);
+        });
+
+        // 2. 遍歷 member_list，找出每個樓層剩餘的人
+        for (const floorKey in member_list) {
+            if (member_list.hasOwnProperty(floorKey)) {
+                const floorMembers = member_list[floorKey];
+                const currentReportedMembers = reportedMembersByFloor[floorKey] || new Set(); // 如果該樓層沒有人報到，則為空 Set
+
+                const remainingInThisFloor = [];
+                floorMembers.forEach(member => {
+                    if (!currentReportedMembers.has(member)) {
+                        remainingInThisFloor.push(member);
+                    }
+                });
+                remainingMembers[floorKey] = remainingInThisFloor;
+            }
+        }
+
+        // 比對一下每個樓層剩餘的人數
+        // 依照剩餘人數準備 data
+        let loadData_floor = [];
+        for (let floor in remainingMembers) {
+            let data = {};
+            data.id = floor;
+            data.text = floor;
+            loadData_floor.push(data);
+        }
+        $("#select_floor").combobox({
+            required: true,
+            editable: false,
+            panelHeight: 'auto',
+            panelMaxHeight: '335',
+            valueField: 'id',
+            textField: 'text',
+            data: loadData_floor,
+            onChange: function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    $("#select_name").combobox("setValue", "");
+                    data = remainingMembers[newValue].map((x) => { return { id: x, text: x } });
+                }
+                $("#select_name").combobox("loadData", data);
+            }
+        })
+        $("#select_name").combobox({
+            required: true,
+            editable: false,
+            panelHeight: 'auto',
+            panelMaxHeight: '250',
+            valueField: 'id',
+            textField: 'text',
+            idField: "id",
+            textField: "text",
+        })
+        /*---------------------------------------------*/
+        // 點餐清單
+        /*---------------------------------------------*/
+        var food = JSON.parse(localStorage.getItem("food"))??[];
+        var drink = JSON.parse(localStorage.getItem("drink"))??[];
+        var order = food.concat(drink);
+        var order_html = "";
+        for ( let i = 0 ; i < order.length ; i++ ){
+            order_html += `<li>${order[i]}</li>`;
+        }
+        $("#order_list_ul").html(order_html);
+    })
+    //-----------------------------------------------------------------------------------------
+    // 一些好用的 function
+    //-----------------------------------------------------------------------------------------
+    // 確認菜單存入localStorage
+    function confirm(type) {
+        var formCheck =  $("#frm_" + type)[0];
+        // console.log(formCheck)
+		var isValid = formCheck.checkValidity();
+		if (! isValid) {
+			return false;
+		}
+        // 檢查是否有必填欄位未填妥
+        $("#frm_" + type).form({
+            onSubmit:function(){
+                var liTextsArray = [];
+                if ( $(this).form('validate') == true ){
+                    $("#" + type + "_form").find(".selected_items").each(function (idx, comp) {
+                        liTextsArray = $(comp).find("li")
+                        .map(function() {
+                            return $(this).text().trim().replace(/\s+/g, ' '); 
+                        })
+                        .get();
+                    });
+                    
+                    localStorage.setItem(type, JSON.stringify(liTextsArray));
+                    // 檢查項目
+                    let ck_local = 0;
+                    $("#cart_total_qty").text(localStorage.length);
+                    $("#" + type + "_form").modal("toggle");
+                }
+            }
+        })
+    }
+    // 送出訂單
+    function Confirm(buttom) {
+        var modal = $(buttom).parents(".modal");
+        // 檢查是否都有填
+        var order_floor = $("#select_floor").combobox("getValue");
+        var order_name = $("#select_name").combobox("getValue");
+        var order_food = JSON.parse(localStorage.getItem("food"))??null;
+        var order_drink = JSON.parse(localStorage.getItem("drink"))??null;
+        if (!order_floor || !order_name || !order_food || !order_drink) {
+            Swal.fire({
+                title: "請務必填寫完整",
+                icon: "warning"
+            });
+            return;
+        }
+        Swal.fire({
+            title: "確定要送出訂單?",
+            icon:"question",
+            html:`確定要送出 <span style="font-weight:bold">${order_floor}-${order_name} </span> 的訂單嗎? <br/><span style="color:red">(不要點錯人喔)<span>`,
+            showCancelButton: true,
+            confirmButtonText: "確定",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                order = order_food.concat(order_drink);
+                total = order.map(item => {
+                // 1. 正規表達式：從字串末端開始尋找 "$ + 任意空白 + 數字"
+                //    /\$\s*(\d+)$/
+                //    - \$: 匹配字面上的 $ 符號 (需要跳脫)
+                //    - \s*: 匹配零個或多個空白字符
+                //    - (\d+): 捕獲一或多個數字 (這就是我們需要的金額)
+                //    - $: 匹配字串結尾
+                
+                const match = item.match(/\$\s*(\d+)/g);
+                
+                if (match) {
+                    // 取得最後一個匹配項 (通常是總價)
+                    const lastMatch = match[match.length - 1]; 
+                    
+                    // 移除 $ 符號和所有空白，只留下數字
+                    const priceStr = lastMatch.replace(/[\$\s]/g, ''); 
+                    
+                    // 確保轉換為數字類型 (Int)
+                    return parseInt(priceStr, 10);
+                }
+                
+                // 如果找不到匹配項，返回 0 避免加總出錯
+                return 0;
+            }).reduce((accumulator, currentValue) => {
+                // 2. 加總所有 map() 返回的數值
+                return accumulator + currentValue;
+            }, 0);
+
+                var form_data = {
+                    creatd_at: showDate(new Date()),
+                    order_floor: order_floor,
+                    order_name: order_name,
+                    order_food: order_food,
+                    order_drink: order_drink,
+                    total: total,
+                };
+                InsertGasData("11月表單回應", form_data);
+                Swal.fire("送出成功", "", "success");
+                localStorage.clear(); // 送出後清空紀錄
+                // 關閉modal
+                $("#cart_form").modal("toggle");
+            }
+        });
+    }
+    // ----------------------------------------------------------------------------------
+    /* 
+        表單必填驗證 using bootstrap
+        <form class="needs-validation" novalidate ...>
+        <input ... required>
+    */
+    // ----------------------------------------------------------------------------------
+    (function () {
+        'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+
+</html>
