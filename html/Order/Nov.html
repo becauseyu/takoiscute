@@ -14,6 +14,81 @@
     <link rel="stylesheet icon" type="text/css" href="/takoiscute/public/main/main.css">
 </head>
 <style>
+    .food-cards-mobile {
+        padding: 10px;
+    }
+
+    .flavor-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .flavor-card h4 {
+        margin: 0 0 10px 0;
+        color: #333;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+    }
+
+    .additions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .addition-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .addition-item label {
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: #666;
+    }
+
+    /* 桌面版隱藏手機版,手機版隱藏桌面版 */
+    @media (max-width: 768px) {
+        .table.table-bordered {
+            display: none;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .food-cards-mobile {
+            display: none;
+        }
+    }
+    /* 手機版本的樣式 */
+    @media (max-width: 768px) {
+        #food_cards {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        #food_cards table {
+            min-width: 800px; /* 確保表格有最小寬度 */
+            font-size: 12px; /* 縮小字體 */
+        }
+        
+        #food_cards td {
+            padding: 4px !important;
+            white-space: nowrap;
+        }
+        
+        /* 縮小 combobox 寬度 */
+        #food_cards .textbox {
+            width: 80px !important;
+        }
+        
+        #food_cards .textbox-text {
+            width: 50px !important;
+        }
+    }
     body {
         font-family: 'Noto Sans CJK TC', sans-serif;
         /* You might need to import a suitable Chinese font */
@@ -598,61 +673,109 @@
             "抹茶紅豆": 45, "抹茶奶油": 45
         },
     };
-    let food_html = "";
     // 使用 table，X 軸為 加料 / Y 軸為 口味
     // 取得 "addition" 的鍵名和值，用於表格標頭和計算價格
     var additionKeys = Object.keys(food_data.addition);
     var additionValues = Object.values(food_data.addition);
-
-    // 用於儲存每個 Combobox 的名稱和價格資訊
-    let comboInfo = [];
-
-    // 開始建立 HTML 字串
-    food_html += '<table class="table table-bordered">';
-    // 1. 建立表格標頭 (第一行 tr)
-    food_html += '<tr>';
-    food_html += '<td></td>'; // 左上角空白格
-    for (const key of additionKeys) {
-        const price = food_data.addition[key];
-        const priceDisplay = price === 0 ? `(${price})` : `(+${price})`;
-        food_html += `<td>${key}${priceDisplay}</td>`;
-    }
-    food_html += '</tr>';
-
-    // 2. 建立表格內容 (口味行)
-    for (const [flavorKey, basePrice] of Object.entries(food_data.flavor)) {
+    if ( window.innerWidth <= 768){
+        //-----------------------------------------------------------------------------------------
+        // 手機版本
+        //-----------------------------------------------------------------------------------------
+        let mobile_html = '<div class="food-cards-mobile">';
+        for (const [flavorKey, basePrice] of Object.entries(food_data.flavor)) {
+            mobile_html += `
+                <div class="flavor-card">
+                    <h4>${flavorKey} ($${basePrice})</h4>
+                    <div class="additions-grid">
+            `;
+            
+            for (let i = 0; i < additionKeys.length; i++) {
+                const additionKey = additionKeys[i];
+                const additionPrice = additionValues[i];
+                const totalPrice = basePrice + additionPrice;
+                const priceDisplay = additionPrice === 0 ? '' : `+$${additionPrice}`;
+                
+                const comboboxData = [
+                    { id: totalPrice * 0, text: 0 },
+                    { id: totalPrice * 1, text: 1 },
+                    { id: totalPrice * 2, text: 2 }
+                ];
+                
+                const dataOptions = `valueField:'id',textField:'text',data:${JSON.stringify(comboboxData).replace(/"/g, "'")},editable:false,panelHeight:'auto',onChange:CheckFood`;
+                const customData = `data-custom-info='{"flavorKey":"${flavorKey}", "additionKey":"${additionKey}", "basePrice":${basePrice}, "additionPrice":${additionPrice}, "totalPrice":${totalPrice}}'`;
+                
+                mobile_html += `
+                    <div class="addition-item">
+                        <label>${additionKey}${priceDisplay}</label>
+                        <input type="text" class="easyui-combobox food_item" ${customData} data-options="${dataOptions}">
+                    </div>
+                `;
+            }
+            
+            mobile_html += `
+                    </div>
+                </div>
+            `;
+        }
+        
+        mobile_html += '</div>';
+        $("#food_cards").append(mobile_html);
+    }else{
+        //-----------------------------------------------------------------------------------------
+        // 電腦版本
+        //-----------------------------------------------------------------------------------------
+        let food_html = "";
+        
+        // 用於儲存每個 Combobox 的名稱和價格資訊
+        let comboInfo = [];
+    
+        // 開始建立 HTML 字串
+        food_html += '<table class="table table-bordered">';
+        // 1. 建立表格標頭 (第一行 tr)
         food_html += '<tr>';
-        food_html += `<td>${flavorKey}(${basePrice})</td>`;
-
-        for (let i = 0; i < additionKeys.length; i++) {
-            const additionKey = additionKeys[i];
-            const additionPrice = additionValues[i];
-            const totalPrice = basePrice + additionPrice;
-
-            const comboboxData = [
-                { id: totalPrice * 0, text: 0 },
-                { id: totalPrice * 1, text: 1 },
-                { id: totalPrice * 2, text: 2 }
-            ];
-
-            const dataOptions = `valueField:'id',textField:'text',data:${JSON.stringify(comboboxData).replace(/"/g, "'")},editable:false,panelHeight:'auto',onChange:CheckFood`;
-
-            // **關鍵：將訂單所需的文字資訊存為 HTML data 屬性，方便之後取用**
-            const customData = `data-custom-info='{"flavorKey":"${flavorKey}", "additionKey":"${additionKey}", "basePrice":${basePrice}, "additionPrice":${additionPrice}, "totalPrice":${totalPrice}}'`;
-
-            food_html += `
-                        <td>
-                            <input type="text" class="easyui-combobox food_item" ${customData} data-options="${dataOptions}">
-                        </td>
-                    `;
+        food_html += '<td></td>'; // 左上角空白格
+        for (const key of additionKeys) {
+            const price = food_data.addition[key];
+            const priceDisplay = price === 0 ? `(${price})` : `(+${price})`;
+            food_html += `<td>${key}${priceDisplay}</td>`;
         }
         food_html += '</tr>';
+    
+        // 2. 建立表格內容 (口味行)
+        for (const [flavorKey, basePrice] of Object.entries(food_data.flavor)) {
+            food_html += '<tr>';
+            food_html += `<td>${flavorKey}(${basePrice})</td>`;
+    
+            for (let i = 0; i < additionKeys.length; i++) {
+                const additionKey = additionKeys[i];
+                const additionPrice = additionValues[i];
+                const totalPrice = basePrice + additionPrice;
+    
+                const comboboxData = [
+                    { id: totalPrice * 0, text: 0 },
+                    { id: totalPrice * 1, text: 1 },
+                    { id: totalPrice * 2, text: 2 }
+                ];
+    
+                const dataOptions = `valueField:'id',textField:'text',data:${JSON.stringify(comboboxData).replace(/"/g, "'")},editable:false,panelHeight:'auto',onChange:CheckFood`;
+    
+                // **關鍵：將訂單所需的文字資訊存為 HTML data 屬性，方便之後取用**
+                const customData = `data-custom-info='{"flavorKey":"${flavorKey}", "additionKey":"${additionKey}", "basePrice":${basePrice}, "additionPrice":${additionPrice}, "totalPrice":${totalPrice}}'`;
+    
+                food_html += `
+                            <td>
+                                <input type="text" class="easyui-combobox food_item" ${customData} data-options="${dataOptions}">
+                            </td>
+                        `;
+            }
+            food_html += '</tr>';
+        }
+    
+        // 結束表格
+        food_html += '</table>';
+    
+        $("#food_cards").append(food_html);
     }
-
-    // 結束表格
-    food_html += '</table>';
-
-    $("#food_cards").append(food_html);
     //-----------------------------------------------------------------------------------------
     // 檢查數量
     //-----------------------------------------------------------------------------------------
